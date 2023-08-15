@@ -3,6 +3,9 @@
 # curl zabbix.kjartanohr.no/zabbix/repo/default/files/bashrc -o .bashrc_kfo -z .bashrc_kfo
 # curl 10.0.6.102/zabbix/repo/default/files/bashrc -o .bashrc_kfo -z .bashrc_kfo
 
+# perl mini
+# https://raw.githubusercontent.com/kjartanohr/zabbix/main/default/files/perl
+
 # perl simple function
 perlf () {
   local input=$*;
