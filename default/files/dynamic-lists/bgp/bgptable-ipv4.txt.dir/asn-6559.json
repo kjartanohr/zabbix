@@ -1,0 +1,1 @@
+{"version":"1.0","description":"Generic Data Center file","objects":[{"name":"ASN-AS6559","id":"e7f18b60-f22d-4f42-8dc2-050490e44584","ranges":["149.168.0.0/24","198.85.117.0/24","199.90.0.0/16","207.4.0.0/16","207.192.0.0/18"],"description":""}]}

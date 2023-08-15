@@ -1,0 +1,1 @@
+echo "nohup perl -e 'while (1){ chomp( $date = `date +"%H%M"`); if ($date == 0400){print "Reboot\n"; system "shutdown -r now" }else{print "Not time yet: $date\n"} sleep 10}' </dev/null >/dev/null 2>&1 & "

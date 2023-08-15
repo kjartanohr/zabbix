@@ -1,0 +1,1 @@
+../zabbix_watchdog-test.pl

@@ -1,0 +1,1 @@
+../dns_latency.sh

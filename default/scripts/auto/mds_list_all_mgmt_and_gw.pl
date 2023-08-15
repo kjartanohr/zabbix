@@ -1,0 +1,1 @@
+../mds_list_all_mgmt_and_gw.pl

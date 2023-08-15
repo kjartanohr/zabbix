@@ -1,0 +1,718 @@
+<html>
+<head>
+<TITLE>IPv6 CIDR Report
+</TITLE>
+<link rel="stylesheet" type="text/css" media="screen" href="//bgp.potaroo.net/styles/style.css" />
+</HEAD>
+
+<BODY>
+<div align="right"><a class="nav" href="//bgp.potaroo.net">&nbsp;&nbsp;Home&nbsp;&nbsp;</a><a class="nav" href="//bgp.potaroo.net/index-bgp.html">&nbsp;&nbsp;BGP Reports&nbsp;&nbsp;</a><a class="nav" href="//bgp.potaroo.net/index-cidr.html">&nbsp;&nbsp;CIDR Reports&nbsp;&nbsp;</a><a class="nav" href="//bgp.potaroo.net/index-ale.html">&nbsp;IPv4 Reports&nbsp;&nbsp;</a><a class="nav" href="//bgp.potaroo.net/index-v6.html">&nbsp;IPv6 Reports&nbsp;&nbsp;</a><a class="nav" href="//bgp.potaroo.net/ietf/html/">&nbsp;&nbsp;IETF Docs&nbsp;&nbsp;</a></div>
+<CENTER><P>
+<IMG SRC="./images/cidr-barca.jpg">
+<P>
+<A HREF="mailto:gih@telstra.net">Geoff Huston</A><p>
+Comments to: <A HREF="mailto:cidr-reports@potaroo.net">cidr-reports@potaroo.net</A></CENTER><p>
+<HR>
+<BR>
+<CENTER>
+<H2>IPv6 CIDR REPORT for  2 Jun 23</H2></CENTER>
+<P><h3>Report Sections:</h3><p><ul>
+<A HREF="#General_Status"><h3>Status Summary</h3></a><ul>
+Summary of total route table size for the past 7 days
+and summary information on ASes.<p></ul>
+<A HREF="#Gains"><h3>Aggregation Summary</h3></a><ul>
+<P>This lists the "Top 30" ASes  who, if they aggregated
+their announced prefixes, could
+make a significant contribution to the reduction of the current
+size of the IPv6 Internet routing table.<p></ul>
+<A HREF="#Delta"><h3>Last Week's Changes</h3></A><ul>
+A summary of the last week's changes in terms of withdrawn and
+added routes and added ASes.<p></ul>
+<A HREF="#Aggs"><h3>More Specifics</h3></A><ul>
+A list of ASes advertising routes that appear to be more specfic than the original
+Class-based prefix mask, or more specific than the registry allocation size.<p></ul>
+<A HREF="#Bogons"><h3>Possible Bogons</h3></A><ul>
+A list of advertisements of address blocks and Autonomous System numbers
+where there is no matching allocation data.</ul>
+</ul>
+<hr><p>
+<p>This report is generated from <a href="//bgp.potaroo.net/v6/as2.0">an analysis</a> of the BGP routing table withinAS131072,
+and was produced at  Fri Jun  2 14:46:11 2023
+ AEST.<p><hr><P>
+<P>
+<H2><A NAME="General_Status">Status Summary</H2></A>
+<P>
+<H3>Table History</H3>
+<ul>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><td valign="top">
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><th align=left>Date</th><th align=right>Prefixes</th><th align=right>&nbsp;&nbsp;CIDR Aggregated</th></tr>
+
+<tr><td>26-05-23</td><td align=right><tt>&nbsp;&nbsp;187180</tt></td><td align=right><tt>&nbsp;&nbsp;99372</tt></td></tr>
+<tr><td>27-05-23</td><td align=right><tt>&nbsp;&nbsp;187277</tt></td><td align=right><tt>&nbsp;&nbsp;99582</tt></td></tr>
+<tr><td>28-05-23</td><td align=right><tt>&nbsp;&nbsp;187524</tt></td><td align=right><tt>&nbsp;&nbsp;99155</tt></td></tr>
+<tr><td>29-05-23</td><td align=right><tt>&nbsp;&nbsp;187564</tt></td><td align=right><tt>&nbsp;&nbsp;99222</tt></td></tr>
+<tr><td>30-05-23</td><td align=right><tt>&nbsp;&nbsp;187526</tt></td><td align=right><tt>&nbsp;&nbsp;98942</tt></td></tr>
+<tr><td>31-05-23</td><td align=right><tt>&nbsp;&nbsp;186978</tt></td><td align=right><tt>&nbsp;&nbsp;99415</tt></td></tr>
+<tr><td>01-06-23</td><td align=right><tt>&nbsp;&nbsp;187034</tt></td><td align=right><tt>&nbsp;&nbsp;99049</tt></td></tr>
+<tr><td>02-06-23</td><td align=right><tt>&nbsp;&nbsp;187281</tt></td><td align=right><tt>&nbsp;&nbsp;99049</tt></td></tr>
+
+</table>
+</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top"><img src="//bgp.potaroo.net/cgi-bin/plot?file=%2Fvar%2Fdata%2Fbgp%2Fv6%2Fas2.0%2Fbgp-active.txt&start=1685025971&end=1685717171&width=0%2e6&height=0%2e3&with=step&ylabel=BGP+entries"></td></tr></table>
+Plot: <a href="/cgi-bin/plota?file=%%2fvar%%2fdata%%2fbgp%%2fv6%%2fas2.0%%2fbgp%%2dactive%%2etxt&descr=Active%%20BGP%%20entries%%20%%28FIB%%29&ylabel=Active%%20BGP%%20entries%%20%%28FIB%%29&with=step">
+BGP Table Size</A></ul><p>
+<P>&nbsp;<p>
+<H3>AS Summary</H3>
+<ul><p>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><td valign="top">
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><td align=right><tt>31405&nbsp;&nbsp;</tt></td><td>Number of ASes in routing system</td></tr>
+<tr><td align=right><tt>20001&nbsp;&nbsp;</tt></td><td>Number of ASes announcing only one prefix</td></tr>
+<tr><td align=right><tt>5500&nbsp;&nbsp;</tt></td><td>Largest number of prefixes announced by an AS</td></tr>
+<tr><td>&nbsp;</td><td><a href="/cgi-bin/as-report?as=AS11172&view=2.0&v=6">AS11172</a>: Alestra, S. de R.L. de C.V., MX</td></tr>
+<tr><td align=right><tt>36318243520512&nbsp;(/18.95)&nbsp;&nbsp;</tt></td><td> Largest address span announced by an AS (/64s)</tr></td>
+<tr><td>&nbsp;</td><td><a href="/cgi-bin/as-report?as=AS7922&view=2.0&v=6">AS7922</a>: COMCAST-7922, US</td></tr>
+
+</table>
+</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top"><img src="//bgp.potaroo.net/cgi-bin/plot?file=%2Fvar%2Fdata%2Fbgp%2Fv6%2Fas2.0%2Fbgp%2das%2dcount%2etxt&start=1685025971&end=1685717171&width=0%2e6&height=0%2e3&with=step&ylabel=AS+Count"></td></tr></table>
+<p>
+Plot: <a href="/cgi-bin/plota?file=%2fvar%2fdata%2fbgp%2fv6%2fas2.0%2fbgp%2das%2dcount%2etxt&descr=Unique%20ASes&ylabel=Unique%20ASes&with=step">AS count</A><br>
+Plot: <a href="/cgi-bin/plota?file=%2fvar%2fdata%2fbgp%2fv6%2fas2.0%2fbgp%2dentries%2das%2etxt&descr=Average%20entries%20per%20origin%20AS&ylabel=Average%20entries%20per%20origin%20AS&with=step">Average announcements per origin AS</A><br>
+Report: <a href="bgp-originas.html">ASes ordered by originating address span</a><br>
+Report: <a href="autnums.html">Autonomous System number-to-name</a> mapping (from Registry WHOIS data)</ul>
+<p>
+<HR><p>
+<H2><A NAME="Gains">Aggregation Summary</H2></A><BR>
+The algorithm used in this report proposes aggregation only when there is a precise match using
+AS path so as to preserve traffic transit policies.
+<p><ul>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><th colspan=6 align=left>--- 02Jun23 ---
+</th></tr>
+<tr><th align=left>ASnum&nbsp;&nbsp;</th><th align=right>NetsNow</th><th align=right>&nbsp;&nbsp;NetsAggr</th><th align=right>&nbsp;&nbsp;NetGain</th><th align=right>&nbsp;&nbsp;% Gain&nbsp;&nbsp;</th><th align=left>Description</th></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td align=left>Table&nbsp;&nbsp;</td><td align=right><tt>186929</tt></td><td align=right>&nbsp;&nbsp;<tt>98795</tt></td><td align=right>&nbsp;&nbsp;<tt>88134</tt></td><td align=right>&nbsp;&nbsp;<tt>47.1%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS11172&view=2.0&v=6">AS11172</a>&nbsp;&nbsp;</td><td align=right><tt>5500</tt></td><td align=right>&nbsp;&nbsp;<tt>794</tt></td><td align=right>&nbsp;&nbsp;<tt>4706</tt></td><td align=right>&nbsp;&nbsp;<tt>85.6%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS18403&view=2.0&v=6">AS18403</a>&nbsp;&nbsp;</td><td align=right><tt>4234</tt></td><td align=right>&nbsp;&nbsp;<tt>870</tt></td><td align=right>&nbsp;&nbsp;<tt>3364</tt></td><td align=right>&nbsp;&nbsp;<tt>79.5%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS9808&view=2.0&v=6">AS9808</a>&nbsp;&nbsp;</td><td align=right><tt>4466</tt></td><td align=right>&nbsp;&nbsp;<tt>1189</tt></td><td align=right>&nbsp;&nbsp;<tt>3277</tt></td><td align=right>&nbsp;&nbsp;<tt>73.4%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS7552&view=2.0&v=6">AS7552</a>&nbsp;&nbsp;</td><td align=right><tt>2202</tt></td><td align=right>&nbsp;&nbsp;<tt>6</tt></td><td align=right>&nbsp;&nbsp;<tt>2196</tt></td><td align=right>&nbsp;&nbsp;<tt>99.7%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS45609&view=2.0&v=6">AS45609</a>&nbsp;&nbsp;</td><td align=right><tt>2463</tt></td><td align=right>&nbsp;&nbsp;<tt>414</tt></td><td align=right>&nbsp;&nbsp;<tt>2049</tt></td><td align=right>&nbsp;&nbsp;<tt>83.2%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS28573&view=2.0&v=6">AS28573</a>&nbsp;&nbsp;</td><td align=right><tt>1879</tt></td><td align=right>&nbsp;&nbsp;<tt>237</tt></td><td align=right>&nbsp;&nbsp;<tt>1642</tt></td><td align=right>&nbsp;&nbsp;<tt>87.4%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS16509&view=2.0&v=6">AS16509</a>&nbsp;&nbsp;</td><td align=right><tt>3453</tt></td><td align=right>&nbsp;&nbsp;<tt>2017</tt></td><td align=right>&nbsp;&nbsp;<tt>1436</tt></td><td align=right>&nbsp;&nbsp;<tt>41.6%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS39891&view=2.0&v=6">AS39891</a>&nbsp;&nbsp;</td><td align=right><tt>1316</tt></td><td align=right>&nbsp;&nbsp;<tt>23</tt></td><td align=right>&nbsp;&nbsp;<tt>1293</tt></td><td align=right>&nbsp;&nbsp;<tt>98.3%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS12479&view=2.0&v=6">AS12479</a>&nbsp;&nbsp;</td><td align=right><tt>1616</tt></td><td align=right>&nbsp;&nbsp;<tt>357</tt></td><td align=right>&nbsp;&nbsp;<tt>1259</tt></td><td align=right>&nbsp;&nbsp;<tt>77.9%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS45271&view=2.0&v=6">AS45271</a>&nbsp;&nbsp;</td><td align=right><tt>1748</tt></td><td align=right>&nbsp;&nbsp;<tt>492</tt></td><td align=right>&nbsp;&nbsp;<tt>1256</tt></td><td align=right>&nbsp;&nbsp;<tt>71.9%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS22773&view=2.0&v=6">AS22773</a>&nbsp;&nbsp;</td><td align=right><tt>1329</tt></td><td align=right>&nbsp;&nbsp;<tt>149</tt></td><td align=right>&nbsp;&nbsp;<tt>1180</tt></td><td align=right>&nbsp;&nbsp;<tt>88.8%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS62240&view=2.0&v=6">AS62240</a>&nbsp;&nbsp;</td><td align=right><tt>1221</tt></td><td align=right>&nbsp;&nbsp;<tt>65</tt></td><td align=right>&nbsp;&nbsp;<tt>1156</tt></td><td align=right>&nbsp;&nbsp;<tt>94.7%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS17623&view=2.0&v=6">AS17623</a>&nbsp;&nbsp;</td><td align=right><tt>1448</tt></td><td align=right>&nbsp;&nbsp;<tt>504</tt></td><td align=right>&nbsp;&nbsp;<tt>944</tt></td><td align=right>&nbsp;&nbsp;<tt>65.2%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS56046&view=2.0&v=6">AS56046</a>&nbsp;&nbsp;</td><td align=right><tt>1132</tt></td><td align=right>&nbsp;&nbsp;<tt>230</tt></td><td align=right>&nbsp;&nbsp;<tt>902</tt></td><td align=right>&nbsp;&nbsp;<tt>79.7%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS38266&view=2.0&v=6">AS38266</a>&nbsp;&nbsp;</td><td align=right><tt>1289</tt></td><td align=right>&nbsp;&nbsp;<tt>424</tt></td><td align=right>&nbsp;&nbsp;<tt>865</tt></td><td align=right>&nbsp;&nbsp;<tt>67.1%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS32098&view=2.0&v=6">AS32098</a>&nbsp;&nbsp;</td><td align=right><tt>1092</tt></td><td align=right>&nbsp;&nbsp;<tt>283</tt></td><td align=right>&nbsp;&nbsp;<tt>809</tt></td><td align=right>&nbsp;&nbsp;<tt>74.1%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS17622&view=2.0&v=6">AS17622</a>&nbsp;&nbsp;</td><td align=right><tt>2311</tt></td><td align=right>&nbsp;&nbsp;<tt>1505</tt></td><td align=right>&nbsp;&nbsp;<tt>806</tt></td><td align=right>&nbsp;&nbsp;<tt>34.9%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS24547&view=2.0&v=6">AS24547</a>&nbsp;&nbsp;</td><td align=right><tt>1828</tt></td><td align=right>&nbsp;&nbsp;<tt>1048</tt></td><td align=right>&nbsp;&nbsp;<tt>780</tt></td><td align=right>&nbsp;&nbsp;<tt>42.7%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS4808&view=2.0&v=6">AS4808</a>&nbsp;&nbsp;</td><td align=right><tt>910</tt></td><td align=right>&nbsp;&nbsp;<tt>135</tt></td><td align=right>&nbsp;&nbsp;<tt>775</tt></td><td align=right>&nbsp;&nbsp;<tt>85.2%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS20115&view=2.0&v=6">AS20115</a>&nbsp;&nbsp;</td><td align=right><tt>1256</tt></td><td align=right>&nbsp;&nbsp;<tt>502</tt></td><td align=right>&nbsp;&nbsp;<tt>754</tt></td><td align=right>&nbsp;&nbsp;<tt>60.0%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS56047&view=2.0&v=6">AS56047</a>&nbsp;&nbsp;</td><td align=right><tt>718</tt></td><td align=right>&nbsp;&nbsp;<tt>119</tt></td><td align=right>&nbsp;&nbsp;<tt>599</tt></td><td align=right>&nbsp;&nbsp;<tt>83.4%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS30036&view=2.0&v=6">AS30036</a>&nbsp;&nbsp;</td><td align=right><tt>873</tt></td><td align=right>&nbsp;&nbsp;<tt>281</tt></td><td align=right>&nbsp;&nbsp;<tt>592</tt></td><td align=right>&nbsp;&nbsp;<tt>67.8%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS61302&view=2.0&v=6">AS61302</a>&nbsp;&nbsp;</td><td align=right><tt>839</tt></td><td align=right>&nbsp;&nbsp;<tt>284</tt></td><td align=right>&nbsp;&nbsp;<tt>555</tt></td><td align=right>&nbsp;&nbsp;<tt>66.2%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS4134&view=2.0&v=6">AS4134</a>&nbsp;&nbsp;</td><td align=right><tt>605</tt></td><td align=right>&nbsp;&nbsp;<tt>59</tt></td><td align=right>&nbsp;&nbsp;<tt>546</tt></td><td align=right>&nbsp;&nbsp;<tt>90.2%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS23674&view=2.0&v=6">AS23674</a>&nbsp;&nbsp;</td><td align=right><tt>526</tt></td><td align=right>&nbsp;&nbsp;<tt>5</tt></td><td align=right>&nbsp;&nbsp;<tt>521</tt></td><td align=right>&nbsp;&nbsp;<tt>99.0%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS17853&view=2.0&v=6">AS17853</a>&nbsp;&nbsp;</td><td align=right><tt>563</tt></td><td align=right>&nbsp;&nbsp;<tt>43</tt></td><td align=right>&nbsp;&nbsp;<tt>520</tt></td><td align=right>&nbsp;&nbsp;<tt>92.4%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS131429&view=2.0&v=6">AS131429</a>&nbsp;&nbsp;</td><td align=right><tt>534</tt></td><td align=right>&nbsp;&nbsp;<tt>78</tt></td><td align=right>&nbsp;&nbsp;<tt>456</tt></td><td align=right>&nbsp;&nbsp;<tt>85.4%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS11664&view=2.0&v=6">AS11664</a>&nbsp;&nbsp;</td><td align=right><tt>639</tt></td><td align=right>&nbsp;&nbsp;<tt>214</tt></td><td align=right>&nbsp;&nbsp;<tt>425</tt></td><td align=right>&nbsp;&nbsp;<tt>66.5%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS56044&view=2.0&v=6">AS56044</a>&nbsp;&nbsp;</td><td align=right><tt>978</tt></td><td align=right>&nbsp;&nbsp;<tt>556</tt></td><td align=right>&nbsp;&nbsp;<tt>422</tt></td><td align=right>&nbsp;&nbsp;<tt>43.1%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=AS17552&view=2.0&v=6">AS17552</a>&nbsp;&nbsp;</td><td align=right><tt>419</tt></td><td align=right>&nbsp;&nbsp;<tt>9</tt></td><td align=right>&nbsp;&nbsp;<tt>410</tt></td><td align=right>&nbsp;&nbsp;<tt>97.9%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td align=left>Total&nbsp;&nbsp;</td><td align=right><tt>49387</tt></td><td align=right>&nbsp;&nbsp;<tt>12892</tt></td><td align=right>&nbsp;&nbsp;<tt>36495</tt></td><td align=right>&nbsp;&nbsp;<tt>73.9%</tt>&nbsp;&nbsp;</td><td align=left>Gain</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+</table>
+<p>Report: <a href="aggrweek.html">Aggregation Top 20 summaries for last 7 days</a><br>
+Report: <a href="aggr.html">Full Aggregation Details</a><p></ul>
+<p>
+<ul>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><th align=left colspan=3>Top 20 Route Count per Originating AS</th></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><th align=left>Prefixes&nbsp;&nbsp;</th><th align=left>ASnum&nbsp;&nbsp;</th><th align=left>AS Description</th></tr>
+<tr><td align=right><tt>5500&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS11172&view=2.0&v=6">AS11172</a>&nbsp;&nbsp;</td><td align=left>Alestra, S. de R.L. de C.V., MX</td></tr>
+<tr><td align=right><tt>4466&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS9808&view=2.0&v=6">AS9808</a>&nbsp;&nbsp;</td><td align=left>CHINAMOBILE-CN China Mobile Communications Group Co., Ltd., CN</td></tr>
+<tr><td align=right><tt>4234&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS18403&view=2.0&v=6">AS18403</a>&nbsp;&nbsp;</td><td align=left>FPT-AS-AP FPT Telecom Company, VN</td></tr>
+<tr><td align=right><tt>3453&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS16509&view=2.0&v=6">AS16509</a>&nbsp;&nbsp;</td><td align=left>AMAZON-02, US</td></tr>
+<tr><td align=right><tt>2463&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS45609&view=2.0&v=6">AS45609</a>&nbsp;&nbsp;</td><td align=left>BHARTI-MOBILITY-AS-AP Bharti Airtel Ltd. AS for GPRS Service, IN</td></tr>
+<tr><td align=right><tt>2311&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS17622&view=2.0&v=6">AS17622</a>&nbsp;&nbsp;</td><td align=left>CNCGROUP-GZ China Unicom Guangzhou network, CN</td></tr>
+<tr><td align=right><tt>2202&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS7552&view=2.0&v=6">AS7552</a>&nbsp;&nbsp;</td><td align=left>VIETEL-AS-AP Viettel Group, VN</td></tr>
+<tr><td align=right><tt>1879&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS28573&view=2.0&v=6">AS28573</a>&nbsp;&nbsp;</td><td align=left>Claro NXT Telecomunicacoes Ltda, BR</td></tr>
+<tr><td align=right><tt>1828&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS24547&view=2.0&v=6">AS24547</a>&nbsp;&nbsp;</td><td align=left>CMNET-V4HEBEI-AS-AP Hebei Mobile Communication Company Limited, CN</td></tr>
+<tr><td align=right><tt>1748&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS45271&view=2.0&v=6">AS45271</a>&nbsp;&nbsp;</td><td align=left>ICLNET-AS-AP Idea Cellular Limited, IN</td></tr>
+<tr><td align=right><tt>1616&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS12479&view=2.0&v=6">AS12479</a>&nbsp;&nbsp;</td><td align=left>UNI2-AS, ES</td></tr>
+<tr><td align=right><tt>1448&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS17623&view=2.0&v=6">AS17623</a>&nbsp;&nbsp;</td><td align=left>CNCGROUP-SZ China Unicom Shenzen network, CN</td></tr>
+<tr><td align=right><tt>1387&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS36183&view=2.0&v=6">AS36183</a>&nbsp;&nbsp;</td><td align=left>AKAMAI-AS, US</td></tr>
+<tr><td align=right><tt>1329&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS22773&view=2.0&v=6">AS22773</a>&nbsp;&nbsp;</td><td align=left>ASN-CXA-ALL-CCI-22773-RDC, US</td></tr>
+<tr><td align=right><tt>1316&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS39891&view=2.0&v=6">AS39891</a>&nbsp;&nbsp;</td><td align=left>ALJAWWALSTC-AS, SA</td></tr>
+<tr><td align=right><tt>1293&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS13335&view=2.0&v=6">AS13335</a>&nbsp;&nbsp;</td><td align=left>CLOUDFLARENET, US</td></tr>
+<tr><td align=right><tt>1289&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS38266&view=2.0&v=6">AS38266</a>&nbsp;&nbsp;</td><td align=left>VIL-AS-AP Vodafone Idea Ltd, IN</td></tr>
+<tr><td align=right><tt>1270&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS17072&view=2.0&v=6">AS17072</a>&nbsp;&nbsp;</td><td align=left>TOTAL PLAY TELECOMUNICACIONES SA DE CV, MX</td></tr>
+<tr><td align=right><tt>1256&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS20115&view=2.0&v=6">AS20115</a>&nbsp;&nbsp;</td><td align=left>CHARTER-20115, US</td></tr>
+<tr><td align=right><tt>1221&nbsp;&nbsp;</tt></td><td align=left><a href="/cgi-bin/as-report?as=AS62240&view=2.0&v=6">AS62240</a>&nbsp;&nbsp;</td><td align=left>CLOUVIDER Clouvider - Global ASN, GB</td></tr>
+</table><p>
+</ul><p><hr><h2><A NAME="Delta">Last Week's Changes</H2></A><br>
+This a daily snapshot of changes in routes being withdrawn and added.
+The deltas are calculated over a rolling 7 day period. Please bear in mind this
+is purely a "snapshot" and a large flucuation could be caused by a connectivity
+problem, for example.<p><ul>
+<p>&nbsp;<p>
+<p>&nbsp;<p><table border=0 cellspacing=0 cellpadding=0>
+<tr><th align=left colspan=3>ASes Added to the Routing Table</th></tr>
+<tr><td>&nbsp;</td></tr
+<tr><th align=right>Prefixes</th><th align=left>&nbsp;&nbsp;ASnum&nbsp;&nbsp;</th><th align=left>&nbsp;&nbsp;AS Description</th></tr>
+<tr><td align=right><tt>26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS135636&view=2.0&v=6">AS135636</a></td><td align=left>&nbsp;&nbsp;RACKH-AS-AP Rackh Lintas Asia, pt, ID</td></tr>
+<tr><td align=right><tt>18</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS32278&view=2.0&v=6">AS32278</a></td><td align=left>&nbsp;&nbsp;GETWIRELESS, US</td></tr>
+<tr><td align=right><tt>17</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS147042&view=2.0&v=6">AS147042</a></td><td align=left>&nbsp;&nbsp;PANABO-AS-AP Panabo Satellite Cable Television Inc., PH</td></tr>
+<tr><td align=right><tt>15</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS269202&view=2.0&v=6">AS269202</a></td><td align=left>&nbsp;&nbsp;BRASNET MULTIINFORMATICA LTDA ME, BR</td></tr>
+<tr><td align=right><tt>7</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS138382&view=2.0&v=6">AS138382</a></td><td align=left>&nbsp;&nbsp;BRUR-AS-AP Begum Rokeya University, Rangpur, BD</td></tr>
+<tr><td align=right><tt>7</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS268123&view=2.0&v=6">AS268123</a></td><td align=left>&nbsp;&nbsp;INOVA TELECOMUNICACOES EIRELI, BR</td></tr>
+<tr><td align=right><tt>6</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS38562&view=2.0&v=6">AS38562</a></td><td align=left>&nbsp;&nbsp;IOLBD-AS Innovative Online Limited, BD</td></tr>
+<tr><td align=right><tt>6</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS52112&view=2.0&v=6">AS52112</a></td><td align=left>&nbsp;&nbsp;TOM-KLEIN-IT-AS Tom Klein IT  Gentlent Network, DE</td></tr>
+<tr><td align=right><tt>6</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS267823&view=2.0&v=6">AS267823</a></td><td align=left>&nbsp;&nbsp;ATENEA TELECOMUNICACIONES S.A.S, CO</td></tr>
+<tr><td align=right><tt>5</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS268120&view=2.0&v=6">AS268120</a></td><td align=left>&nbsp;&nbsp;Garden Telecom, BR</td></tr>
+<tr><td align=right><tt>4</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS199266&view=2.0&v=6">AS199266</a></td><td align=left>&nbsp;&nbsp;CONTAINER-DEV, JP</td></tr>
+<tr><td align=right><tt>4</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS199582&view=2.0&v=6">AS199582</a></td><td align=left>&nbsp;&nbsp;MADDOX-ALBRO, US</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS1840&view=2.0&v=6">AS1840</a></td><td align=left>&nbsp;&nbsp;Universidad de Las Americas-Puebla, MX</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS61581&view=2.0&v=6">AS61581</a></td><td align=left>&nbsp;&nbsp;INFOMAISNET TELECOM LTDA, BR</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198378&view=2.0&v=6">AS198378</a></td><td align=left>&nbsp;&nbsp;STAM-AS, NL</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS201445&view=2.0&v=6">AS201445</a></td><td align=left>&nbsp;&nbsp;AS-M4NIC-GLOBAL AS-M4NIC-GLOBAL, TW</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS262683&view=2.0&v=6">AS262683</a></td><td align=left>&nbsp;&nbsp;M4.NET ACESSO A REDE DE COMUNICACAO LTDA - ME, BR</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS263801&view=2.0&v=6">AS263801</a></td><td align=left>&nbsp;&nbsp;LINKEAR SRL, AR</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS268845&view=2.0&v=6">AS268845</a></td><td align=left>&nbsp;&nbsp;ITD Internet Ltda, BR</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS269394&view=2.0&v=6">AS269394</a></td><td align=left>&nbsp;&nbsp;Mitas - Internet Banda Larga Ltda, BR</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS269588&view=2.0&v=6">AS269588</a></td><td align=left>&nbsp;&nbsp;CELERIUM TELECOMUNICACOES, BR</td></tr>
+<tr><td align=right><tt>3</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273724&view=2.0&v=6">AS273724</a></td><td align=left>&nbsp;&nbsp;ID Link servicos de telecomunicacoes ltda, BR</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS29497&view=2.0&v=6">AS29497</a></td><td align=left>&nbsp;&nbsp;KUBANGSM, RU</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS38138&view=2.0&v=6">AS38138</a></td><td align=left>&nbsp;&nbsp;INTECHLTD-BD Intech Limited, BD</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS42943&view=2.0&v=6">AS42943</a></td><td align=left>&nbsp;&nbsp;TOPNET, SA</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS44322&view=2.0&v=6">AS44322</a></td><td align=left>&nbsp;&nbsp;RCNTEC-AS, RU</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS55789&view=2.0&v=6">AS55789</a></td><td align=left>&nbsp;&nbsp;IDC-TW TWIDC, TW</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS136535&view=2.0&v=6">AS136535</a></td><td align=left>&nbsp;&nbsp;HRBM27-AS-AP Yang Mengqi, CN</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS137236&view=2.0&v=6">AS137236</a></td><td align=left>&nbsp;&nbsp;TTSCL-AS-AP TURBOTECH CO., LTD., KH</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS141184&view=2.0&v=6">AS141184</a></td><td align=left>&nbsp;&nbsp;INNC-AS-AP I NOX NET COMMUNICATION, BD</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198825&view=2.0&v=6">AS198825</a></td><td align=left>&nbsp;&nbsp;MATHYS-DUMONTE, FR</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS201771&view=2.0&v=6">AS201771</a></td><td align=left>&nbsp;&nbsp;ITCC-CLOUD, SA</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS210281&view=2.0&v=6">AS210281</a></td><td align=left>&nbsp;&nbsp;WAICORE, GB</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS210926&view=2.0&v=6">AS210926</a></td><td align=left>&nbsp;&nbsp;OPEN-ALL, FR</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS211381&view=2.0&v=6">AS211381</a></td><td align=left>&nbsp;&nbsp;PODAON-NL-1, LV</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS267069&view=2.0&v=6">AS267069</a></td><td align=left>&nbsp;&nbsp;CONECTA MAIS LTDA ME, BR</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS271123&view=2.0&v=6">AS271123</a></td><td align=left>&nbsp;&nbsp;MAGICNET TELECOM, BR</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273700&view=2.0&v=6">AS273700</a></td><td align=left>&nbsp;&nbsp;ESPECIALISTA SERVICOS DE INFORMATICA LTDA ME, BR</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273756&view=2.0&v=6">AS273756</a></td><td align=left>&nbsp;&nbsp;INTRALINKK TELECOM LTDA, BR</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS395853&view=2.0&v=6">AS395853</a></td><td align=left>&nbsp;&nbsp;NYCMESH, US</td></tr>
+<tr><td align=right><tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS400554&view=2.0&v=6">AS400554</a></td><td align=left>&nbsp;&nbsp;STRICITY-NET, US</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS2121&view=2.0&v=6">AS2121</a></td><td align=left>&nbsp;&nbsp;RIPE-MEETING-AS, NL</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS7587&view=2.0&v=6">AS7587</a></td><td align=left>&nbsp;&nbsp;ACCESSNETWORKS TRANSMEDIA-, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS11364&view=2.0&v=6">AS11364</a></td><td align=left>&nbsp;&nbsp;VAREX-USA, US</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS17117&view=2.0&v=6">AS17117</a></td><td align=left>&nbsp;&nbsp;RITSNET, US</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS18678&view=2.0&v=6">AS18678</a></td><td align=left>&nbsp;&nbsp;INTERNEXA S.A. E.S.P, CO</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS19230&view=2.0&v=6">AS19230</a></td><td align=left>&nbsp;&nbsp;NANOG, US</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS19369&view=2.0&v=6">AS19369</a></td><td align=left>&nbsp;&nbsp;-Reserved AS-, CA</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS22296&view=2.0&v=6">AS22296</a></td><td align=left>&nbsp;&nbsp;</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS23670&view=2.0&v=6">AS23670</a></td><td align=left>&nbsp;&nbsp;HOSTDC-AU Host DC, AU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS23676&view=2.0&v=6">AS23676</a></td><td align=left>&nbsp;&nbsp;MARIIX-GU Mariana Islands Internet Exchange, GU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS24448&view=2.0&v=6">AS24448</a></td><td align=left>&nbsp;&nbsp;NDSINDIA-AS Synamedia Technologies India Private Limited, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS24534&view=2.0&v=6">AS24534</a></td><td align=left>&nbsp;&nbsp;TRANSHYBRID-AS-ID PT. Transhybrid Communication, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS28150&view=2.0&v=6">AS28150</a></td><td align=left>&nbsp;&nbsp;CDT Network Ltda, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS30937&view=2.0&v=6">AS30937</a></td><td align=left>&nbsp;&nbsp;WALHALLA__AS30937, ES</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS38561&view=2.0&v=6">AS38561</a></td><td align=left>&nbsp;&nbsp;DOM-AU-AP NTT Australia Solutions Pty Ltd, AU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS43987&view=2.0&v=6">AS43987</a></td><td align=left>&nbsp;&nbsp;NDC-CLOUD, SA</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS48511&view=2.0&v=6">AS48511</a></td><td align=left>&nbsp;&nbsp;SECTOR-TELECOM-AS, RU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS48586&view=2.0&v=6">AS48586</a></td><td align=left>&nbsp;&nbsp;BAIKAL-IX-AS, RU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS49992&view=2.0&v=6">AS49992</a></td><td align=left>&nbsp;&nbsp;BFI-NETWORKS, NL</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS52201&view=2.0&v=6">AS52201</a></td><td align=left>&nbsp;&nbsp;TCTEL, RU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS60490&view=2.0&v=6">AS60490</a></td><td align=left>&nbsp;&nbsp;MTS-CLOUD, RU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS60910&view=2.0&v=6">AS60910</a></td><td align=left>&nbsp;&nbsp;TRUECALLER-AS, SE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS61298&view=2.0&v=6">AS61298</a></td><td align=left>&nbsp;&nbsp;NOAHKS-NET, DK</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS61470&view=2.0&v=6">AS61470</a></td><td align=left>&nbsp;&nbsp;MUSURIT, AR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS64532&view=2.0&v=6">AS64532</a></td><td align=left>&nbsp;&nbsp;-Private Use AS-, ZZ</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS64558&view=2.0&v=6">AS64558</a></td><td align=left>&nbsp;&nbsp;-Private Use AS-, ZZ</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS64557&view=2.0&v=6">AS64557</a></td><td align=left>&nbsp;&nbsp;-Private Use AS-, ZZ</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS134905&view=2.0&v=6">AS134905</a></td><td align=left>&nbsp;&nbsp;IGENNETWORKS-AS-IN iGEN Networks Pvt Ltd, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS134932&view=2.0&v=6">AS134932</a></td><td align=left>&nbsp;&nbsp;VIPL789-AS-IN VORTEX INFOWAY PRIVATE LIMITED, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS137159&view=2.0&v=6">AS137159</a></td><td align=left>&nbsp;&nbsp;MARUTHI-AS Maruthi Cable And Data Private Limited, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS137259&view=2.0&v=6">AS137259</a></td><td align=left>&nbsp;&nbsp;ILINK-AS-AP i-Link, MM</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS137406&view=2.0&v=6">AS137406</a></td><td align=left>&nbsp;&nbsp;ACI-AS-AP Airlive Communications Inc., PH</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS138556&view=2.0&v=6">AS138556</a></td><td align=left>&nbsp;&nbsp;ARMOUR-AS-AP Armour Technologies Ltd., BD</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS138621&view=2.0&v=6">AS138621</a></td><td align=left>&nbsp;&nbsp;CITY-NET-COM-AS-AP City Net Communication, BD</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS138783&view=2.0&v=6">AS138783</a></td><td align=left>&nbsp;&nbsp;THREEJGLOBAL THREEJ Global Services Private Limited, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139013&view=2.0&v=6">AS139013</a></td><td align=left>&nbsp;&nbsp;HTOS-AS-AP Hi-Tech Online Services, BD</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139302&view=2.0&v=6">AS139302</a></td><td align=left>&nbsp;&nbsp;ACNNETWORK-AS-AP Ashiq Cable Network Pvt. Limited, PK</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139419&view=2.0&v=6">AS139419</a></td><td align=left>&nbsp;&nbsp;GURITA-AS-ID PT GURITA CYBER NUSANTARA, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139543&view=2.0&v=6">AS139543</a></td><td align=left>&nbsp;&nbsp;MAHABAL-AS-IN MAHABAL NET SERVICE PROVIDER PRIVATE LIMITED, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139539&view=2.0&v=6">AS139539</a></td><td align=left>&nbsp;&nbsp;ABFSSLIN-AS Aditya Birla Financial Shared Services Ltd., IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139587&view=2.0&v=6">AS139587</a></td><td align=left>&nbsp;&nbsp;CHINANET-HENAN-ZHENGZHOU-SHUJUGANG-IDC China Telecom Henan Zhengzhou Shujugang IDC network, CN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS140457&view=2.0&v=6">AS140457</a></td><td align=left>&nbsp;&nbsp;IMEDIANET-AS-ID PT Ikhlas Cipta Teknologi, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS140941&view=2.0&v=6">AS140941</a></td><td align=left>&nbsp;&nbsp;FULLTIMEHOSTING-AS-AP Full Time Hosting, PK</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS140973&view=2.0&v=6">AS140973</a></td><td align=left>&nbsp;&nbsp;LNPL-AS-AP Life Net Pvt. Ltd., NP</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS141133&view=2.0&v=6">AS141133</a></td><td align=left>&nbsp;&nbsp;IDNIC-UIKA-AS-ID Yayasan Pendidikan Islam Ibn Khaldun, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS141241&view=2.0&v=6">AS141241</a></td><td align=left>&nbsp;&nbsp;TWAYNET-AS-IN T-way Network, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS142103&view=2.0&v=6">AS142103</a></td><td align=left>&nbsp;&nbsp;</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS142094&view=2.0&v=6">AS142094</a></td><td align=left>&nbsp;&nbsp;</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS142086&view=2.0&v=6">AS142086</a></td><td align=left>&nbsp;&nbsp;</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS142072&view=2.0&v=6">AS142072</a></td><td align=left>&nbsp;&nbsp;</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS142368&view=2.0&v=6">AS142368</a></td><td align=left>&nbsp;&nbsp;IDNIC-ARKO97-AS-ID PT Global Data Akses Persada, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS142389&view=2.0&v=6">AS142389</a></td><td align=left>&nbsp;&nbsp;IKI-INDONESIA-AS-ID IKI INDONESIA, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS147018&view=2.0&v=6">AS147018</a></td><td align=left>&nbsp;&nbsp;MISL-AS-AP MIAN INTERNET SERVICES Pvt. Ltd, PK</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS147047&view=2.0&v=6">AS147047</a></td><td align=left>&nbsp;&nbsp;YUETAUYEUNG-AS-AP Yuet Au Yeung, HK</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS147107&view=2.0&v=6">AS147107</a></td><td align=left>&nbsp;&nbsp;TUNASMULTIDATA-AS-ID PT Tunas Multi Data, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS149161&view=2.0&v=6">AS149161</a></td><td align=left>&nbsp;&nbsp;MEGA-VN MEGA TECHNOLOGY COMPANY LIMITED, VN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS149557&view=2.0&v=6">AS149557</a></td><td align=left>&nbsp;&nbsp;GRBINFO-AS-IN GRB INFOTECH, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS150242&view=2.0&v=6">AS150242</a></td><td align=left>&nbsp;&nbsp;IDNIC-KDN-AS-ID PT Kampung Dua Net, ID</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS150608&view=2.0&v=6">AS150608</a></td><td align=left>&nbsp;&nbsp;DENET-AS-IN SAN ENTERPRISES, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS151074&view=2.0&v=6">AS151074</a></td><td align=left>&nbsp;&nbsp;AS-VMW-TPE VMWare Incorporation, JP</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS151114&view=2.0&v=6">AS151114</a></td><td align=left>&nbsp;&nbsp;KSCCL-AS-IN Karimnagar Smart City Corporation Limited, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198383&view=2.0&v=6">AS198383</a></td><td align=left>&nbsp;&nbsp;AS-SKYINFO, IN</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198480&view=2.0&v=6">AS198480</a></td><td align=left>&nbsp;&nbsp;TWOADVENTURESTUDIOSLTD-AS 2adventure Studios Ltd - Primary AS, GB</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198513&view=2.0&v=6">AS198513</a></td><td align=left>&nbsp;&nbsp;VIPERHOSTING, NL</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198585&view=2.0&v=6">AS198585</a></td><td align=left>&nbsp;&nbsp;WLTCS WLTCS BGP System, US</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198584&view=2.0&v=6">AS198584</a></td><td align=left>&nbsp;&nbsp;PIO-HOSTING, DE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198596&view=2.0&v=6">AS198596</a></td><td align=left>&nbsp;&nbsp;BAULME-NET, FR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS199340&view=2.0&v=6">AS199340</a></td><td align=left>&nbsp;&nbsp;HONG-GUANWAN, HK</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS199967&view=2.0&v=6">AS199967</a></td><td align=left>&nbsp;&nbsp;THINK-HUGE, HK</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS200335&view=2.0&v=6">AS200335</a></td><td align=left>&nbsp;&nbsp;ANGULO-AS, MX</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS200532&view=2.0&v=6">AS200532</a></td><td align=left>&nbsp;&nbsp;HOSTER-KRG Hoster.KZ - Karagandy, KZ</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS200559&view=2.0&v=6">AS200559</a></td><td align=left>&nbsp;&nbsp;BOTKYRKA-KOMMUN-ASN Botkyrka Kommun, SE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS200603&view=2.0&v=6">AS200603</a></td><td align=left>&nbsp;&nbsp;FIXME-AS, DE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS200844&view=2.0&v=6">AS200844</a></td><td align=left>&nbsp;&nbsp;SA-AS, CZ</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS201492&view=2.0&v=6">AS201492</a></td><td align=left>&nbsp;&nbsp;NETVERSOR-4, DE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS203979&view=2.0&v=6">AS203979</a></td><td align=left>&nbsp;&nbsp;MISAKAMIKOTONETWORK, KR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS204181&view=2.0&v=6">AS204181</a></td><td align=left>&nbsp;&nbsp;XOC, DE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS204740&view=2.0&v=6">AS204740</a></td><td align=left>&nbsp;&nbsp;IRON80, FR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS205977&view=2.0&v=6">AS205977</a></td><td align=left>&nbsp;&nbsp;PCOMPUTE, TH</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS207394&view=2.0&v=6">AS207394</a></td><td align=left>&nbsp;&nbsp;CRT-AS, AU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS208453&view=2.0&v=6">AS208453</a></td><td align=left>&nbsp;&nbsp;SWEHOST-NET, SE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS209024&view=2.0&v=6">AS209024</a></td><td align=left>&nbsp;&nbsp;MTS-CLOUD-A, RU</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS209395&view=2.0&v=6">AS209395</a></td><td align=left>&nbsp;&nbsp;VOLKANSALIH-AS, TR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS210275&view=2.0&v=6">AS210275</a></td><td align=left>&nbsp;&nbsp;SITCO-AS, SA</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS210918&view=2.0&v=6">AS210918</a></td><td align=left>&nbsp;&nbsp;KERNSTOCK, IE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS211416&view=2.0&v=6">AS211416</a></td><td align=left>&nbsp;&nbsp;TAWASUL2021, AE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS211488&view=2.0&v=6">AS211488</a></td><td align=left>&nbsp;&nbsp;GROPYUS, DE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS212194&view=2.0&v=6">AS212194</a></td><td align=left>&nbsp;&nbsp;PRABU-NET, MY</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS212801&view=2.0&v=6">AS212801</a></td><td align=left>&nbsp;&nbsp;ALMANID-AS-IAS, CH</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS262439&view=2.0&v=6">AS262439</a></td><td align=left>&nbsp;&nbsp;ALCANS SERVICOS EM TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS263056&view=2.0&v=6">AS263056</a></td><td align=left>&nbsp;&nbsp;INDNET TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS264369&view=2.0&v=6">AS264369</a></td><td align=left>&nbsp;&nbsp;INHAMBUPE ON-LINE COM COM. E SERV. DE INFORMATICA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS265700&view=2.0&v=6">AS265700</a></td><td align=left>&nbsp;&nbsp;UNIVERSIDAD NACIONAL DE LA PATAGONIA AUSTRAL, AR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS266158&view=2.0&v=6">AS266158</a></td><td align=left>&nbsp;&nbsp;T3 Telecom, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS266245&view=2.0&v=6">AS266245</a></td><td align=left>&nbsp;&nbsp;Burda Comercio e Servicos Ltda Me, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS266528&view=2.0&v=6">AS266528</a></td><td align=left>&nbsp;&nbsp;Master Telecomunicacoes LTDA ME, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS267001&view=2.0&v=6">AS267001</a></td><td align=left>&nbsp;&nbsp;Tribunal de Contas do Estado do Maranhao, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS267197&view=2.0&v=6">AS267197</a></td><td align=left>&nbsp;&nbsp;CAMOA SERVICOS TELECOM LTDA., BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS267370&view=2.0&v=6">AS267370</a></td><td align=left>&nbsp;&nbsp;ConnectNet Brasil ME, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS267399&view=2.0&v=6">AS267399</a></td><td align=left>&nbsp;&nbsp;TOP 37 ESTACOES E REDES DE TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS268064&view=2.0&v=6">AS268064</a></td><td align=left>&nbsp;&nbsp;Net 1000 Telecom Ltda, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS269480&view=2.0&v=6">AS269480</a></td><td align=left>&nbsp;&nbsp;ANA CELIA RODRIGUES COELHO ME, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270159&view=2.0&v=6">AS270159</a></td><td align=left>&nbsp;&nbsp;GENER HUMBERTO KUK CONCHA, MX</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270175&view=2.0&v=6">AS270175</a></td><td align=left>&nbsp;&nbsp;ICENTRAL SISTEMAS Y COMUNICACIONES, MX</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270279&view=2.0&v=6">AS270279</a></td><td align=left>&nbsp;&nbsp;WIMAXNET LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270309&view=2.0&v=6">AS270309</a></td><td align=left>&nbsp;&nbsp;TURBONET - Provedor de Acesso a Internet, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270320&view=2.0&v=6">AS270320</a></td><td align=left>&nbsp;&nbsp;X NET, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270332&view=2.0&v=6">AS270332</a></td><td align=left>&nbsp;&nbsp;EXATA TELECOM, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270336&view=2.0&v=6">AS270336</a></td><td align=left>&nbsp;&nbsp;Careassunet Informatica Ltda - ME, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270502&view=2.0&v=6">AS270502</a></td><td align=left>&nbsp;&nbsp;EDUARDO DE SOUZA SILVA 37009196893, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270707&view=2.0&v=6">AS270707</a></td><td align=left>&nbsp;&nbsp;LINK NET BRASIL TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270812&view=2.0&v=6">AS270812</a></td><td align=left>&nbsp;&nbsp;RizziNET Solucoes em Internet LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS271185&view=2.0&v=6">AS271185</a></td><td align=left>&nbsp;&nbsp;BRTELE TECNOLOGIA LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS272031&view=2.0&v=6">AS272031</a></td><td align=left>&nbsp;&nbsp;NETENMICASA SpA, CL</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS272158&view=2.0&v=6">AS272158</a></td><td align=left>&nbsp;&nbsp;Rpcnet Internet Informatica, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS272663&view=2.0&v=6">AS272663</a></td><td align=left>&nbsp;&nbsp;DAIANE DA COSTA FERNANDES & CIA LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS272950&view=2.0&v=6">AS272950</a></td><td align=left>&nbsp;&nbsp;EMPRESA PRESTADORA DE SERVICIOS DE INTERNET Y TELEVISION SUR DE BOLIVAR S.A.S. GIGACABLE SAS, CO</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS272979&view=2.0&v=6">AS272979</a></td><td align=left>&nbsp;&nbsp;UCAYALI VENTURES SOCIEDAD ANONIMA CERRADA, PE</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273006&view=2.0&v=6">AS273006</a></td><td align=left>&nbsp;&nbsp;INTERNET Y TELECOMUNICACIONES DE COLOMBIA S.A.S., CO</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273009&view=2.0&v=6">AS273009</a></td><td align=left>&nbsp;&nbsp;NEXTELECOM, S.R.L., DO</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273707&view=2.0&v=6">AS273707</a></td><td align=left>&nbsp;&nbsp;ANDERSON SILVA DOS SANTOS - ME, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273710&view=2.0&v=6">AS273710</a></td><td align=left>&nbsp;&nbsp;Happynet LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273731&view=2.0&v=6">AS273731</a></td><td align=left>&nbsp;&nbsp;MGDATA TECNOLOGIA LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273742&view=2.0&v=6">AS273742</a></td><td align=left>&nbsp;&nbsp;Ellite Internet LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273745&view=2.0&v=6">AS273745</a></td><td align=left>&nbsp;&nbsp;DMSTOR INFORMATICA LTDA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273757&view=2.0&v=6">AS273757</a></td><td align=left>&nbsp;&nbsp;NEW TELECOM TELECOMUNICACOES, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273765&view=2.0&v=6">AS273765</a></td><td align=left>&nbsp;&nbsp;RedLink Fibra, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273763&view=2.0&v=6">AS273763</a></td><td align=left>&nbsp;&nbsp;Conexao Net Fibra LTDA - ME, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS273758&view=2.0&v=6">AS273758</a></td><td align=left>&nbsp;&nbsp;PROCURADORIA GERAL DE JUSTICA, BR</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS327987&view=2.0&v=6">AS327987</a></td><td align=left>&nbsp;&nbsp;Webstorm, ZA</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS328825&view=2.0&v=6">AS328825</a></td><td align=left>&nbsp;&nbsp;AACL-AS, NG</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS328913&view=2.0&v=6">AS328913</a></td><td align=left>&nbsp;&nbsp;DoualaIX, CM</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS329234&view=2.0&v=6">AS329234</a></td><td align=left>&nbsp;&nbsp;NMBIX-mgmt, ZA</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS329095&view=2.0&v=6">AS329095</a></td><td align=left>&nbsp;&nbsp;AFRIMETRO-AS, SZ</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS394209&view=2.0&v=6">AS394209</a></td><td align=left>&nbsp;&nbsp;ECBOCES-VNETS, US</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS396948&view=2.0&v=6">AS396948</a></td><td align=left>&nbsp;&nbsp;CLOUDWEBMANAGE-SC, US</td></tr>
+<tr><td align=right><tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS400381&view=2.0&v=6">AS400381</a></td><td align=left>&nbsp;&nbsp;CENTRICTX-ASN, US</td></tr>
+</table><p>
+<p>&nbsp;<p>
+<p><table border=0 cellspacing=0 cellpadding=0>
+<tr><th align=left colspan=4>Top 20 Net Increased Routes per Originating AS</th></tr>
+<tr><td>&nbsp;</td></tr
+<tr><th align=right>Prefixes</th><th align=right>&nbsp;&nbsp;Change</th><th align=left>&nbsp;&nbsp;ASnum&nbsp;&nbsp;</th><th align=left>AS Description</th></tr>
+<tr><td align=right><tt>253</tt></td><td align=right>&nbsp;&nbsp;<tt>586</tt>-&gt;<tt>839</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS61302&view=2.0&v=6">AS61302</a>&nbsp;&nbsp;</td><td align=left>HUIZE_TELECOM Huize Telecom, GB</td></tr>
+<tr><td align=right><tt>100</tt></td><td align=right>&nbsp;&nbsp;<tt>4134</tt>-&gt;<tt>4234</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS18403&view=2.0&v=6">AS18403</a>&nbsp;&nbsp;</td><td align=left>FPT-AS-AP FPT Telecom Company, VN</td></tr>
+<tr><td align=right><tt>53</tt></td><td align=right>&nbsp;&nbsp;<tt>5</tt>-&gt;<tt>58</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS28613&view=2.0&v=6">AS28613</a>&nbsp;&nbsp;</td><td align=left>HUGHES TELECOMUNICACOES DO BRASIL LTDA., BR</td></tr>
+<tr><td align=right><tt>50</tt></td><td align=right>&nbsp;&nbsp;<tt>1</tt>-&gt;<tt>51</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270944&view=2.0&v=6">AS270944</a>&nbsp;&nbsp;</td><td align=left>MEGA DAT INFORMATICA E TELECOM, BR</td></tr>
+<tr><td align=right><tt>48</tt></td><td align=right>&nbsp;&nbsp;<tt>399</tt>-&gt;<tt>447</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS26611&view=2.0&v=6">AS26611</a>&nbsp;&nbsp;</td><td align=left>COMUNICACION CELULAR S.A. COMCEL S.A., CO</td></tr>
+<tr><td align=right><tt>41</tt></td><td align=right>&nbsp;&nbsp;<tt>7</tt>-&gt;<tt>48</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS262612&view=2.0&v=6">AS262612</a>&nbsp;&nbsp;</td><td align=left>Piotr Piwowar, BR</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=right>&nbsp;&nbsp;<tt>3</tt>-&gt;<tt>29</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS132556&view=2.0&v=6">AS132556</a>&nbsp;&nbsp;</td><td align=left>BLUELOTUS-AS Blue Lotus Support Services Pvt Ltd, IN</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=right>&nbsp;&nbsp;<tt>0</tt>-&gt;<tt>26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS135636&view=2.0&v=6">AS135636</a>&nbsp;&nbsp;</td><td align=left>RACKH-AS-AP Rackh Lintas Asia, pt, ID</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=right>&nbsp;&nbsp;<tt>6</tt>-&gt;<tt>32</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139026&view=2.0&v=6">AS139026</a>&nbsp;&nbsp;</td><td align=left>SHADHINOTA2-AS-AP Shadhinota Net, BD</td></tr>
+<tr><td align=right><tt>20</tt></td><td align=right>&nbsp;&nbsp;<tt>853</tt>-&gt;<tt>873</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS30036&view=2.0&v=6">AS30036</a>&nbsp;&nbsp;</td><td align=left>MEDIACOM-ENTERPRISE-BUSINESS, US</td></tr>
+<tr><td align=right><tt>18</tt></td><td align=right>&nbsp;&nbsp;<tt>0</tt>-&gt;<tt>18</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS32278&view=2.0&v=6">AS32278</a>&nbsp;&nbsp;</td><td align=left>GETWIRELESS, US</td></tr>
+<tr><td align=right><tt>18</tt></td><td align=right>&nbsp;&nbsp;<tt>5482</tt>-&gt;<tt>5500</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS11172&view=2.0&v=6">AS11172</a>&nbsp;&nbsp;</td><td align=left>Alestra, S. de R.L. de C.V., MX</td></tr>
+<tr><td align=right><tt>17</tt></td><td align=right>&nbsp;&nbsp;<tt>1</tt>-&gt;<tt>18</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS61573&view=2.0&v=6">AS61573</a>&nbsp;&nbsp;</td><td align=left>IP TELECOM BRASIL, BR</td></tr>
+<tr><td align=right><tt>17</tt></td><td align=right>&nbsp;&nbsp;<tt>0</tt>-&gt;<tt>17</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS147042&view=2.0&v=6">AS147042</a>&nbsp;&nbsp;</td><td align=left>PANABO-AS-AP Panabo Satellite Cable Television Inc., PH</td></tr>
+<tr><td align=right><tt>15</tt></td><td align=right>&nbsp;&nbsp;<tt>4</tt>-&gt;<tt>19</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS134968&view=2.0&v=6">AS134968</a>&nbsp;&nbsp;</td><td align=left>MAYACYBERWORLD-AS-AP Mizanur Rahman ta Maya Cyber World, BD</td></tr>
+<tr><td align=right><tt>15</tt></td><td align=right>&nbsp;&nbsp;<tt>0</tt>-&gt;<tt>15</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS269202&view=2.0&v=6">AS269202</a>&nbsp;&nbsp;</td><td align=left>BRASNET MULTIINFORMATICA LTDA ME, BR</td></tr>
+<tr><td align=right><tt>12</tt></td><td align=right>&nbsp;&nbsp;<tt>58</tt>-&gt;<tt>70</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS24186&view=2.0&v=6">AS24186</a>&nbsp;&nbsp;</td><td align=left>RAILTEL-AS-IN RailTel Corporation of India Ltd, IN</td></tr>
+<tr><td align=right><tt>11</tt></td><td align=right>&nbsp;&nbsp;<tt>273</tt>-&gt;<tt>284</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS20473&view=2.0&v=6">AS20473</a>&nbsp;&nbsp;</td><td align=left>AS-CHOOPA, US</td></tr>
+<tr><td align=right><tt>11</tt></td><td align=right>&nbsp;&nbsp;<tt>10</tt>-&gt;<tt>21</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS141731&view=2.0&v=6">AS141731</a>&nbsp;&nbsp;</td><td align=left>MAXHUBLTD-AS-AP Max Hub Limited, BD</td></tr>
+<tr><td align=right><tt>11</tt></td><td align=right>&nbsp;&nbsp;<tt>2</tt>-&gt;<tt>13</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS400304&view=2.0&v=6">AS400304</a>&nbsp;&nbsp;</td><td align=left>REDOUBT-NET, US</td></tr>
+</table><p>
+<p>&nbsp;<p>
+<p><table border=0 cellspacing=0 cellpadding=0>
+<tr><th align=left colspan=4>Top 20 Net Decreased Routes per Originating AS</th></tr>
+<tr><td>&nbsp;</td></tr
+<tr><th align=right>Prefixes</th><th align=right>&nbsp;&nbsp;Change</th><th align=left>&nbsp;&nbsp;ASnum&nbsp;&nbsp;</th><th align=left>AS Description</th></tr>
+<tr><td align=right><tt>-603</tt></td><td align=right>&nbsp;&nbsp;<tt>1179</tt>-&gt;<tt>576</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS7545&view=2.0&v=6">AS7545</a>&nbsp;&nbsp;</td><td align=left>TPG-INTERNET-AP TPG Telecom Limited, AU</td></tr>
+<tr><td align=right><tt>-255</tt></td><td align=right>&nbsp;&nbsp;<tt>1347</tt>-&gt;<tt>1092</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS32098&view=2.0&v=6">AS32098</a>&nbsp;&nbsp;</td><td align=left>TRANSTELCO-INC, US</td></tr>
+<tr><td align=right><tt>-77</tt></td><td align=right>&nbsp;&nbsp;<tt>611</tt>-&gt;<tt>534</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS131429&view=2.0&v=6">AS131429</a>&nbsp;&nbsp;</td><td align=left>MOBIFONE-AS-VN MOBIFONE Corporation, VN</td></tr>
+<tr><td align=right><tt>-30</tt></td><td align=right>&nbsp;&nbsp;<tt>31</tt>-&gt;<tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS28260&view=2.0&v=6">AS28260</a>&nbsp;&nbsp;</td><td align=left>ALTA REDE CORPORATE NETWORK TELECOM LTDA - EPP, BR</td></tr>
+<tr><td align=right><tt>-29</tt></td><td align=right>&nbsp;&nbsp;<tt>30</tt>-&gt;<tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS24521&view=2.0&v=6">AS24521</a>&nbsp;&nbsp;</td><td align=left>DATAUTAMA-NET-AS-ID PT. DATA Utama Dinamika, ID</td></tr>
+<tr><td align=right><tt>-28</tt></td><td align=right>&nbsp;&nbsp;<tt>29</tt>-&gt;<tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS264780&view=2.0&v=6">AS264780</a>&nbsp;&nbsp;</td><td align=left>HomeNet LTDA, CL</td></tr>
+<tr><td align=right><tt>-26</tt></td><td align=right>&nbsp;&nbsp;<tt>31</tt>-&gt;<tt>5</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS53123&view=2.0&v=6">AS53123</a>&nbsp;&nbsp;</td><td align=left>Power Telecomunicacoes Ltda. - ME, BR</td></tr>
+<tr><td align=right><tt>-21</tt></td><td align=right>&nbsp;&nbsp;<tt>21</tt>-&gt;<tt>0</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS14615&view=2.0&v=6">AS14615</a>&nbsp;&nbsp;</td><td align=left>ROCK-HILL-TELEPHONE, US</td></tr>
+<tr><td align=right><tt>-19</tt></td><td align=right>&nbsp;&nbsp;<tt>19</tt>-&gt;<tt>0</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS136326&view=2.0&v=6">AS136326</a>&nbsp;&nbsp;</td><td align=left>VARESHA-AS Sarva Airworld Network Pvt. Ltd., IN</td></tr>
+<tr><td align=right><tt>-18</tt></td><td align=right>&nbsp;&nbsp;<tt>211</tt>-&gt;<tt>193</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS53356&view=2.0&v=6">AS53356</a>&nbsp;&nbsp;</td><td align=left>FREE RANGE CLOUD, CA</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=right>&nbsp;&nbsp;<tt>26</tt>-&gt;<tt>14</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270092&view=2.0&v=6">AS270092</a>&nbsp;&nbsp;</td><td align=left>ZAMBRANO CARRENO HUMBERTO ALEJANDRO PROGRAMAX, EC</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=right>&nbsp;&nbsp;<tt>14</tt>-&gt;<tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS266181&view=2.0&v=6">AS266181</a>&nbsp;&nbsp;</td><td align=left>GOLDEN LINK, BR</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=right>&nbsp;&nbsp;<tt>14</tt>-&gt;<tt>2</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS203619&view=2.0&v=6">AS203619</a>&nbsp;&nbsp;</td><td align=left>Tomas Oliveira Valente Leite de Castro, PT</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=right>&nbsp;&nbsp;<tt>12</tt>-&gt;<tt>0</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS134995&view=2.0&v=6">AS134995</a>&nbsp;&nbsp;</td><td align=left>IZONE-AS-AP I. ZONE PVT. LTD, NP</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=right>&nbsp;&nbsp;<tt>1301</tt>-&gt;<tt>1289</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS38266&view=2.0&v=6">AS38266</a>&nbsp;&nbsp;</td><td align=left>VIL-AS-AP Vodafone Idea Ltd, IN</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=right>&nbsp;&nbsp;<tt>12</tt>-&gt;<tt>0</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS7602&view=2.0&v=6">AS7602</a>&nbsp;&nbsp;</td><td align=left>SPT-AS-VN Sai gon Postel Corporation, VN</td></tr>
+<tr><td align=right><tt>-11</tt></td><td align=right>&nbsp;&nbsp;<tt>11</tt>-&gt;<tt>0</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270362&view=2.0&v=6">AS270362</a>&nbsp;&nbsp;</td><td align=left>FIBERCOMP INTERNET, BR</td></tr>
+<tr><td align=right><tt>-11</tt></td><td align=right>&nbsp;&nbsp;<tt>12</tt>-&gt;<tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS206919&view=2.0&v=6">AS206919</a>&nbsp;&nbsp;</td><td align=left>CXLNET a Global Personal Network, maintained by Jeffrey Chen, CN</td></tr>
+<tr><td align=right><tt>-10</tt></td><td align=right>&nbsp;&nbsp;<tt>11</tt>-&gt;<tt>1</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS262664&view=2.0&v=6">AS262664</a>&nbsp;&nbsp;</td><td align=left>GIGALINE INTERNET SERVICOS DE INFORMATICA LTDA, BR</td></tr>
+<tr><td align=right><tt>-10</tt></td><td align=right>&nbsp;&nbsp;<tt>41</tt>-&gt;<tt>31</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS202256&view=2.0&v=6">AS202256</a>&nbsp;&nbsp;</td><td align=left>LAWLIETNET, CN</td></tr>
+</table><p>
+<p>&nbsp;<p>
+<p><table border=0 cellspacing=0 cellpadding=0>
+<tr><th align=left colspan=3>Top 20 Added Routes this week per Originating AS</th></tr>
+<tr><td>&nbsp;</td></tr
+<tr><th align=right>Prefixes</th><th align=left>&nbsp;&nbsp;ASnum</th><th align=left>&nbsp;&nbsp;AS Description</th></tr>
+<tr><td align=right><tt>253</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS61302&view=2.0&v=6">AS61302</a></td><td align=left>&nbsp;&nbsp;HUIZE_TELECOM Huize Telecom, GB</td></tr>
+<tr><td align=right><tt>100</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS18403&view=2.0&v=6">AS18403</a></td><td align=left>&nbsp;&nbsp;FPT-AS-AP FPT Telecom Company, VN</td></tr>
+<tr><td align=right><tt>53</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS28613&view=2.0&v=6">AS28613</a></td><td align=left>&nbsp;&nbsp;HUGHES TELECOMUNICACOES DO BRASIL LTDA., BR</td></tr>
+<tr><td align=right><tt>50</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270944&view=2.0&v=6">AS270944</a></td><td align=left>&nbsp;&nbsp;MEGA DAT INFORMATICA E TELECOM, BR</td></tr>
+<tr><td align=right><tt>48</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS26611&view=2.0&v=6">AS26611</a></td><td align=left>&nbsp;&nbsp;COMUNICACION CELULAR S.A. COMCEL S.A., CO</td></tr>
+<tr><td align=right><tt>45</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS150698&view=2.0&v=6">AS150698</a></td><td align=left>&nbsp;&nbsp;VCL-AS-AP VCORE LTD, VN</td></tr>
+<tr><td align=right><tt>41</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS262612&view=2.0&v=6">AS262612</a></td><td align=left>&nbsp;&nbsp;Piotr Piwowar, BR</td></tr>
+<tr><td align=right><tt>34</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS53356&view=2.0&v=6">AS53356</a></td><td align=left>&nbsp;&nbsp;FREE RANGE CLOUD, CA</td></tr>
+<tr><td align=right><tt>32</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS16509&view=2.0&v=6">AS16509</a></td><td align=left>&nbsp;&nbsp;AMAZON-02, US</td></tr>
+<tr><td align=right><tt>31</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS202256&view=2.0&v=6">AS202256</a></td><td align=left>&nbsp;&nbsp;LAWLIETNET, CN</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS20473&view=2.0&v=6">AS20473</a></td><td align=left>&nbsp;&nbsp;AS-CHOOPA, US</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS17072&view=2.0&v=6">AS17072</a></td><td align=left>&nbsp;&nbsp;TOTAL PLAY TELECOMUNICACIONES SA DE CV, MX</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS139026&view=2.0&v=6">AS139026</a></td><td align=left>&nbsp;&nbsp;SHADHINOTA2-AS-AP Shadhinota Net, BD</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS135636&view=2.0&v=6">AS135636</a></td><td align=left>&nbsp;&nbsp;RACKH-AS-AP Rackh Lintas Asia, pt, ID</td></tr>
+<tr><td align=right><tt>26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS132556&view=2.0&v=6">AS132556</a></td><td align=left>&nbsp;&nbsp;BLUELOTUS-AS Blue Lotus Support Services Pvt Ltd, IN</td></tr>
+<tr><td align=right><tt>25</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS11172&view=2.0&v=6">AS11172</a></td><td align=left>&nbsp;&nbsp;Alestra, S. de R.L. de C.V., MX</td></tr>
+<tr><td align=right><tt>20</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS30036&view=2.0&v=6">AS30036</a></td><td align=left>&nbsp;&nbsp;MEDIACOM-ENTERPRISE-BUSINESS, US</td></tr>
+<tr><td align=right><tt>18</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS32278&view=2.0&v=6">AS32278</a></td><td align=left>&nbsp;&nbsp;GETWIRELESS, US</td></tr>
+<tr><td align=right><tt>17</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS61573&view=2.0&v=6">AS61573</a></td><td align=left>&nbsp;&nbsp;IP TELECOM BRASIL, BR</td></tr>
+<tr><td align=right><tt>17</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS147042&view=2.0&v=6">AS147042</a></td><td align=left>&nbsp;&nbsp;PANABO-AS-AP Panabo Satellite Cable Television Inc., PH</td></tr>
+</table><p>
+<p><table border=0 cellspacing=0 cellpadding=0>
+<tr><th align=left colspan=3>Top 20 Withdrawn Routes this week per Originating AS</th></tr>
+<tr><td>&nbsp;</td></tr
+<tr><th align=right>Prefixes</th><th align=left>&nbsp;&nbsp;ASnum</th><th align=left>&nbsp;&nbsp;AS Description</th></tr>
+<tr><td align=right><tt>-605</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS7545&view=2.0&v=6">AS7545</a></td><td align=left>&nbsp;&nbsp;TPG-INTERNET-AP TPG Telecom Limited, AU</td></tr>
+<tr><td align=right><tt>-255</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS32098&view=2.0&v=6">AS32098</a></td><td align=left>&nbsp;&nbsp;TRANSTELCO-INC, US</td></tr>
+<tr><td align=right><tt>-80</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS131429&view=2.0&v=6">AS131429</a></td><td align=left>&nbsp;&nbsp;MOBIFONE-AS-VN MOBIFONE Corporation, VN</td></tr>
+<tr><td align=right><tt>-52</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS53356&view=2.0&v=6">AS53356</a></td><td align=left>&nbsp;&nbsp;FREE RANGE CLOUD, CA</td></tr>
+<tr><td align=right><tt>-46</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS150698&view=2.0&v=6">AS150698</a></td><td align=left>&nbsp;&nbsp;VCL-AS-AP VCORE LTD, VN</td></tr>
+<tr><td align=right><tt>-41</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS202256&view=2.0&v=6">AS202256</a></td><td align=left>&nbsp;&nbsp;LAWLIETNET, CN</td></tr>
+<tr><td align=right><tt>-30</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS28260&view=2.0&v=6">AS28260</a></td><td align=left>&nbsp;&nbsp;ALTA REDE CORPORATE NETWORK TELECOM LTDA - EPP, BR</td></tr>
+<tr><td align=right><tt>-29</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS24521&view=2.0&v=6">AS24521</a></td><td align=left>&nbsp;&nbsp;DATAUTAMA-NET-AS-ID PT. DATA Utama Dinamika, ID</td></tr>
+<tr><td align=right><tt>-28</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS264780&view=2.0&v=6">AS264780</a></td><td align=left>&nbsp;&nbsp;HomeNet LTDA, CL</td></tr>
+<tr><td align=right><tt>-26</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS53123&view=2.0&v=6">AS53123</a></td><td align=left>&nbsp;&nbsp;Power Telecomunicacoes Ltda. - ME, BR</td></tr>
+<tr><td align=right><tt>-24</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS16509&view=2.0&v=6">AS16509</a></td><td align=left>&nbsp;&nbsp;AMAZON-02, US</td></tr>
+<tr><td align=right><tt>-21</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS14615&view=2.0&v=6">AS14615</a></td><td align=left>&nbsp;&nbsp;ROCK-HILL-TELEPHONE, US</td></tr>
+<tr><td align=right><tt>-19</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS136326&view=2.0&v=6">AS136326</a></td><td align=left>&nbsp;&nbsp;VARESHA-AS Sarva Airworld Network Pvt. Ltd., IN</td></tr>
+<tr><td align=right><tt>-18</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS17072&view=2.0&v=6">AS17072</a></td><td align=left>&nbsp;&nbsp;TOTAL PLAY TELECOMUNICACIONES SA DE CV, MX</td></tr>
+<tr><td align=right><tt>-17</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS53667&view=2.0&v=6">AS53667</a></td><td align=left>&nbsp;&nbsp;PONYNET, US</td></tr>
+<tr><td align=right><tt>-15</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS20473&view=2.0&v=6">AS20473</a></td><td align=left>&nbsp;&nbsp;AS-CHOOPA, US</td></tr>
+<tr><td align=right><tt>-14</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS270092&view=2.0&v=6">AS270092</a></td><td align=left>&nbsp;&nbsp;ZAMBRANO CARRENO HUMBERTO ALEJANDRO PROGRAMAX, EC</td></tr>
+<tr><td align=right><tt>-13</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS203619&view=2.0&v=6">AS203619</a></td><td align=left>&nbsp;&nbsp;Tomas Oliveira Valente Leite de Castro, PT</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS7602&view=2.0&v=6">AS7602</a></td><td align=left>&nbsp;&nbsp;SPT-AS-VN Sai gon Postel Corporation, VN</td></tr>
+<tr><td align=right><tt>-12</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS38266&view=2.0&v=6">AS38266</a></td><td align=left>&nbsp;&nbsp;VIL-AS-AP Vodafone Idea Ltd, IN</td></tr>
+</table><p>
+
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><th align=left colspan=10>Adds and Wdls per Prefix Length</th></tr>
+<tr><td>&nbsp;</td</tr>
+<tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/29</b>&nbsp;&nbsp;</td><td align=left>+12&nbsp;&nbsp;</td><td align=left>-16</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/30</b>&nbsp;&nbsp;</td><td align=left>+1&nbsp;&nbsp;</td><td align=left>-1</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/32</b>&nbsp;&nbsp;</td><td align=left>+100&nbsp;&nbsp;</td><td align=left>-106</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/33</b>&nbsp;&nbsp;</td><td align=left>+66&nbsp;&nbsp;</td><td align=left>-67</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/34</b>&nbsp;&nbsp;</td><td align=left>+89&nbsp;&nbsp;</td><td align=left>-77</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/35</b>&nbsp;&nbsp;</td><td align=left>+19&nbsp;&nbsp;</td><td align=left>-32</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/36</b>&nbsp;&nbsp;</td><td align=left>+73&nbsp;&nbsp;</td><td align=left>-71</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/37</b>&nbsp;&nbsp;</td><td align=left>+3&nbsp;&nbsp;</td><td align=left>-14</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/38</b>&nbsp;&nbsp;</td><td align=left>+33&nbsp;&nbsp;</td><td align=left>-3</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/39</b>&nbsp;&nbsp;</td><td align=left>+3&nbsp;&nbsp;</td><td align=left>-1</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/40</b>&nbsp;&nbsp;</td><td align=left>+368&nbsp;&nbsp;</td><td align=left>-77</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/41</b>&nbsp;&nbsp;</td><td align=left>+19&nbsp;&nbsp;</td><td align=left>-1</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/42</b>&nbsp;&nbsp;</td><td align=left>+4&nbsp;&nbsp;</td><td align=left>-15</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/43</b>&nbsp;&nbsp;</td><td align=left>+7&nbsp;&nbsp;</td><td align=left>-5</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/44</b>&nbsp;&nbsp;</td><td align=left>+99&nbsp;&nbsp;</td><td align=left>-77</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/45</b>&nbsp;&nbsp;</td><td align=left>+62&nbsp;&nbsp;</td><td align=left>-11</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/46</b>&nbsp;&nbsp;</td><td align=left>+65&nbsp;&nbsp;</td><td align=left>-16</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/47</b>&nbsp;&nbsp;</td><td align=left>+110&nbsp;&nbsp;</td><td align=left>-21</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/48</b>&nbsp;&nbsp;</td><td align=left>+802&nbsp;&nbsp;</td><td align=left>-1070</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/52</b>&nbsp;&nbsp;</td><td align=left>+1&nbsp;&nbsp;</td><td align=left>-1</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/56</b>&nbsp;&nbsp;</td><td align=left>+0&nbsp;&nbsp;</td><td align=left>-602</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=right valign=top><b>/64</b>&nbsp;&nbsp;</td><td align=left>+9&nbsp;&nbsp;</td><td align=left>-9</td></tr>
+</table><p>
+Report: <a href="as-prefixes.txt">Announced and Withdrawn prefix list</a><br>
+Report: <a href="addwdl-prefixes.txt">Announced and Withdrawn prefix list - ordered by prefix length</a><br>
+Report: <a href="as-announce.txt">Announced Route count per Originating AS</a><br>
+Report: <a href="as-wdl.txt">Withdrawn Route count per Originating AS</a><p></ul>
+<hr><p><h2><A NAME="Aggs">More Specifics</H2></A><br>
+A list of route advertisements that appear to be more specfic than the original
+Class-based prefix mask, or more specific than the registry allocation size.<p>
+<ul>
+<p><table border=0 cellspacing=0 cellpadding=0>
+<tr><th align=left colspan=4>Top 20 ASes advertising more specific prefixes</th></tr>
+<tr><td>&nbsp;</td></tr
+<tr><th align=right>More<br>Specifics</th><th align=right>Total<br>&nbsp;&nbsp;Prefixes</th><th align=left>&nbsp;&nbsp;ASnum&nbsp;&nbsp;</th><th align=left>AS Description</th></tr>
+<tr><td align=right><tt>200</tt></td><td align=right><tt>390</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS24203&view=2.0&v=6">AS24203</a>&nbsp;&nbsp;</td><td align=left>NAPXLNET-AS-ID PT XL Axiata, ID</td></tr>
+<tr><td align=right><tt>161</tt></td><td align=right><tt>486</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS7713&view=2.0&v=6">AS7713</a>&nbsp;&nbsp;</td><td align=left>TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID</td></tr>
+<tr><td align=right><tt>141</tt></td><td align=right><tt>141</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS65503&view=2.0&v=6">AS65503</a>&nbsp;&nbsp;</td><td align=left>-Private Use AS-, ZZ</td></tr>
+<tr><td align=right><tt>64</tt></td><td align=right><tt>70</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS16625&view=2.0&v=6">AS16625</a>&nbsp;&nbsp;</td><td align=left>AKAMAI-AS, US</td></tr>
+<tr><td align=right><tt>59</tt></td><td align=right><tt>65</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS4761&view=2.0&v=6">AS4761</a>&nbsp;&nbsp;</td><td align=left>INDOSAT-INP-AP INDOSAT Internet Network Provider, ID</td></tr>
+<tr><td align=right><tt>57</tt></td><td align=right><tt>78</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS4657&view=2.0&v=6">AS4657</a>&nbsp;&nbsp;</td><td align=left>STARHUB-INTERNET StarHub Ltd, SG</td></tr>
+<tr><td align=right><tt>45</tt></td><td align=right><tt>76</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS4773&view=2.0&v=6">AS4773</a>&nbsp;&nbsp;</td><td align=left>MOBILEONELTD-AS-AP MobileOne Ltd. MobileInternet Service Provider Singapore, SG</td></tr>
+<tr><td align=right><tt>34</tt></td><td align=right><tt>34</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS138345&view=2.0&v=6">AS138345</a>&nbsp;&nbsp;</td><td align=left>STARHUB-MOBILE2 StarHub Ltd, SG</td></tr>
+<tr><td align=right><tt>23</tt></td><td align=right><tt>811</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS20940&view=2.0&v=6">AS20940</a>&nbsp;&nbsp;</td><td align=left>AKAMAI-ASN1, NL</td></tr>
+<tr><td align=right><tt>22</tt></td><td align=right><tt>28</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS7470&view=2.0&v=6">AS7470</a>&nbsp;&nbsp;</td><td align=left>TRUEINTERNET-AS-AP TRUE INTERNET Co.,Ltd., TH</td></tr>
+<tr><td align=right><tt>21</tt></td><td align=right><tt>21</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS17885&view=2.0&v=6">AS17885</a>&nbsp;&nbsp;</td><td align=left>JKTXLNET-AS-AP PT XL Axiata Tbk, ID</td></tr>
+<tr><td align=right><tt>20</tt></td><td align=right><tt>24</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS55423&view=2.0&v=6">AS55423</a>&nbsp;&nbsp;</td><td align=left>JASTEL-NETWORK-TH-IDC-AP JasTel Network, TH</td></tr>
+<tr><td align=right><tt>14</tt></td><td align=right><tt>41</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS36040&view=2.0&v=6">AS36040</a>&nbsp;&nbsp;</td><td align=left>YOUTUBE, US</td></tr>
+<tr><td align=right><tt>14</tt></td><td align=right><tt>19</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS135373&view=2.0&v=6">AS135373</a>&nbsp;&nbsp;</td><td align=left>EFLYPRO-AS-AP EFLY NETWORK LIMITED, HK</td></tr>
+<tr><td align=right><tt>13</tt></td><td align=right><tt>23</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS9924&view=2.0&v=6">AS9924</a>&nbsp;&nbsp;</td><td align=left>TFN-TW Taiwan Fixed Network, Telco and Network Service Provider., TW</td></tr>
+<tr><td align=right><tt>11</tt></td><td align=right><tt>392</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS8151&view=2.0&v=6">AS8151</a>&nbsp;&nbsp;</td><td align=left>Uninet S.A. de C.V., MX</td></tr>
+<tr><td align=right><tt>10</tt></td><td align=right><tt>10</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS38372&view=2.0&v=6">AS38372</a>&nbsp;&nbsp;</td><td align=left>RJNET Room 203, No.6, PingYuanBei Street, Foshan, GuangDong, China, CN</td></tr>
+<tr><td align=right><tt>8</tt></td><td align=right><tt>10</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS3662&view=2.0&v=6">AS3662</a>&nbsp;&nbsp;</td><td align=left>HARNET Joint Universities Computer Centre Limited, HK</td></tr>
+<tr><td align=right><tt>8</tt></td><td align=right><tt>9</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS198967&view=2.0&v=6">AS198967</a>&nbsp;&nbsp;</td><td align=left>BITEL-GESELLSCHAFT-FUER-TELEKOMMUNIKATION-AS - IP Transit Customer AS33873 -, DE</td></tr>
+<tr><td align=right><tt>7</tt></td><td align=right><tt>129</tt></td><td align=left>&nbsp;&nbsp;<a href="/cgi-bin/as-report?as=AS4775&view=2.0&v=6">AS4775</a>&nbsp;&nbsp;</td><td align=left>GLOBE-TELECOM-AS Globe Telecoms, PH</td></tr>
+</table><p>
+Report: <a href="as-ms-prefix-list.html">ASes ordered by number of more specific prefixes</a><br>
+Report: <a href="as-ms-prefixes.txt">More Specific prefix list (by AS)</a><br>
+Report: <a href="msprefix-list.html">More Specific prefix list (ordered by prefix)</a><p>
+</ul>
+<HR><p>
+<H2><a href="//www.cidr-report.org/bogons">Possible Bogus Routes and AS Announcements</a><A NAME="Bogons">&nbsp;</a></H2>
+<ul>
+<h3>Possible Bogus Routes</h3>
+<ul>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><th align=left>Prefix</th><th align=left>Origin AS&nbsp;&nbsp;</th><th align=left>AS Description</th><th align=left>Unallocated block</th></tr>
+
+<tr><td align=left>2001::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS6939&view=2.0&v=6">AS6939</a>&nbsp;&nbsp;</td><td>HURRICANE, US</td><td>2001::/23</td></tr>
+<tr><td align=left>2001:4:112::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS112&view=2.0&v=6">AS112</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2001::/23</td></tr>
+<tr><td align=left>2001:df0:2b7::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS9555&view=2.0&v=6">AS9555</a>&nbsp;&nbsp;</td><td>VZB-AU-AS Verizon Australia PTY Limited, AU</td><td>2001:df0:2b7::/48</td></tr>
+<tr><td align=left>2001:df5:5c00::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS9649&view=2.0&v=6">AS9649</a>&nbsp;&nbsp;</td><td>MOPH-TH-AP Information Technology Office, SG</td><td>2001:df5:5c00::/48</td></tr>
+<tr><td align=left>2001:df5:9a80::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS134458&view=2.0&v=6">AS134458</a>&nbsp;&nbsp;</td><td></td><td>2001:df5:9a80::/48</td></tr>
+<tr><td align=left>2001:df7:e200::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS135239&view=2.0&v=6">AS135239</a>&nbsp;&nbsp;</td><td>SONALI-AS-IN Sonali Internet Services Pvt Ltd, IN</td><td>2001:df7:e200::/48</td></tr>
+<tr><td align=left>2002::/16&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS6939&view=2.0&v=6">AS6939</a>&nbsp;&nbsp;</td><td>HURRICANE, US</td><td>2002::/16</td></tr>
+<tr><td align=left>2355:bbbb:cccc::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS1840&view=2.0&v=6">AS1840</a>&nbsp;&nbsp;</td><td>Universidad de Las Americas-Puebla, MX</td><td>2200::/7</td></tr>
+<tr><td align=left>2355:bbbb:eeee::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS1840&view=2.0&v=6">AS1840</a>&nbsp;&nbsp;</td><td>Universidad de Las Americas-Puebla, MX</td><td>2200::/7</td></tr>
+<tr><td align=left>2400:8720:1::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS138032&view=2.0&v=6">AS138032</a>&nbsp;&nbsp;</td><td></td><td>2400:8720::/32</td></tr>
+<tr><td align=left>2400:8720:31::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS138032&view=2.0&v=6">AS138032</a>&nbsp;&nbsp;</td><td></td><td>2400:8720::/32</td></tr>
+<tr><td align=left>2400:8720:ff00::/41&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS138032&view=2.0&v=6">AS138032</a>&nbsp;&nbsp;</td><td></td><td>2400:8720::/32</td></tr>
+<tr><td align=left>2400:d840:1::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS13813&view=2.0&v=6">AS13813</a>&nbsp;&nbsp;</td><td>BROADSOFT-INC-NORTH-AMERICA, US</td><td>2400:d840::/32</td></tr>
+<tr><td align=left>2400:e800:1000::/36&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS17564&view=2.0&v=6">AS17564</a>&nbsp;&nbsp;</td><td>GITN-PCN-AS-AP GITN M Sdn. Bhd., MY</td><td>2400:e800::/32</td></tr>
+<tr><td align=left>2400:fda6::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS9318&view=2.0&v=6">AS9318</a>&nbsp;&nbsp;</td><td>SKB-AS SK Broadband Co Ltd, KR</td><td>2400:fda4::/30</td></tr>
+<tr><td align=left>2402:f880::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS64056&view=2.0&v=6">AS64056</a>&nbsp;&nbsp;</td><td>KAZILALLC-AS-AP Kazila LLC, AU</td><td>2402:f880::/32</td></tr>
+<tr><td align=left>2403:4e00::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS45528&view=2.0&v=6">AS45528</a>&nbsp;&nbsp;</td><td>TIKONAIN-AS Tikona Infinet Ltd., IN</td><td>2403:4e00::/32</td></tr>
+<tr><td align=left>2403:4e00:300::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS45528&view=2.0&v=6">AS45528</a>&nbsp;&nbsp;</td><td>TIKONAIN-AS Tikona Infinet Ltd., IN</td><td>2403:4e00::/32</td></tr>
+<tr><td align=left>2403:4e00:301::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS45528&view=2.0&v=6">AS45528</a>&nbsp;&nbsp;</td><td>TIKONAIN-AS Tikona Infinet Ltd., IN</td><td>2403:4e00::/32</td></tr>
+<tr><td align=left>2403:4e00:302::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS45528&view=2.0&v=6">AS45528</a>&nbsp;&nbsp;</td><td>TIKONAIN-AS Tikona Infinet Ltd., IN</td><td>2403:4e00::/32</td></tr>
+<tr><td align=left>2403:4e00:305::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS45528&view=2.0&v=6">AS45528</a>&nbsp;&nbsp;</td><td>TIKONAIN-AS Tikona Infinet Ltd., IN</td><td>2403:4e00::/32</td></tr>
+<tr><td align=left>2403:4e00:306::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS45528&view=2.0&v=6">AS45528</a>&nbsp;&nbsp;</td><td>TIKONAIN-AS Tikona Infinet Ltd., IN</td><td>2403:4e00::/32</td></tr>
+<tr><td align=left>2403:4e00:30b::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS45528&view=2.0&v=6">AS45528</a>&nbsp;&nbsp;</td><td>TIKONAIN-AS Tikona Infinet Ltd., IN</td><td>2403:4e00::/32</td></tr>
+<tr><td align=left>2404:b980::/35&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS62240&view=2.0&v=6">AS62240</a>&nbsp;&nbsp;</td><td>CLOUVIDER Clouvider - Global ASN, GB</td><td>2404:b980::/32</td></tr>
+<tr><td align=left>2405:3580:1919::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS62240&view=2.0&v=6">AS62240</a>&nbsp;&nbsp;</td><td>CLOUVIDER Clouvider - Global ASN, GB</td><td>2405:3580::/32</td></tr>
+<tr><td align=left>2406:2580::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS397086&view=2.0&v=6">AS397086</a>&nbsp;&nbsp;</td><td>LAYER-HOST-HOUSTON, US</td><td>2406:2580::/32</td></tr>
+<tr><td align=left>2450:aaaa::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS1840&view=2.0&v=6">AS1840</a>&nbsp;&nbsp;</td><td>Universidad de Las Americas-Puebla, MX</td><td>2440::/10</td></tr>
+<tr><td align=left>2602:fbbe::/40&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS35913&view=2.0&v=6">AS35913</a>&nbsp;&nbsp;</td><td>DEDIPATH-LLC, US</td><td>2602:fbbe::/40</td></tr>
+<tr><td align=left>2602:fcbc::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS14618&view=2.0&v=6">AS14618</a>&nbsp;&nbsp;</td><td>AMAZON-AES, US</td><td>2602:fcbc::/36</td></tr>
+<tr><td align=left>2602:fcbc:2::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS16509&view=2.0&v=6">AS16509</a>&nbsp;&nbsp;</td><td>AMAZON-02, US</td><td>2602:fcbc::/36</td></tr>
+<tr><td align=left>2605:a80:1::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS13213&view=2.0&v=6">AS13213</a>&nbsp;&nbsp;</td><td>UK2NET-AS, GB</td><td>2605:a80::/32</td></tr>
+<tr><td align=left>2605:36c0:1::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS29944&view=2.0&v=6">AS29944</a>&nbsp;&nbsp;</td><td>DATABANK-LATISYS, US</td><td>2605:36c0::/32</td></tr>
+<tr><td align=left>2605:8280::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS36069&view=2.0&v=6">AS36069</a>&nbsp;&nbsp;</td><td>CHANUTE, US</td><td>2605:8280::/32</td></tr>
+<tr><td align=left>2606:2e80::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS63125&view=2.0&v=6">AS63125</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2606:2e80::/32</td></tr>
+<tr><td align=left>2606:ae04:8020::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS17224&view=2.0&v=6">AS17224</a>&nbsp;&nbsp;</td><td>ATT-CERFNET-BLOCK, US</td><td>2606:ae04::/30</td></tr>
+<tr><td align=left>2607:6780::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS395282&view=2.0&v=6">AS395282</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2607:6780::/32</td></tr>
+<tr><td align=left>2607:ff08::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS13722&view=2.0&v=6">AS13722</a>&nbsp;&nbsp;</td><td>DEFAULTROUTE, ZZ</td><td>2607:ff08::/36</td></tr>
+<tr><td align=left>2620:0:880::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS29763&view=2.0&v=6">AS29763</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2620:0:880::/48</td></tr>
+<tr><td align=left>2620:0:900::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS4185&view=2.0&v=6">AS4185</a>&nbsp;&nbsp;</td><td>ATTIS-ASN4185, US</td><td>2620:0:900::/48</td></tr>
+<tr><td align=left>2620:38:a00::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS22695&view=2.0&v=6">AS22695</a>&nbsp;&nbsp;</td><td>PLAYGROUND, US</td><td>2620:38:800::/37</td></tr>
+<tr><td align=left>2620:a0:e0::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS11278&view=2.0&v=6">AS11278</a>&nbsp;&nbsp;</td><td>NINTENDO, US</td><td>2620:a0:80::/41</td></tr>
+<tr><td align=left>2620:ba:8000::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS2386&view=2.0&v=6">AS2386</a>&nbsp;&nbsp;</td><td>INS-AS, US</td><td>2620:ba:8000::/48</td></tr>
+<tr><td align=left>2620:12c:b131::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS13448&view=2.0&v=6">AS13448</a>&nbsp;&nbsp;</td><td>WEBSENSE, US</td><td>2620:12c:b100::/40</td></tr>
+<tr><td align=left>2620:13b:d001::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS3549&view=2.0&v=6">AS3549</a>&nbsp;&nbsp;</td><td>LVLT-3549, US</td><td>2620:13b:d000::/44</td></tr>
+<tr><td align=left>2620:13b:d002::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS3549&view=2.0&v=6">AS3549</a>&nbsp;&nbsp;</td><td>LVLT-3549, US</td><td>2620:13b:d000::/44</td></tr>
+<tr><td align=left>2620:1e8:3::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS29802&view=2.0&v=6">AS29802</a>&nbsp;&nbsp;</td><td>HVC-AS, US</td><td>2620:1e8::/36</td></tr>
+<tr><td align=left>2620:1e8:4::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS29802&view=2.0&v=6">AS29802</a>&nbsp;&nbsp;</td><td>HVC-AS, US</td><td>2620:1e8::/36</td></tr>
+<tr><td align=left>2801:13:a800::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS271809&view=2.0&v=6">AS271809</a>&nbsp;&nbsp;</td><td>IGLESIA CRISTIANA DE LOS TESTIGOS DE JEHOVA, CO</td><td>2801:13:a800::/48</td></tr>
+<tr><td align=left>2801:c4:38::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS18734&view=2.0&v=6">AS18734</a>&nbsp;&nbsp;</td><td>Operbes, S.A. de C.V., MX</td><td>2801:c4:38::/47</td></tr>
+<tr><td align=left>2801:c4:92::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS18734&view=2.0&v=6">AS18734</a>&nbsp;&nbsp;</td><td>Operbes, S.A. de C.V., MX</td><td>2801:c4:92::/47</td></tr>
+<tr><td align=left>2801:19c:10::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS14080&view=2.0&v=6">AS14080</a>&nbsp;&nbsp;</td><td>Telmex Colombia S.A., CO</td><td>2801:19c:10::/44</td></tr>
+<tr><td align=left>2803:2f40:ffff::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS36351&view=2.0&v=6">AS36351</a>&nbsp;&nbsp;</td><td>SOFTLAYER, US</td><td>2803:2f40::/32</td></tr>
+<tr><td align=left>2803:6606:4000::/34&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS28075&view=2.0&v=6">AS28075</a>&nbsp;&nbsp;</td><td>ARLINK S.A., AR</td><td>2803:6606::/31</td></tr>
+<tr><td align=left>2803:6606:4000::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS28075&view=2.0&v=6">AS28075</a>&nbsp;&nbsp;</td><td>ARLINK S.A., AR</td><td>2803:6606::/31</td></tr>
+<tr><td align=left>2803:8700:10::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS25577&view=2.0&v=6">AS25577</a>&nbsp;&nbsp;</td><td>C4L-AS, GB</td><td>2803:8700::/31</td></tr>
+<tr><td align=left>2804:51c::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS262495&view=2.0&v=6">AS262495</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:51c::/32</td></tr>
+<tr><td align=left>2804:51c:7300::/40&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS262495&view=2.0&v=6">AS262495</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:51c::/32</td></tr>
+<tr><td align=left>2804:558::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS262509&view=2.0&v=6">AS262509</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:558::/32</td></tr>
+<tr><td align=left>2804:15b8::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS52666&view=2.0&v=6">AS52666</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:15b8::/32</td></tr>
+<tr><td align=left>2804:5f5c:4000::/34&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS268308&view=2.0&v=6">AS268308</a>&nbsp;&nbsp;</td><td>VIVA CONNECTION TELECOMUNICACOES LTDA ME, BR</td><td>2804:5f5c::/32</td></tr>
+<tr><td align=left>2804:5f80:7100::/40&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS269104&view=2.0&v=6">AS269104</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:5f80::/32</td></tr>
+<tr><td align=left>2804:66f4:c000::/34&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS269594&view=2.0&v=6">AS269594</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:66f4::/32</td></tr>
+<tr><td align=left>2804:7f3c::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS271675&view=2.0&v=6">AS271675</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:7f3c::/32</td></tr>
+<tr><td align=left>2804:81fc::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS272490&view=2.0&v=6">AS272490</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:81fc::/32</td></tr>
+<tr><td align=left>2804:823c::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS272507&view=2.0&v=6">AS272507</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:823c::/32</td></tr>
+<tr><td align=left>2804:8914::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS273579&view=2.0&v=6">AS273579</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:8914::/32</td></tr>
+<tr><td align=left>2804:8914::/33&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS273579&view=2.0&v=6">AS273579</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:8914::/32</td></tr>
+<tr><td align=left>2804:8914:8000::/33&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS273579&view=2.0&v=6">AS273579</a>&nbsp;&nbsp;</td><td>-Reserved AS-, ZZ</td><td>2804:8914::/32</td></tr>
+<tr><td align=left>2805:f10:f12::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS262182&view=2.0&v=6">AS262182</a>&nbsp;&nbsp;</td><td>Media Networks Latin America SAC, PE</td><td>2805::/16</td></tr>
+<tr><td align=left>2805:f10:f13::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS262182&view=2.0&v=6">AS262182</a>&nbsp;&nbsp;</td><td>Media Networks Latin America SAC, PE</td><td>2805::/16</td></tr>
+<tr><td align=left>2805:f10:f14::/48&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS262182&view=2.0&v=6">AS262182</a>&nbsp;&nbsp;</td><td>Media Networks Latin America SAC, PE</td><td>2805::/16</td></tr>
+<tr><td align=left>2c0f:f590::/32&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=AS36974&view=2.0&v=6">AS36974</a>&nbsp;&nbsp;</td><td>AFNET-AS, CI</td><td>2c0f:f590::/29</td></tr>
+</table></ul><p>
+Report: <a href="reserved-ipv6.html">Allocated and Unallocated IPv6 address blocks</a><p>
+<P>
+<H3>Possible Bogus ASs</H3>
+<ul>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><th align=left>Bogus AS</th><th>&nbsp;</th><th colspan=2>Announcing-AS</ths></tr>
+
+<tr><td align=left><a href="/cgi-bin/as-report?as=13722&view=2.0&v=6">AS13722      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=6939&view=2.0&v=6">AS6939       </a></td><td align=left>&nbsp;&nbsp;HURRICANE, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=22698&view=2.0&v=6">AS22698      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=52320&view=2.0&v=6">AS52320      </a></td><td align=left>&nbsp;&nbsp;GlobeNet Cabos Submarinos Colombia, S.A.S., CO</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=29763&view=2.0&v=6">AS29763      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=7385&view=2.0&v=6">AS7385       </a></td><td align=left>&nbsp;&nbsp;ABUL-14-7385, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=30037&view=2.0&v=6">AS30037      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=55002&view=2.0&v=6">AS55002      </a></td><td align=left>&nbsp;&nbsp;DEFENSE-NET, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=52666&view=2.0&v=6">AS52666      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=6939&view=2.0&v=6">AS6939       </a></td><td align=left>&nbsp;&nbsp;HURRICANE, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=53059&view=2.0&v=6">AS53059      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=28220&view=2.0&v=6">AS28220      </a></td><td align=left>&nbsp;&nbsp;CABO SERVICOS DE TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=53224&view=2.0&v=6">AS53224      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=28220&view=2.0&v=6">AS28220      </a></td><td align=left>&nbsp;&nbsp;CABO SERVICOS DE TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=61570&view=2.0&v=6">AS61570      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=262773&view=2.0&v=6">AS262773     </a></td><td align=left>&nbsp;&nbsp;PROXXIMA TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=63125&view=2.0&v=6">AS63125      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=6939&view=2.0&v=6">AS6939       </a></td><td align=left>&nbsp;&nbsp;HURRICANE, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64011&view=2.0&v=6">AS64011      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=20057&view=2.0&v=6">AS20057      </a></td><td align=left>&nbsp;&nbsp;ATT-MOBILITY-LLC-AS20057, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64500&view=2.0&v=6">AS64500      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=7713&view=2.0&v=6">AS7713       </a></td><td align=left>&nbsp;&nbsp;TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64500&view=2.0&v=6">AS64500      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=13489&view=2.0&v=6">AS13489      </a></td><td align=left>&nbsp;&nbsp;EPM Telecomunicaciones S.A. E.S.P., CO</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64501&view=2.0&v=6">AS64501      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=7713&view=2.0&v=6">AS7713       </a></td><td align=left>&nbsp;&nbsp;TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64501&view=2.0&v=6">AS64501      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=64500&view=2.0&v=6">AS64500      </a></td><td align=left>&nbsp;&nbsp;-Reserved AS-, ZZ</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64503&view=2.0&v=6">AS64503      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=7713&view=2.0&v=6">AS7713       </a></td><td align=left>&nbsp;&nbsp;TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64505&view=2.0&v=6">AS64505      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=7713&view=2.0&v=6">AS7713       </a></td><td align=left>&nbsp;&nbsp;TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64513&view=2.0&v=6">AS64513      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64514&view=2.0&v=6">AS64514      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64515&view=2.0&v=6">AS64515      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64516&view=2.0&v=6">AS64516      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64517&view=2.0&v=6">AS64517      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64518&view=2.0&v=6">AS64518      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64519&view=2.0&v=6">AS64519      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64520&view=2.0&v=6">AS64520      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64521&view=2.0&v=6">AS64521      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64522&view=2.0&v=6">AS64522      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64523&view=2.0&v=6">AS64523      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64524&view=2.0&v=6">AS64524      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64526&view=2.0&v=6">AS64526      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64527&view=2.0&v=6">AS64527      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64528&view=2.0&v=6">AS64528      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64529&view=2.0&v=6">AS64529      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64532&view=2.0&v=6">AS64532      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64533&view=2.0&v=6">AS64533      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64534&view=2.0&v=6">AS64534      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64536&view=2.0&v=6">AS64536      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64537&view=2.0&v=6">AS64537      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64540&view=2.0&v=6">AS64540      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64541&view=2.0&v=6">AS64541      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64542&view=2.0&v=6">AS64542      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64545&view=2.0&v=6">AS64545      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64546&view=2.0&v=6">AS64546      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64547&view=2.0&v=6">AS64547      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64548&view=2.0&v=6">AS64548      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64550&view=2.0&v=6">AS64550      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64551&view=2.0&v=6">AS64551      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64552&view=2.0&v=6">AS64552      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64554&view=2.0&v=6">AS64554      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64557&view=2.0&v=6">AS64557      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64558&view=2.0&v=6">AS64558      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64559&view=2.0&v=6">AS64559      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64561&view=2.0&v=6">AS64561      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64562&view=2.0&v=6">AS64562      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64563&view=2.0&v=6">AS64563      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64565&view=2.0&v=6">AS64565      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64567&view=2.0&v=6">AS64567      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64569&view=2.0&v=6">AS64569      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64570&view=2.0&v=6">AS64570      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64571&view=2.0&v=6">AS64571      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64572&view=2.0&v=6">AS64572      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=137961&view=2.0&v=6">AS137961     </a></td><td align=left>&nbsp;&nbsp;ABUZZITLIMITED-AS-AP MD. Mokhlesur Rahman, BD</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64600&view=2.0&v=6">AS64600      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=41001&view=2.0&v=6">AS41001      </a></td><td align=left>&nbsp;&nbsp;SAFESPRING, SE</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64901&view=2.0&v=6">AS64901      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=3573&view=2.0&v=6">AS3573       </a></td><td align=left>&nbsp;&nbsp;ACCENTURE, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64918&view=2.0&v=6">AS64918      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=9730&view=2.0&v=6">AS9730       </a></td><td align=left>&nbsp;&nbsp;BHARTITELESONIC-AS-IN-AP Bharti Telesonic Ltd, IN</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64944&view=2.0&v=6">AS64944      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=45609&view=2.0&v=6">AS45609      </a></td><td align=left>&nbsp;&nbsp;BHARTI-MOBILITY-AS-AP Bharti Airtel Ltd. AS for GPRS Service, IN</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64951&view=2.0&v=6">AS64951      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=9730&view=2.0&v=6">AS9730       </a></td><td align=left>&nbsp;&nbsp;BHARTITELESONIC-AS-IN-AP Bharti Telesonic Ltd, IN</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64962&view=2.0&v=6">AS64962      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=45609&view=2.0&v=6">AS45609      </a></td><td align=left>&nbsp;&nbsp;BHARTI-MOBILITY-AS-AP Bharti Airtel Ltd. AS for GPRS Service, IN</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=64966&view=2.0&v=6">AS64966      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=26673&view=2.0&v=6">AS26673      </a></td><td align=left>&nbsp;&nbsp;CORPIT-AS, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65001&view=2.0&v=6">AS65001      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=265066&view=2.0&v=6">AS265066     </a></td><td align=left>&nbsp;&nbsp;Conect Provedor de Acesso a Internet Ltda Me, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65021&view=2.0&v=6">AS65021      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=53231&view=2.0&v=6">AS53231      </a></td><td align=left>&nbsp;&nbsp;GRUPOHOST COMUNICACAO MULTIMIDIA LTDA, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65066&view=2.0&v=6">AS65066      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=4761&view=2.0&v=6">AS4761       </a></td><td align=left>&nbsp;&nbsp;INDOSAT-INP-AP INDOSAT Internet Network Provider, ID</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65072&view=2.0&v=6">AS65072      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=64903&view=2.0&v=6">AS64903      </a></td><td align=left>&nbsp;&nbsp;-Private Use AS-, ZZ</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65072&view=2.0&v=6">AS65072      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=64947&view=2.0&v=6">AS64947      </a></td><td align=left>&nbsp;&nbsp;-Private Use AS-, ZZ</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65101&view=2.0&v=6">AS65101      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=45629&view=2.0&v=6">AS45629      </a></td><td align=left>&nbsp;&nbsp;JASTEL-NETWORK-TH-AP JasTel Network International Gateway, TH</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65346&view=2.0&v=6">AS65346      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=53087&view=2.0&v=6">AS53087      </a></td><td align=left>&nbsp;&nbsp;TELY Ltda., BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65409&view=2.0&v=6">AS65409      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=6619&view=2.0&v=6">AS6619       </a></td><td align=left>&nbsp;&nbsp;SAMSUNGSDS-AS-KR SamsungSDS Inc., KR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65500&view=2.0&v=6">AS65500      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=265340&view=2.0&v=6">AS265340     </a></td><td align=left>&nbsp;&nbsp;S.M.C Redes e Informatica LTDA, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65501&view=2.0&v=6">AS65501      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=132717&view=2.0&v=6">AS132717     </a></td><td align=left>&nbsp;&nbsp;NDCTPL-IN NxtGen Datacenter & Cloud Technologies Pvt. Ltd., IN</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65503&view=2.0&v=6">AS65503      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=56231&view=2.0&v=6">AS56231      </a></td><td align=left>&nbsp;&nbsp;ASTRO-MY-AS-AP MEASAT Broadcast Network Systems, MY</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65505&view=2.0&v=6">AS65505      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=5539&view=2.0&v=6">AS5539       </a></td><td align=left>&nbsp;&nbsp;SPACENET SpaceNET AG, DE</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65530&view=2.0&v=6">AS65530      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=4788&view=2.0&v=6">AS4788       </a></td><td align=left>&nbsp;&nbsp;TMNET-AS-AP TM Net, Internet Service Provider, MY</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65540&view=2.0&v=6">AS65540      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=42298&view=2.0&v=6">AS42298      </a></td><td align=left>&nbsp;&nbsp;GCC-MPLS-PEERING GCC MPLS peering, QA</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65556&view=2.0&v=6">AS65556      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=29046&view=2.0&v=6">AS29046      </a></td><td align=left>&nbsp;&nbsp;RBK-AS, KZ</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65564&view=2.0&v=6">AS65564      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=9255&view=2.0&v=6">AS9255       </a></td><td align=left>&nbsp;&nbsp;CONNECTPLUS-AS Singapore Telecom, SG</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=65900&view=2.0&v=6">AS65900      </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=11281&view=2.0&v=6">AS11281      </a></td><td align=left>&nbsp;&nbsp;ROBLOX-CORPORATE, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=134458&view=2.0&v=6">AS134458     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=132779&view=2.0&v=6">AS132779     </a></td><td align=left>&nbsp;&nbsp;RACKBANK-AS RackBank Datacenters Private Ltd, IN</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=138032&view=2.0&v=6">AS138032     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=9245&view=2.0&v=6">AS9245       </a></td><td align=left>&nbsp;&nbsp;COMPASS-NZ-AP COMPASS, NZ</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=138032&view=2.0&v=6">AS138032     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=58511&view=2.0&v=6">AS58511      </a></td><td align=left>&nbsp;&nbsp;ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=140362&view=2.0&v=6">AS140362     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=38008&view=2.0&v=6">AS38008      </a></td><td align=left>&nbsp;&nbsp;APERTURE-AS-AP Aperture Science Limited, HK</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=262495&view=2.0&v=6">AS262495     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=61832&view=2.0&v=6">AS61832      </a></td><td align=left>&nbsp;&nbsp;DB3 SERVICOS DE TELECOMUNICACOES S.A, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=262509&view=2.0&v=6">AS262509     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=3356&view=2.0&v=6">AS3356       </a></td><td align=left>&nbsp;&nbsp;LEVEL3, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=262509&view=2.0&v=6">AS262509     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=28220&view=2.0&v=6">AS28220      </a></td><td align=left>&nbsp;&nbsp;CABO SERVICOS DE TELECOMUNICACOES LTDA, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=264362&view=2.0&v=6">AS264362     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=16735&view=2.0&v=6">AS16735      </a></td><td align=left>&nbsp;&nbsp;ALGAR TELECOM SA, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=269104&view=2.0&v=6">AS269104     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=61832&view=2.0&v=6">AS61832      </a></td><td align=left>&nbsp;&nbsp;DB3 SERVICOS DE TELECOMUNICACOES S.A, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=269594&view=2.0&v=6">AS269594     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=268528&view=2.0&v=6">AS268528     </a></td><td align=left>&nbsp;&nbsp;MR7 TELECOM LTDA - ME, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=271675&view=2.0&v=6">AS271675     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=53062&view=2.0&v=6">AS53062      </a></td><td align=left>&nbsp;&nbsp;GGNET TELECOM BACKBONE, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=272490&view=2.0&v=6">AS272490     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=3356&view=2.0&v=6">AS3356       </a></td><td align=left>&nbsp;&nbsp;LEVEL3, US</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=272507&view=2.0&v=6">AS272507     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=268182&view=2.0&v=6">AS268182     </a></td><td align=left>&nbsp;&nbsp;JNET TELECOM EIRELI, BR</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=273579&view=2.0&v=6">AS273579     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=52468&view=2.0&v=6">AS52468      </a></td><td align=left>&nbsp;&nbsp;UFINET PANAMA S.A., PA</td></tr>
+<tr><td align=left><a href="/cgi-bin/as-report?as=395282&view=2.0&v=6">AS395282     </a></td><td align=left>&nbsp;&nbsp;Announced by     &nbsp;&nbsp;&nbsp;&nbsp;</td><td align=left><a href="/cgi-bin/as-report?as=22652&view=2.0&v=6">AS22652      </a></td><td align=left>&nbsp;&nbsp;FIBRENOIRE-INTERNET, CA</td></tr>
+</table></ul><p>
+Report: <a href="bogus-as-advertisements.html">Advertisements with Bogus ASs in the AS Path</a><p>
+Report: <a href="reserved-ases.html">Allocated and Reserved AS blocks</a><p></ul><hr><p>
+<FORM ACTION="/cgi-bin/as-report" METHOD="GET">
+<h3>Selected AS Report</h3><ul>
+Enter an AS here to generate an aggregation report for the AS.<p>
+Enter AS (e.g. "AS1221") <INPUT TYPE="text" NAME="as" SIZE=7><p>
+<INPUT TYPE="hidden" NAME="view" VALUE="2.0"><INPUT TYPE="hidden" NAME="v" VALUE="6"><INPUT TYPE="submit" VALUE="Generate AS Report"><p></ul></FORM><p><hr><p>
+A version of this report is available using <a href="indext.html">plain text tables</a>.<p><I>Report produced at: Fri Jun  2 14:46:11 2023
+ AEST (cidr6 v2.0 - gih)</I>
+<HR>
+</BODY>

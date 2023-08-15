@@ -1,0 +1,1 @@
+../dns_test_dns_server_from_config.sh

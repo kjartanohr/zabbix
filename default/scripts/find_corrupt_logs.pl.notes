@@ -1,0 +1,10 @@
+
+2022.05.04
+
+Denne finner fortsatt feile *.log filer i $FWIDR/log
+Forhindrer at indexer kræsjer
+
+[Expert@cp-harris:0]# ls -lh pg_gaia_dump.log.corrupt
+-rw-rw---- 1 admin root 2.4K Jan 18 23:35 pg_gaia_dump.log.corrupt
+[Expert@cp-harris:0]#
+

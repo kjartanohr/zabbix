@@ -1,0 +1,1 @@
+../fw_ctl_debug_drop_get.pl

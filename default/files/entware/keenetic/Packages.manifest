@@ -1,0 +1,137 @@
+Package: adguardhome-go
+Version: v0.107.0-b.14-1
+Depends: libc, libssp, librt, libpthread, ca-bundle
+Source: feeds/keendev3x/adguardhome-go
+SourceName: adguardhome-go
+License: GPL-3.0-only
+LicenseFiles: LICENSE.txt
+Section: net
+SourceDateEpoch: 1630401910
+Maintainer: Entware team, https://entware.net
+Architecture: aarch64-3.10
+Installed-Size: 10363198
+Filename: adguardhome-go_v0.107.0-b.14-1_aarch64-3.10.ipk
+Size: 10341413
+SHA256sum: db773e7c781b2750fe341ad8fdef58b46dc6a51401346d1c0d46bb86ecb4c768
+Description: AdGuard Home is a network-wide software for blocking ads & tracking. After you
+ set it up, it`ll cover ALL your home devices, and you don`t need any client-side
+ software for that. With the rise of Internet-Of-Things and connected devices, it
+ becomes more and more important to be able to control your whole network.
+
+Package: ext-ui
+Version: 0.5-2
+Depends: libc, libssp, librt, libpthread, pciids, php7-cli, php7-cgi, php7-mod-json, php7-mod-session, vnstat, shellinabox, uhttpd_kn, usbids
+Source: feeds/keendev3x/ext-ui
+SourceName: ext-ui
+Section: keendev
+SourceDateEpoch: 1629639474
+Architecture: aarch64-3.10_kn
+Installed-Size: 312570
+Filename: ext-ui_0.5-2_aarch64-3.10_kn.ipk
+Size: 313505
+SHA256sum: bba8ef0b5eb0f596e0ffa263618630a9f9e6c5e7897221b045fd0be80c914914
+Description: PHP (v7.x) version extended web user interface (ext-UI) for Keenetic routers.
+
+Package: iptables
+Version: 1.4.21-3
+Depends: libc, libssp, librt, libpthread
+Source: package/network/utils/iptables
+SourceName: iptables
+License: GPL-2.0
+Section: net
+SourceDateEpoch: 1568967158
+CPE-ID: cpe:/a:netfilter_core_team:iptables
+Architecture: aarch64-3.10_kn
+Installed-Size: 209619
+Filename: iptables_1.4.21-3_aarch64-3.10_kn.ipk
+Size: 209857
+SHA256sum: 196467023e081a717ce6a4804a006905cc7d2b517b8bc860cf9e24b943928bcc
+Description: IP firewall administration tool.
+ 
+ Matches:
+ - icmp
+ - tcp
+ - udp
+ - comment
+ - conntrack
+ - limit
+ - mac
+ - mark
+ - multiport
+ - set
+ - state
+ - time
+ 
+ Targets:
+ - ACCEPT
+ - CT
+ - DNAT
+ - DROP
+ - REJECT
+ - LOG
+ - MARK
+ - MASQUERADE
+ - REDIRECT
+ - SET
+ - SNAT
+ - TCPMSS
+ 
+ Tables:
+ - filter
+ - mangle
+ - nat
+ - raw
+ 
+
+Package: opt-ndmsv2
+Version: 1.0-15
+Depends: libc, libssp, librt, libpthread, libgcc, libstdcpp, ldconfig, findutils, terminfo, opkg, entware-release, locales, zoneinfo-asia, zoneinfo-europe
+Source: feeds/keendev3x/opt-ndmsv2
+SourceName: opt-ndmsv2
+Section: libs
+SourceDateEpoch: 1629639474
+Essential: yes
+Maintainer: Entware team, http://entware.net
+Architecture: aarch64-3.10_kn
+Installed-Size: 2870
+Filename: opt-ndmsv2_1.0-15_aarch64-3.10_kn.ipk
+Size: 3711
+SHA256sum: 1bc112f8a6f5256932dcde76c12abf66768b2c6e517db71e11b28985501225fc
+Description: opt-ndmsv2 is a metapackage to install Entware basic libraries and scripts
+ on Keenetic routers.
+
+Package: poorbox
+Version: 1.33.1-1
+Source: feeds/keendev3x/poorbox
+SourceName: poorbox
+License: GPL-2.0
+LicenseFiles: LICENSE archival/libarchive/bz/LICENSE
+Section: base
+SourceDateEpoch: 1629639474
+CPE-ID: cpe:/a:busybox:busybox
+Architecture: aarch64-3.10_kn
+Installed-Size: 449657
+Filename: poorbox_1.33.1-1_aarch64-3.10_kn.ipk
+Size: 449783
+SHA256sum: bbd4735bad873fb4d1f90bbac143b56882d780201156e9bc3a105f3e4d109996
+Description: The Swiss Army Knife of embedded Linux.
+ It slices, it dices, it makes Julian Fries.
+
+Package: uhttpd_kn
+Version: 2021-03-21-15346de8-3
+Depends: libc, libssp, librt, libpthread, libubox, libblobmsg-json, libjson-script, libjson-c
+Source: feeds/keendev3x/uhttpd_kn
+SourceName: uhttpd_kn
+License: ISC
+Section: net
+SourceDateEpoch: 1629639474
+Maintainer: Felix Fietkau <nbd@nbd.name>
+Architecture: aarch64-3.10
+Installed-Size: 24437
+Filename: uhttpd_kn_2021-03-21-15346de8-3_aarch64-3.10.ipk
+Size: 25097
+SHA256sum: 5bd0f06fa9b7092d0bd97b821df6e182f263b26d0872bce4f1a1f56e4568d5f2
+Description: uHTTPd is a tiny single threaded HTTP server with TLS, CGI and Lua
+ support. It is intended as a drop-in replacement for the Busybox
+ HTTP daemon.
+

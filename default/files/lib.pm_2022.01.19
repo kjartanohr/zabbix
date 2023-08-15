@@ -1,0 +1,1289 @@
+BEGIN{
+  if ($] eq "5.032000") {
+
+    push @INC,
+      "/usr/share/zabbix/bin/perl-5.32.0/",
+      "/usr/share/zabbix/bin/perl-5.32.0/lib/site_perl/5.32.0/i686-linux",
+      "/usr/share/zabbix/bin/perl-5.32.0/lib/site_perl/5.32.0",
+      "/usr/share/zabbix/bin/perl-5.32.0/lib/5.32.0/i686-linux",
+      "/usr/share/zabbix/bin/perl-5.32.0/lib/5.32.0";
+
+  }
+  elsif ($] eq "5.010001") {
+    push @INC,
+      "/usr/share/zabbix/bin/perl-5.10.1/lib";
+  }
+}
+
+#my $data = readfile('filename', 'return type: s (string), a (array)', 'max file size. 10');
+sub readfile {
+  my $filename        = shift;
+  my $return_type     = shift || "s";
+  my $max_file_size   = shift || 10; #MB 
+  my $chomp           = shift || 1;
+  
+  debug("return type $return_type\nReading $filename\n");
+
+  if (-e $filename) {
+    debug("File exists: $filename", "debug", \[caller(0)] ) if $debug;
+  }
+  else {
+    debug("File does not exist: $filename", "fatal", \[caller(0)] );
+    return;
+  }
+
+  if (-f $filename) {
+    debug("File is a file: $filename", "debug", \[caller(0)] ) if $debug;
+  }
+  else {
+    debug("File is not a file type. File: $filename", "fatal", \[caller(0)] );
+    return;
+  }
+
+  if (-r $filename) {
+    debug("File is readable. File: $filename", "debug", \[caller(0)] ) if $debug;
+  }
+  else {
+    debug("File is not readable. File: $filename", "fatal", \[caller(0)] );
+    return;
+  }
+
+  my $file_size_max = ($max_file_size*1024*1024);
+  debug("Max file size is: $file_size_max byte. $max_file_size MB", "debug", \[caller(0)] ) if $debug;
+
+  my $file_size     = -s $filename;
+  debug("File size: $file_size", "debug", \[caller(0)] ) if $debug;
+
+  if ($file_size < $file_size_max) {
+    debug("File size is less than $file_size_max. File: $filename", "debug", \[caller(0)] ) if $debug;
+  }
+  else {
+    debug("File size is more than max. file size $file_size > file size max $file_size_max. File: $filename", "fatal", \[caller(0)] );
+    return;
+  }
+
+
+  my $file_open_status = open my $fh_r, "<", $filename;
+  unless ($file_open_status) {
+    debug("Could not open file '$filename'. Error: '$!'. Fatal error", "fatal", \[caller(0)] );
+    return;
+  }
+
+  if ($return_type eq "s") {
+    my $text = join "", <$fh_r>;
+    chomp $text if $chomp;
+    return $text;
+  }
+  elsif ($return_type eq "a") {
+    my @text =  <$fh_r>;
+    return @text;
+  }
+  else {
+    debug("Unknown return type: $return_type", "fatal", \[caller(0)] );
+    return;
+  }
+}
+
+sub run_cmd {
+
+  #TODO.
+  #Add
+  # timeout
+  # retry
+  # debug with error and fatal
+
+  my $cmd           = shift || die "Need a command to run\n";
+  my $return_type   = shift || "s";
+  my $refresh_time  = shift || 1;
+  my $chomp         = shift || 1;
+  my $remove_space  = shift || 1;
+
+  debug("sub run_cmd. Input CMD $cmd, return type $return_type, refresh time $refresh_time\n");
+
+  my $out;
+  my @out;
+
+  my $cmd_file = $cmd;
+  $cmd_file =~ s/\W/_/g;
+  #$cmd_file =~ s/_{2,}/_/g;
+  $cmd_file =~ s/^_//g;
+
+  create_dir("/tmp/zabbix/cmd/");
+
+  my $file = "/tmp/zabbix/cmd/$cmd_file";
+
+  debug("Command to run: \"$cmd\"\n");
+
+  debug("Output from command will be saved in $file");
+
+  #If the file is newer than $refresh_time
+  if (-f $file) {
+    if ( (time - (stat($file))[9]) < $refresh_time*60 ) {
+
+      open my $fh_r, "<", $file or die "Can't open $file: $!";
+
+      if ($return_type eq "s") {
+  
+        foreach (<$fh_r>) {
+          $out .= $_;
+        }
+  
+        if ($chomp) {
+          debug("\$chomp is true. chomp \$out", "debug", \[caller(0)] ) if $debug;
+          chomp $out;
+        }
+        if ($remove_space) {
+          debug("\$remove_space is true. Removing space in the beginning and end", "debug", \[caller(0)] ) if $debug;
+          $out =~ s/^\s{1,}//;
+          $out =~ s/\s{1,}$//;
+        }
+
+        debug("Output from command as string:\n$out\n");
+        return $out;
+      }
+      elsif ($return_type eq "a") {
+  
+        foreach (<$fh_r>) {
+          push @out, $_;
+        }
+  
+        debug("Output from command as array:\n@out\n");
+        return @out;
+      }
+  
+      else {
+        debug("Unknown return type $return_type\n");
+      }
+          
+    }
+  }
+  #END If the file is newer than $refresh_time
+
+  open my $fh_cmd_r, "-|", "$cmd 2>&1" or die "Can't run $cmd: $!\n";
+
+  open my $fh_w, ">", $file or die "Can't write to $file: $!\n";
+
+  foreach (<$fh_cmd_r>) {
+    print $fh_w $_;
+  }
+
+  close $fh_w;
+  close $fh_cmd_r;
+
+  open my $fh_r, "<", $file or die "Can't open $file: $!\n";
+  
+  if ($return_type eq "s") {
+
+    foreach (<$fh_r>) {
+      $out .= $_;
+    }
+
+    debug("Output from command as string:\n$out\n");
+    return $out;
+  }
+  elsif ($return_type eq "a") {
+
+    foreach (<$fh_r>) {
+      push @out, $_;
+    }
+
+    debug("Output from command as array:\n@out\n");
+    return @out;
+  }
+
+  else {
+    debug("Unknown return type $return_type\n");
+  }
+        
+}
+
+
+sub run_cmd_old {
+  my $cmd         = shift || die "Need a command to run\n";
+  my $return_type = shift || "s";
+  my $out;
+  my @out;
+
+  debug("Command to run: \"$cmd\"\n");
+
+  if ($return_type eq "s") {
+    $out = `$cmd 2>&1`;
+    debug("Output from command as string:\n$out\n");
+    return $out;
+  }
+  elsif ($return_type eq "a") {
+    @out =  `$cmd 2>&1`;
+    debug("Output from command as array:\n@out\n");
+    return @out;
+  }
+  else {
+    debug("Unknown return type $return_type\n");
+  }
+}
+
+sub trunk_file_if_bigger_than_mb {
+  my $file    = shift || die "Need a filename to check file size for";
+  my $size    = shift || 10; 
+
+  my $size_mb = ($size*1024*1024); 
+
+  print "Checking if $file is bigger than size_mb MB\n" if $debug;
+
+  if (-s $file > ($size*1024*1024) ) { 
+    print "File is to big. Will trunk\n" if $debug;
+    open my $fh,">", $file or die "Can't trunk $file: $!\n";
+    close $fh;
+  }
+}
+
+sub debug {
+  my $text = shift || "No text given to debug";
+  $text .= "\n";
+
+  if ($debug and $file_debug) {
+    open my $fh_db_w, ">>","$file_debug" or die "Can't write to $file_debug: $!\n";
+    print $fh_db_w $text;
+  }
+
+  print $text if $debug;
+}
+
+sub error {
+  my $text = shift || "No text given to debug";
+  $text .= "\n";
+
+  if (defined $file_error) {
+    open my $fh_db_w, ">>",$file_error or die "Can't write to $file_error: $!\n";
+    print $fh_db_w $text;
+  }
+
+  warn $text if $debug;
+}
+
+sub create_dir {
+  #debug(((caller(0))[3])." Start\n");
+  my $name = shift || die "Need a directory name to create\n";
+  #debug(((caller(0))[3])." Input directory name: $name\n");
+
+  my $out;
+
+  if (-d $name){
+    debug("$name directory exists. No need to create\n");
+  }
+  else {
+    $out = `mkdir -p $name 2>&1`;
+    debug("$name directory missing. Creating\n");
+  }
+
+  unless (-d $name) {
+    debug("Could not create $name: $out\n");
+  }
+}
+
+sub arping {
+  my $int = shift;
+  my $mac = shift;
+  my $ip  = shift;
+
+  my $cmd = "arping -f -w 3 -c 3 -I $int $ip";
+  print $cmd if $debug;
+
+  my $out = `$cmd`;
+  print $out if $debug;
+
+  my ($found)     = $out =~ /reply from /;
+  unless ($found) {
+    print "MAC not found, return $int $mac $ip\n" if $debug;
+    return
+  }
+
+  my ($mac_found) = $out =~ /$ip.*$mac/i;
+
+  print "MAC found, return 1  $int $mac $ip\n" if $debug;
+
+  return 1 if $mac_found;
+}
+
+sub get_all_vs_id {
+  my @return;
+
+  push @return,0;
+
+  foreach (`vsx stat -v 2>/dev/null`){
+    s/^\s*`?//;
+    next unless /^\d/;
+    my @split = split/\s{1,}/;
+
+    next unless $split[2] eq "S";
+
+    push @return,$split[0];
+  }
+
+  return @return;
+}
+
+sub get_all_vs {
+  debug(((caller(0))[3])." Start\n");
+
+  my %return;
+
+  chomp(my $hostname = `hostname`);
+  debug(((caller(0))[3])." Using output form command hostname as VS0 name: $hostname\n");
+
+  $return{0} = $hostname;
+
+  debug(((caller(0))[3])." Checking if this is a VSX GW\n");
+  my $cmd_vsx_state = "cpprod_util FwIsVSX";
+  my $vsx_state     = run_cmd($cmd_vsx_state, 's', 10);
+  chomp $vsx_state;
+
+  debug(((caller(0))[3])." Result from $cmd_vsx_state: \"$vsx_state\"\n");
+
+
+
+  if ($vsx_state == 1) {
+    debug(((caller(0))[3])." This is a VSX GW\n");
+  }
+  else {
+    debug(((caller(0))[3])." This is not a VSX GW. Will return with VS 0\n");
+    return %return;
+  }
+
+  debug(((caller(0))[3])." Running vsx stat -v\n");
+  foreach (run_cmd("vsx stat -v", "a", 60)){
+    s/^\s*`?//;
+    next unless /^\d/;
+    s/\|//g;
+
+    #9  S NAVN            Standard                4Jan2021 10:43  Standard                  Trust
+    my @split = split/\s{1,}/;
+
+    next unless $split[1] eq "S";
+
+    $return{$split[0]} = $split[2];
+  }
+
+  return %return;
+}
+
+sub get_vsname {
+  my $vsid = shift;
+
+  return get_hostname() if $vsid == 0;
+
+  die "No VSID given" unless defined $vsid;
+
+  my $vsx_out = run_cmd("vsx stat -v", 's', 60);
+
+  my ($vsname) = $vsx_out =~ / $vsid \| . (.*?) /;
+
+  return $vsname;
+
+}
+
+sub get_vs_detailed {
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %return;
+
+  my $hostname = get_hostname();
+  unless ($hostname) {
+    debug("Could not get hostname. Something is wrong. Setting hostname to 'no name found'", "error", \((caller(0))[3]) );
+    $hostname = 'no name found';
+  }
+
+  debug(((caller(0))[3])." Using output from command hostname as VS0 name: $hostname\n") if $debug;
+
+  #Check if fw is vsx START
+  debug(((caller(0))[3])." Checking if this is a VSX GW\n") if $debug;
+
+  if (is_vsx()) {
+    debug(((caller(0))[3])." This is a VSX GW\n") if $debug;
+  }
+  else {
+    debug(((caller(0))[3])." This is not a VSX GW. Will return with VS 0\n") if $debug;
+    return %return;
+  }
+  #Check if fw is vsx END
+
+  debug(((caller(0))[3])." Running vsx stat -v\n") if $debug;
+
+  #vsx stat -v R80.10
+=pod
+[Expert@host:0]# fw ver
+This is Check Point's software version R80.10 - Build 236
+[Expert@host-1:0]#
+
+[Expert@host:0]# vsx stat -v
+VSX Gateway Status
+==================
+Name:            hostname
+Access Control Policy: Standard
+Installed at:    10Dec2021  5:26:32
+Threat Prevention Policy: Standard
+SIC Status:      Trust
+
+Number of Virtual Systems allowed by license:          10
+Virtual Systems [active / configured]:                 10 / 10
+Virtual Routers and Switches [active / configured]:     4 / 4
+Total connections [current / limit]:                25445 / 1502500
+
+Virtual Devices Status
+======================
+
+ ID  | Type & Name             | Access Control Policy | Installed at    | Threat Prevention Policy | SIC Stat
+-----+-------------------------+-----------------------+-----------------+--------------------------+---------
+   1 | W sw1-ext               | <Not Applicable>      |                 | <Not Applicable>         | Trust
+   2 | W sw1-fwbackbone        | <Not Applicable>      |                 | <Not Applicable>         | Trust
+   3 | S fw1-userext           | Standard              | 29Dec2021 11:28 | Standard                 | Trust
+   4 | W sw1-uservpn           | <Not Applicable>      |                 | <Not Applicable>         | Trust
+   5 | S fw1-vpn               | Standard              | 16Dec2021 10:15 | <No Policy>              | Trust
+   6 | S fw1-guest             | Standard              | 10Dec2021  5:27 | Standard                 | Trust
+   7 | S fw1-sumoplayout       | Standard              | 10Dec2021  5:27 | <No Policy>              | Trust
+   8 | S fw1-serverext         | Standard              | 15Dec2021 12:13 | Standard                 | Trust
+   9 | S fw1-lab               | Standard              | 10Dec2021  5:27 | <No Policy>              | Trust
+  10 | S fw1-dmz2              | Standard              | 27Dec2021 13:03 | <No Policy>              | Trust
+  12 | W sw1-ext-2             | <Not Applicable>      |                 | <Not Applicable>         | Trust
+  13 | S fw1-dmz1              | Standard              | 27Dec2021 13:03 | Standard                 | Trust
+  14 | S fw1-dmz3              | Standard              |  4Jan2022  9:11 | <No Policy>              | Trust
+  15 | S fw1-hosting           | Hosting               | 27Dec2021 13:00 | Hosting                  | Trust
+
+Type: S - Virtual System, B - Virtual System in Bridge mode,
+      R - Virtual Router, W - Virtual Switch.
+
+[Expert@tv2-cp-fw1-1:0]#
+=cut
+
+  my %data;
+
+  foreach (run_cmd("vsx stat -v","a")){
+    chomp;                #Remove new line
+    s/^\s*`?//;           #Remove white space from start of the line
+    next unless /^\d/;    #Next line unless is starts with a digit
+    #s/\|//g;
+
+    #9  S NAVN            Standard                4Jan2021 10:43  Standard                  Trust
+    ($data{'id'}, $data{'type_name'}, $data{'access_policy'}, $data{'installed'}, $data{'threat_policy'}, $data{'sic'}) = split/\s{0,}\|\s{0,}/;  #Split on |
+
+    #Split type and name
+    ($data{'type'}, $data{'name'}) =  split/\s{1,}/, $data{'type_name'};
+
+
+    #Remove random space and tabs
+    debug("foreach data. Remove space and tab", "debug", \[caller(0)] ) if $debug;
+    foreach my $key (keys %data) {
+      
+      unless ($data{$key} and $data{$key}) {
+        debug("No data found in key $key. next", "debug", \[caller(0)] ) if $debug;
+        next;
+      }
+      debug("Key: '$key'. Data: '$data{$key}'", "debug", \[caller(0)] ) if $debug;
+
+      $data{$key} =~ s/\t//g;       #Remove tab
+      $data{$key} =~ s/\s{2,}/ /g;  #Remove 2 or more space and replace with 1 space
+
+      $data{$key} =~ s/^\s{1,}//g;  #Remove space from the beginning
+      $data{$key} =~ s/\s{1,}$//g;  #Remove space from the end
+
+    }
+
+    my @validate_data = qw(id type name access_policy threat_policy sic);
+    foreach my $key (@validate_data) {
+      
+      #Verify the output data START
+      if (defined $data{$key} and $data{$key}) {
+        debug("Key '$key' found and has data. Data: '$data{$key}'", "debug", \[caller(0)] ) if $debug;
+      }
+      else {
+        debug("Key '$key' found but has no data. Fatal error found", "fatal", \[caller(0)] );
+        next;
+      }
+      #Verify the output data END
+    }
+    
+    #Data health check
+    if ($data{'sic'} ne "Trust") {
+      debug("Sic is not 'Trust'. Sic: '$data{'sic'}'. Fatal error found", "fatal", \[caller(0)] );
+    }
+
+    #TODO. 
+    #Validate id as digit ... 
+
+    #Set defaults 
+    $data{'installed'} ||= "no install time";
+
+    #Build the return hash with data
+    $return{$data{'id'}} = {
+      'id'                => $data{'id'},
+      'type'              => $data{'type'},
+      'name'              => $data{'name'},
+      'access_policy'     => $data{'access_policy'},
+      'threat_policy'     => $data{'threat_policy'},
+      'policy_installed'  => $data{'installed'},
+      'sic'               => $data{'sic'},
+    };
+  }
+
+  #Add VS 0 to the data
+  #TODO. Get all the data from other commands
+  $return{0} = {
+    'id'                => 0,
+    'type'              => 'S',
+    'name'              => $hostname,
+    'access_policy'     => '',
+    'threat_policy'     => '',
+    'policy_installed'  => '',
+    'sic'               => '',
+  };
+
+
+  #Return the hash with data
+  debug("end", "debug", \[caller(0)] ) if $debug;
+  return %return;
+}
+
+sub get_resolv_search {
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my $file_resolv = "/etc/resolv.conf";
+  debug("File: $file_resolv", "debug", \[caller(0)] ) if $debug;
+
+  my $data = readfile($file_resolv, 's', 1);
+  if (defined $data and $data) {
+    debug("Data from readfile(): $data", "debug", \[caller(0)] ) if $debug;
+  }
+  else {
+    debug("No data from readfile(). Something is wrong. Fatal error", "fatal", \[caller(0)] );
+    return;
+  }
+
+
+  my ($search) = $data =~ /search\s{1,}(.*?)\s{1,}/; 
+
+  if ($search) {
+    debug("search data found in $file_resolv: $search", "debug", \[caller(0)] ) if $debug;
+  }
+  else {
+    debug("search data not found in $file_resolv. Something is wrong", "fatal", \[caller(0)] );
+    return;
+  }
+
+  debug("end", "debug", \[caller(0)] ) if $debug;
+  return $search;
+
+}
+
+
+
+sub check_if_other_self_is_running {
+  my $name = shift || die "Need a name to check for. use \$0\n";
+   my $count = 0;
+
+   foreach (`ps xau`){
+    next unless /$name/;
+    my @s = split/\s{1,}/;
+    next if $s[1] == $$;
+
+    $count++;
+
+  }
+
+  return 1 if $count;
+}
+
+sub kill_old_version_running {
+  $name = $0;
+  $name =~ s/ VER.*//;
+
+  $cmd = qq#ps xa|grep "$name"#;
+  debug($cmd);
+
+  foreach (`$cmd`){
+    s/^\s{1,}//;
+
+    #PID TTY      STAT   TIME COMMAND
+    ($pid,$tty,$stat,$time,$command) = split /\s{1,}/;
+
+    next if $$ == $pid;
+    next if /grep /;
+
+    ($ver) = /VER (\d{1,})/;
+
+    unless ($ver) {
+      debug("Found an old version of the script without version. Will kill it: $pid");
+      system "kill $pid";
+    }
+
+
+    if ($ver && $ver < $version){
+      debug("Found an old version of the script Will kill it: $pid");
+      system "kill $pid";
+    }
+  }
+
+}
+
+sub cpu_count {
+  my $cpu_count;
+
+  foreach (`cat /proc/cpuinfo`){
+    next unless /^$/;
+    $cpu_count++;
+  }
+  return $cpu_count;
+}
+
+sub is_gw {
+  $out = `fw stat`;
+
+  return 1 if $out =~ /POLICY/;
+}
+
+sub get_file_size {
+  my $file = shift;
+
+  my ($size) = (stat($file))[7];
+
+  unless (defined $size) {
+    print "Could not find the file to get file size $file";
+    exit;
+  }
+
+  return $size;
+
+}
+
+sub ping_ip {
+  my $ip    = shift || die "need a IP to ping";
+  my $vsid  = shift || 0;
+  my $retry = shift || 1;
+
+  print "sub ping_ip: input $ip\n" if $debug;
+
+  foreach (1 .. $retry) {
+    my $out = `source /etc/profile.d/vsenv.sh; vsenv $vsid &>/dev/null ;  ping -c 1 -w 1 $ip`;
+
+    return 1 if $out =~ / 0% packet loss/;
+  }
+
+  return 0;
+}
+
+sub zabbix_check {
+  my $argv = shift || return;
+
+  if ($argv eq "--zabbix-test-run"){
+    print "ZABBIX TEST OK";
+    exit;
+  }
+}
+
+sub get_mgmt_ip {
+  my $cmd = "source /etc/bashrc; source /etc/profile.d/vsenv.sh; vsenv $vsid &>/dev/null ; echo -n \$CPDIR/registry/HKLM_registry.data";
+  print "sub get_mgmt_ip: CMD: \"$cmd\"\n" if $debug;
+
+  my $filename = `$cmd`;
+  print "sub get_mgmt_ip: CMD output: \"$filename\"\n" if $debug;
+
+  open my $fh_r,"<", $filename || die "Can't open $filename: $!";
+  while (<$fh_r>) {
+    next unless /ICAip /;
+    my ($ip) = /ICAip \((.*?)\)/;
+    print "Found MGMT IP $ip\n" if $debug;
+
+    return $ip;
+  }
+}
+
+sub touch {
+  my $filename = shift || die "Can't touch file with no filename given\n";
+  debug("sub touch: input filename: $filename\n");
+
+  open my $fh,">", $filename or die "Can't create file $filename: $!\n";
+  close $fh;
+  debug("sub touch: created file $filename\n");
+}
+
+sub file_days_old {
+  my $filename = shift || die "Check how old the file is with no filename\n";
+
+  die "Can't check how old the file is. No such file found: $filename\n" unless -f $filename;
+
+  my $filename_mtime = (stat($filename))[9];
+
+  my $seconds_old = (time - $filename_mtime);
+  my $hours_old   = ($seconds_old/60/60);
+  my $days_old   = ($seconds_old_old/24);
+
+  return $days_old;
+}
+
+sub file_hours_old {
+  my $filename = shift || die "Check how old the file is with no filename\n";
+
+  die "Can't check how old the file is. No such file found: $filename\n" unless -f $filename;
+
+  my $filename_mtime = (stat($filename))[9];
+
+  my $seconds_old = (time - $filename_mtime);
+  my $hours_old   = ($seconds_old/60/60);
+
+  return $hours_old;
+
+}
+sub file_seconds_old {
+  my $filename = shift || die "Check how old the file is with no filename\n";
+
+  die "Can't check how old the file is. No such file found: $filename\n" unless -f $filename;
+
+  my $filename_mtime = (stat($filename))[9];
+
+  my $seconds_old = (time - $filename_mtime);
+
+  return $seconds_old;
+
+}
+
+sub get_log_ip {
+  my $cmd = "source /etc/bashrc; source /etc/profile.d/vsenv.sh; vsenv $vsid &>/dev/null ; cpstat fw -f log_connection 2>&1";
+  print "sub get_log_ip: CMD: \"$cmd\"\n" if $debug;
+
+  my $out = `$cmd`;
+  print "sub get_log_ip: CMD output: \"$out\"\n" if $debug;
+
+  foreach (split /\n/, $out) {
+    next unless /\|\d/;
+    my @split = split/\|/;
+    return $split[1];
+
+  }
+}
+
+sub get_hklm_directory {
+  my $search = "HKLM_registry.data";
+
+  foreach (`find /var/opt/ -name "$search" 2>/dev/null`){
+    chomp;
+
+    my ($dir) = m#(.*)/#;
+    next unless -d $dir;
+
+    $dir{$dir} = 1;
+  }
+
+  return keys %dir;
+
+}
+
+sub df {
+  my $partition   = shift || die "sub df: Need a partition to check\n";
+  my $return_data = shift || die "sub df: Need input on what data you want in return\n";
+  my $return_type = shift || "";
+
+
+  foreach (`df -P $partition`) {
+    next unless /$partition/; #Skip header
+
+    my ($filesystem, $blocks, $used, $available, $percent_use, $mount) = split /\s{1,}/;
+
+    $used      = ($used*1024);
+    $available = ($available*1024);
+
+    if ($return_type) {
+      $used      = human_readable_byte($used,      "$return_type");
+      $available = human_readable_byte($available, "$return_type");
+    }
+
+    return $filesystem   if $return_data eq "filesystem";
+    return $blocks       if $return_data eq "blocks";
+    return $used         if $return_data eq "used";
+    return $available    if $return_data eq "available";
+    return $percent_use  if $return_data eq "percent_use";
+    return $mount        if $return_data eq "mount";
+
+    return;
+  }
+}
+
+sub human_readable_byte {
+  my $byte = shift || die "sub human_readable: Need bytes to convert\n";
+  my $type = shift || die "sub human_readable: Need a type to convert size into\n";
+
+  return ($byte/1024) if $type eq "KB";
+  return ($byte/ (1024**2) ) if $type eq "MB";
+  return ($byte/ (1024**3) ) if $type eq "GB";
+  return ($byte/ (1024**4) ) if $type eq "TB";
+  return ($byte/ (1024**5) ) if $type eq "PB";
+  return ($byte/ (1024**6) ) if $type eq "EB";
+
+  return 0;
+}
+
+sub get_hostname {
+  #my $hostname = `hostname 2>/dev/null`; 
+  #chomp $hostname; 
+
+  my $hostname = run_cmd('hostname', 's', 60);
+  
+  if ($hostname) {
+    return $hostname
+  }
+  else {
+    warn "Could not get hostname\n";
+    return;
+  }
+}
+
+sub get_cpu_usage_process {
+  my $name = shift || die "Need a process name to get CPU usage from\n";
+
+  foreach (`top -H -b -n1`){
+    s/^\s{1,}//; 
+    my @split = split/\s+/; 
+
+    next unless $split[11];
+
+    if ($split[11] eq $name){
+      return $split[8];
+    }   
+  }
+}
+
+sub get_corexl_count {
+  my $vsid = shift;
+
+  my $id_max = 0;
+
+  foreach (`source /etc/profile.d/vsenv.sh; vsenv $vsid&>/dev/null &>/dev/null; fw ctl multik stat 2>&1`) {
+    s/\s{1,}//;
+    next unless /^\d/;
+
+    my ($id) = split/\s{1,}/;
+
+    next unless $id =~ /\d/;
+
+    $id_max = $id if $id > $id_max;
+  }
+
+  return $id_max + 1;
+}
+
+sub init_json {
+  my $json = JSON->new();
+  $json->relaxed(1);
+  $json->ascii(1);
+  $json->pretty(1);
+
+  return $json;
+}
+
+#Legacy 
+sub is_vsx {
+  if (cpprod('type' => 'FwIsVSX')) {
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
+
+sub cpprod {
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+
+  unless (defined $input{'type'} and $input{'type'}) {
+    debug("Missing input data. This is a code error. Fatal error", "fatal", \[caller(0)] );
+    return;
+  }
+
+  debug("Checking if this installation has: '$input{'type'}'", "debug", \[caller(0)] ) if $debug;
+
+  my $cmd_cpprod  = "cpprod_util $input{'type'}";
+  my $out_cpprod  = run_cmd($cmd_cpprod, 's', 600);
+
+  if (defined $out_cpprod and length $out_cpprod > 0) {
+    debug("Data returned from run_cmd(): '$out_cpprod'", "debug", \[caller(0)] ) if $debug;
+  }
+  else {
+    debug("No data returned from run_cmd(). Something is wrong", "fatal", \[caller(0)] );
+    return;
+  }
+
+  return $out_cpprod;
+  #TODO.
+  #Validate outout value
+
+  if ($out_cpprod == 1) {
+    debug("\$out_cpprod is 1. True", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  elsif ($out_cpprod == 0) {
+    debug("\$out_cpprod is 0. False", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+  else {
+    debug("\$out_cpprod is a unknown value. Something is wrong.", "fatal", \[caller(0)] );
+  }
+
+  debug("end", "debug", \[caller(0)] ) if $debug;
+}
+
+sub is_ha_active {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'};
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && cphaprob state", "s", 6000);
+
+  
+=pod
+
+  [Expert@host:3]# cphaprob state
+
+  Cluster Mode:   Virtual System Load Sharing
+
+  Number     Unique Address  Assigned Load   State
+
+  1 (local)  10.1.1.36      0%              Standby
+  2          10.1.1.37      100%            Active
+
+  Local member is in current state since Fri Dec 10 05:28:16 2021
+
+=cut
+
+
+  if ($out =~ /local.*active/i) {
+    return 1;
+  }
+  elsif ($out =~ /local.*standby/i) {
+    return 0;
+  }
+  else {
+    debug("Could not parse cphaprob state. Something is wrong", "fatal", \[caller(0)] );
+    return;
+  }
+
+
+}
+
+sub is_ha_and_active {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'};
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && cphaprob state", "s", 6000);
+
+  
+=pod
+
+  [Expert@host:3]# cphaprob state
+
+  Cluster Mode:   Virtual System Load Sharing
+
+  Number     Unique Address  Assigned Load   State
+
+  1 (local)  10.1.1.36      0%              Standby
+  2          10.1.1.37      100%            Active
+
+  Local member is in current state since Fri Dec 10 05:28:16 2021
+
+=cut
+
+
+  if ($out =~ /local.*active/i) {
+    return 1;
+  }
+  elsif ($out =~ /local.*standby/i) {
+    return 0;
+  }
+  else {
+    debug("Could not parse cphaprob state. Something is wrong", "fatal", \[caller(0)] );
+    return;
+  }
+
+
+}
+
+
+sub is_enabled_ia {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "identityServer";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+}
+
+sub is_enabled_fw {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "fw";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+}
+
+sub is_enabled_urlf {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "urlf";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+}
+
+sub is_enabled_av {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "av";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+}
+
+sub is_enabled_appi {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "appi";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+}
+
+sub is_enabled_ips {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "ips";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+}
+
+sub is_enabled_ab {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "anti_bot";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+}
+
+sub is_enabled_te {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+  my $name  = "ThreatEmulation";
+
+  $input{'vsid'} = 0 unless defined $input{'vsid'} or length $input{'vsid'} < 1;
+  debug("VSID: $input{'vsid'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("source /etc/profile.d/vsenv.sh; vsenv $input{'vsid'} &>/dev/null && enabled_blades", "s", 6000);
+  
+=pod
+
+fw urlf av appi ips identityServer anti_bot ThreatEmulation
+
+=cut
+
+  if ($out =~ /$name/i) {
+    debug("$name found in enabled_blades. Return 1", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name NOT found in enabled_blades. Return 0", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+
+  debug("end", "debug", \[caller(0)] ) if $debug;
+}
+
+sub is_mgmt {
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my $name  = "FwIsFirewallMgmt";
+
+  if (cpprod('type' => $name)) {
+    debug("$name is true", "debug", \[caller(0)] ) if $debug;
+    return 1;
+  }
+  else {
+    debug("$name is false", "debug", \[caller(0)] ) if $debug;
+    return 0;
+  }
+
+
+  debug("end", "debug", \[caller(0)] ) if $debug;
+}
+
+sub mgmt_cli {
+
+  debug("start", "debug", \[caller(0)] ) if $debug;
+
+  my %input = @_;
+
+  $input{'host'}    ||= "127.0.0.1";
+  $input{'port'}    ||= 4434;
+  $input{'timeout'} ||= 5;
+  $input{'debug'}   ||= "on";
+  $input{'format'}  ||= "text";
+
+  unless (defined $input{'command'} or length $input{'vsid'} < 1) {
+    debug("Missing input command. return", "fatal", \[caller(0)] );
+    return;
+  }
+  debug("Command: $input{'command'}", "debug", \[caller(0)] ) if $debug;
+
+  my $out = run_cmd("mgmt_cli $input{'command'} --unsafe-auto-accept true --conn-timeout $input{'timeout'} --debug $input{'debug'} --format $input{'text'} --ignore-errors false --management $input{'host'} --root true --port $input{'port'}", "s", 600);
+
+  if ($out =~ /Error/) {
+    debug("Error found: $out", "fatal", \[caller(0)] );
+    return "error: $out";
+  }
+
+  debug("end", "debug", \[caller(0)] ) if $debug;
+  return $out;
+}
+
+1;
+

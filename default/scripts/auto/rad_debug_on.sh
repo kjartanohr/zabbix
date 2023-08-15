@@ -1,0 +1,1 @@
+../rad_debug_on.sh

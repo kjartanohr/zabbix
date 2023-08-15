@@ -1,0 +1,1 @@
+../run_cpmdoc.sh

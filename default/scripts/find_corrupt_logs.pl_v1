@@ -1,0 +1,103 @@
+#!/usr/bin/perl5.32.0
+#bin
+BEGIN{
+  require "/usr/share/zabbix/repo/files/auto/lib.pm";
+}
+
+use warnings;
+use strict;
+
+$0 = "perl find corrupt FW logs VER 102";
+$|++;
+$SIG{CHLD} = "IGNORE";
+
+zabbix_check($ARGV[0]);
+
+my $dir_tmp            = "/tmp/zabbix/logs_corrupt/";
+our $file_debug        = "$dir_tmp/debug.log";
+our $debug             = 0;
+my  $corruption_found  = 0;
+
+#Exit the script if this is not a MGMT
+exit if `fwm ver 2>&1` =~ /This is not a Security Management Server station/;
+
+create_dir($dir_tmp);
+
+#Exit if this program is already running 
+if (`ps xau|grep "$0"| grep -v $$ | grep -v grep`) {
+  debug("Found an already running version of my self. Will exit\n");
+  print "Found an already running version of my self. Will exit\n";
+  exit;
+}
+
+#End of standard header
+
+
+#fork a child and exit the parent
+#Don't fork if $debug is true
+unless ($debug){
+  fork && exit;
+}
+
+#Closing so the parent can exit and the child can live on
+#The parent will live and wait for the child if there is no close
+#Don't close if $debug is true
+unless ($debug) {
+  close STDOUT;
+  close STDIN;
+  close STDERR;
+}
+
+#Eveything after here is the child
+
+
+#Loop every line from find. Find will return *.log from FWDIR
+foreach my $file (`source /etc/profile.d/vsenv.sh; find \$FWDIR/log/ -name "*.log"`) {
+  #Remove new line
+  chomp $file;
+
+  my ($path, $filename) = $file =~ /(.*)\/(.*)/;
+
+  #Skip the file if it's found in the $dir_tmp. Skip the file is it's already checked 
+  next if -f "$dir_tmp/$filename";
+
+  #Don't check the fw.log file. It's the live log file 
+  next if $filename eq "fw.log";
+
+  #Skip the line if the filename is not ending with a .log
+  next unless $filename =~ /\.log$/;
+
+
+  #RRead the log file with "fw log" and output the first line of the log.
+  #If the command outputs Error, rename the log file
+  my $out =  `fw log -y 1 $file 2>&1`;
+
+  if ($out =~ /Error: Failed to open log file/i) { 
+
+    my $file_new = "$file.corrupt";
+
+    rename $file,$file_new;
+
+    print "$filename is a corrupt log file\n";
+    debug("$filename is a corrupt log file\n");
+
+    $corruption_found = 1;
+    
+  }
+  else {
+    debug("$filename is OK\n");
+    mark_as_ok($filename);
+  }
+}
+
+if ($corruption_found) {
+  debug("Corrupted files found. Will restart smartevent with evstop ; evstart\n");
+  system "evstop ; evstart";
+}
+
+sub mark_as_ok {
+  my $file = shift || die "Need a filename\n";
+
+  open my $fh_w,">", "$dir_tmp/$file" or die "Can't write to $dir_tmp/$file: $!\n";
+  close $fh_w;
+}

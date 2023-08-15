@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>/usr/share/zabbix/repo/default/scripts/ssh_keys_add_remote.pl.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="perl">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,prevent_copy=">
+<meta name="colorscheme" content="none">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #ffffff; background-color: #000000; }
+body { font-family: monospace; color: #ffffff; background-color: #000000; }
+* { font-size: 1em; }
+.Constant { color: #ff6060; }
+.Special { color: #ff40ff; }
+.Identifier { color: #00ffff; }
+.Statement { color: #ffff00; }
+.PreProc { color: #ff40ff; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="PreProc">#!/bin/perl</span>
+
+<span class="Statement">if</span> (<span class="Identifier">$ARGV[</span><span class="Constant">0</span><span class="Identifier">]</span> <span class="Statement">eq</span> <span class="Constant">&quot;</span><span class="Constant">--zabbix-test-run</span><span class="Constant">&quot;</span>){
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">ZABBIX TEST OK</span><span class="Constant">&quot;</span>;
+  <span class="Statement">exit</span>;
+}
+
+
+<span class="Statement">my</span> <span class="Identifier">$user</span>;
+<span class="Statement">my</span> <span class="Identifier">$ssh_key</span>;
+
+<span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Please answer all the questions</span><span class="Special">\n\n</span><span class="Constant">&quot;</span>;
+
+<span class="Statement">if</span> (is_checkpoint()) {
+  <span class="Identifier">$user</span> = <span class="Constant">&quot;</span><span class="Constant">admin</span><span class="Constant">&quot;</span>;
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">This is a Check Point installation, will use the user admin</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+}
+
+<span class="Statement">unless</span> (<span class="Identifier">$user</span>) {
+  <span class="Identifier">$login_user</span> = get_login_user();
+  <span class="Identifier">$user</span> = ask(<span class="Constant">&quot;</span><span class="Constant">What user to you wish to run ssh from on this computer?: (</span><span class="Identifier">$login_user</span><span class="Constant">) </span><span class="Constant">&quot;</span>,<span class="Identifier">$login_user</span>);
+}
+
+
+<span class="Statement">unless</span> (user_exists(<span class="Identifier">$user</span>)){
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Could not find the user </span><span class="Identifier">$user</span><span class="Constant"> in /etc/passwd. Abort</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+  <span class="Statement">system</span> <span class="Constant">&quot;</span><span class="Constant">cat /etc/passwd</span><span class="Constant">&quot;</span>;
+  <span class="Statement">exit</span>;
+}
+
+<span class="Statement">my</span> <span class="Identifier">$home</span> = get_user_directory(<span class="Identifier">$user</span>);
+<span class="Statement">unless</span> (<span class="Identifier">$home</span>){
+  <span class="Identifier">$home</span> = ask(<span class="Constant">&quot;</span><span class="Constant">Could not get home directory from /etc/passwd. Please type in directory: </span><span class="Constant">&quot;</span>);
+}
+
+<span class="Statement">unless</span> (<span class="Statement">-d</span> <span class="Identifier">$home</span>) {
+  <span class="Identifier">$home</span> = ask(<span class="Constant">&quot;</span><span class="Constant">Could not find the home directory for user </span><span class="Identifier">$user</span><span class="Constant">: </span><span class="Identifier">$home</span><span class="Constant">. Please type in directory: </span><span class="Constant">&quot;</span>);
+}
+
+
+<span class="Statement">my</span> <span class="Identifier">$remote_server</span> = ask(<span class="Constant">&quot;</span><span class="Constant">What server do you wish to auto-login to? (Add ssh keys from this computer to the remote): </span><span class="Constant">&quot;</span>);
+<span class="Statement">my</span> <span class="Identifier">$remote_user</span> = ask(<span class="Constant">&quot;</span><span class="Constant">What user to do wish to login with on the remote server: </span><span class="Constant">&quot;</span>);
+
+<span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Local user: </span><span class="Identifier">$user</span><span class="Special">\n</span><span class="Constant">Remote user </span><span class="Identifier">$remote_user</span><span class="Special">\n</span><span class="Constant">Remote host </span><span class="Identifier">$remote_server</span><span class="Special">\n\n</span><span class="Constant">&quot;</span>;
+<span class="Identifier">$continue</span> = ask(<span class="Constant">&quot;</span><span class="Constant">Do you wish to continue? (Y/n)</span><span class="Constant">&quot;</span>,<span class="Constant">&quot;</span><span class="Constant">y</span><span class="Constant">&quot;</span>);
+<span class="Statement">exit</span> <span class="Statement">unless</span> <span class="Identifier">$continue</span> =~ <span class="Statement">/</span><span class="Constant">y</span><span class="Statement">/i</span>;
+
+<span class="Statement">my</span> <span class="Identifier">$answer_keygen</span> = ask(<span class="Constant">&quot;</span><span class="Constant">Do you wish to run ssh-keygen? If you are not sure, run it (Y/n) </span><span class="Constant">&quot;</span>);
+<span class="Statement">if</span> (<span class="Identifier">$answer_keygen</span> =~ <span class="Statement">/</span><span class="Constant">y</span><span class="Statement">/i</span>){
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Running ssh-keygen</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+  <span class="Identifier">$ssh_key</span> = ssh_keygen(<span class="Identifier">$user</span>);
+
+}
+<span class="Statement">else</span> {
+  <span class="Statement">if</span> (<span class="Statement">-f</span> <span class="Constant">&quot;</span><span class="Identifier">$home</span><span class="Constant">/.ssh/id_rsa.pub</span><span class="Constant">&quot;</span>) {
+    <span class="Statement">chomp</span>(<span class="Identifier">$ssh_key</span> =<span class="Statement">`</span><span class="Constant">cat </span><span class="Identifier">$home</span><span class="Constant">/.ssh/id_rsa.pub</span><span class="Statement">`</span>);
+  }
+  <span class="Statement">else</span> {
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Could not get id_rsa.pub. Aborting</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Statement">exit</span>;
+  }
+}
+
+ssh_remote_server(<span class="Identifier">$remote_user</span>,<span class="Identifier">$remote_server</span>,<span class="Constant">&quot;</span><span class="Constant">mkdir .ssh; echo -n </span><span class="Special">\&quot;</span><span class="Identifier">$ssh_key</span><span class="Special">\&quot;</span><span class="Constant"> &gt;&gt;.ssh/authorized_keys; chmod -Rf 600 .ssh</span><span class="Constant">&quot;</span>);
+
+
+<span class="Statement">sub </span><span class="Identifier">is_checkpoint </span>{
+  <span class="Statement">return</span> <span class="Constant">1</span> <span class="Statement">if</span> <span class="Statement">`</span><span class="Constant">fw ver</span><span class="Statement">`</span> =~ <span class="Statement">/</span><span class="Constant">This is Check Point</span><span class="Statement">/</span>;
+}
+
+<span class="Statement">sub </span><span class="Identifier">user_exists </span>{
+  <span class="Statement">my</span> <span class="Identifier">$input</span> = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a username to check</span><span class="Constant">&quot;</span>;
+  <span class="Statement">foreach</span> (<span class="Statement">`</span><span class="Constant">cat /etc/passwd</span><span class="Statement">`</span>){
+    <span class="Identifier">@s</span> = <span class="Statement">split</span><span class="Statement">/</span><span class="Constant">:</span><span class="Statement">/</span>;
+    <span class="Statement">return</span> <span class="Constant">1</span> <span class="Statement">if</span> <span class="Identifier">$s[</span><span class="Constant">0</span><span class="Identifier">]</span> <span class="Statement">eq</span> <span class="Identifier">$input</span>;
+  }
+
+  <span class="Statement">return</span> <span class="Constant">0</span>;
+}
+
+<span class="Statement">sub </span><span class="Identifier">get_user_directory </span>{
+  <span class="Statement">my</span> <span class="Identifier">$input_user</span> = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a username to check</span><span class="Constant">&quot;</span>;
+
+  <span class="Statement">foreach</span> (<span class="Statement">`</span><span class="Constant">cat /etc/passwd</span><span class="Statement">`</span>){
+    <span class="Identifier">@s</span> = <span class="Statement">split</span><span class="Statement">/</span><span class="Constant">:</span><span class="Statement">/</span>;
+    <span class="Statement">return</span> <span class="Identifier">$s[</span><span class="Constant">5</span><span class="Identifier">]</span> <span class="Statement">if</span> <span class="Identifier">$s[</span><span class="Constant">0</span><span class="Identifier">]</span> <span class="Statement">eq</span> <span class="Identifier">$input_user</span>;
+  }
+
+  <span class="Statement">return</span> <span class="Constant">0</span>;
+
+}
+
+<span class="Statement">sub </span><span class="Identifier">ask </span>{
+  <span class="Statement">my</span> <span class="Identifier">$question</span>  = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a question to ask</span><span class="Constant">&quot;</span>;
+  <span class="Statement">my</span> <span class="Identifier">$default</span>   = <span class="Statement">shift</span> || <span class="Constant">0</span>;
+  <span class="Statement">my</span> <span class="Identifier">$no_check</span>  = <span class="Statement">shift</span> || <span class="Constant">0</span>;
+
+  <span class="Statement">my</span> <span class="Identifier">$max_tries</span> = <span class="Constant">3</span>;
+
+  <span class="Statement">foreach</span> (<span class="Constant">1</span> .. <span class="Identifier">$max_tries</span>) {
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Identifier">$question</span><span class="Constant">&quot;</span>;
+    <span class="Statement">chomp</span> (<span class="Statement">my</span> <span class="Identifier">$answer</span> = &lt;&gt;);
+
+    <span class="Statement">if</span> (<span class="Identifier">$answer</span> =~ <span class="Statement">/</span><span class="Constant">^$</span><span class="Statement">/</span> <span class="Statement">and</span> <span class="Identifier">$default</span>){
+      <span class="Statement">return</span> <span class="Identifier">$default</span>;
+    }
+
+    <span class="Statement">return</span> <span class="Identifier">$answer</span> <span class="Statement">if</span> <span class="Identifier">$no_check</span>;
+
+    <span class="Statement">if</span> (<span class="Identifier">$answer</span>) {
+      <span class="Statement">print</span> <span class="Constant">qq#</span><span class="Constant">You answered &quot;</span><span class="Identifier">$answer</span><span class="Constant">&quot;. Is this correct? (Y/n): </span><span class="Constant">#</span>;
+      <span class="Statement">chomp</span> (<span class="Statement">my</span> <span class="Identifier">$answer_correct</span> = &lt;&gt;);
+
+      <span class="Statement">return</span> <span class="Identifier">$answer</span> <span class="Statement">if</span> <span class="Identifier">$answer_correct</span> =~ <span class="Statement">/</span><span class="Constant">^y$</span><span class="Statement">/i</span>;
+      <span class="Statement">return</span> <span class="Identifier">$answer</span> <span class="Statement">if</span> <span class="Identifier">$answer_correct</span> =~ <span class="Statement">/</span><span class="Constant">^$</span><span class="Statement">/</span>;
+
+      <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Will ask the same question again</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+      <span class="Statement">next</span>;
+
+    }
+    <span class="Statement">else</span> {
+      <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">You did not answer correctly. This is try </span><span class="Identifier">$_</span><span class="Constant">/</span><span class="Identifier">$max_tries</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+      <span class="Statement">next</span>;
+
+    }
+  }
+
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Giving up. Exiting</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+  <span class="Statement">exit</span>;
+
+}
+
+<span class="Statement">sub </span><span class="Identifier">ssh_keygen </span>{
+  <span class="Statement">my</span> <span class="Identifier">$input_user</span> = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a user to create ssh keys</span><span class="Constant">&quot;</span>;
+  <span class="Statement">my</span> <span class="Identifier">$input_home</span> = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a home directory to create ssh keys</span><span class="Constant">&quot;</span>;
+  <span class="Statement">my</span> <span class="Identifier">$cmd</span>;
+  <span class="Statement">my</span> <span class="Identifier">$key</span>;
+
+
+  <span class="Statement">if</span> (<span class="Statement">-d</span> <span class="Constant">&quot;</span><span class="Identifier">$input_home</span><span class="Constant">/.ssh_old</span><span class="Constant">&quot;</span>) {
+    ask(<span class="Constant">&quot;</span><span class="Constant">Found </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh_old. Do you wish to delete the old .ssh directory? Press CTRL+C to stop (Y/n): </span><span class="Constant">&quot;</span>,<span class="Constant">&quot;</span><span class="Constant">y</span><span class="Constant">&quot;</span>);
+    <span class="Identifier">$cmd</span> = <span class="Constant">qq#</span><span class="Constant">rm -Rf </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh_old&quot;</span><span class="Constant">#</span>;
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Identifier">$cmd</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Statement">system</span> <span class="Identifier">$cmd</span>;
+  }
+
+  <span class="Statement">if</span> (<span class="Statement">-d</span> <span class="Constant">&quot;</span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/</span><span class="Constant">&quot;</span>) {
+    ask(<span class="Constant">&quot;</span><span class="Constant">Found </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh. Do you wish to move the .ssh directory to .ssh_old? Press CTRL+C to stop. (Y/n): </span><span class="Constant">&quot;</span>,<span class="Constant">&quot;</span><span class="Constant">y</span><span class="Constant">&quot;</span>);
+    <span class="Identifier">$cmd</span> = <span class="Constant">qq#</span><span class="Constant">mv -f </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/ </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh_old</span><span class="Constant">#</span>;
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Identifier">$cmd</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Statement">system</span> <span class="Identifier">$cmd</span>;
+  }
+
+  <span class="Statement">unless</span> (<span class="Statement">-d</span> <span class="Constant">&quot;</span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/</span><span class="Constant">&quot;</span>) {
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Could not find the directory </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/. Will create it</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Identifier">$cmd</span> = <span class="Constant">qq#</span><span class="Constant">mkdir &quot;</span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/&quot;</span><span class="Constant">#</span>;
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Identifier">$cmd</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Statement">system</span> <span class="Identifier">$cmd</span>;
+  }
+
+  <span class="Statement">my</span> <span class="Identifier">$cmd</span> = <span class="Constant">qq#</span><span class="Constant">ssh-keygen -f </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/id_rsa -P &quot;&quot;</span><span class="Constant">#</span>;
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Identifier">$cmd</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+  <span class="Statement">system</span> <span class="Identifier">$cmd</span>;
+
+  <span class="Identifier">$cmd</span> = <span class="Constant">&quot;</span><span class="Constant">chmod -Rf 600 </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/</span><span class="Constant">&quot;</span>;
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Identifier">$cmd</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+  <span class="Statement">system</span> <span class="Identifier">$cmd</span>;
+
+  <span class="Statement">if</span> (<span class="Statement">-f</span> <span class="Constant">&quot;</span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/id_rsa.pub</span><span class="Constant">&quot;</span>) {
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Found the ssh public key</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Identifier">$key</span> = <span class="Statement">`</span><span class="Constant">cat </span><span class="Identifier">$input_home</span><span class="Constant">/.ssh/id_rsa.pub</span><span class="Statement">`</span>;
+  }
+  <span class="Statement">else</span> {
+    <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">Could not find the ssh public key. Something is wrong. Abort</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Statement">exit</span>;
+  }
+
+  <span class="Statement">return</span> <span class="Identifier">$key</span>;
+}
+
+
+<span class="Statement">sub </span><span class="Identifier">ssh_remote_server </span>{
+  <span class="Statement">my</span> <span class="Identifier">$input_user</span> = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a username to ssh</span><span class="Constant">&quot;</span>;
+  <span class="Statement">my</span> <span class="Identifier">$input_host</span> = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a host to ssh</span><span class="Constant">&quot;</span>;
+  <span class="Statement">my</span> <span class="Identifier">$input_cmd</span>  = <span class="Statement">shift</span> || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Need a CMD to ssh</span><span class="Constant">&quot;</span>;
+
+  ask(<span class="Constant">&quot;</span><span class="Constant">We will now SSH to the remote server. Are you ready? (Y/n) </span><span class="Constant">&quot;</span>,<span class="Constant">&quot;</span><span class="Constant">y</span><span class="Constant">&quot;</span>);
+
+  <span class="Statement">my</span> <span class="Identifier">$cmd</span> = <span class="Constant">qq#</span><span class="Constant">ssh </span><span class="Identifier">$input_user</span><span class="Special">\@</span><span class="Identifier">$input_host</span><span class="Constant"> '</span><span class="Identifier">$input_cmd</span><span class="Constant">'</span><span class="Constant">#</span>;
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Identifier">$cmd</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+  <span class="Statement">system</span> <span class="Identifier">$cmd</span>;
+
+}
+
+<span class="Statement">sub </span><span class="Identifier">get_login_user </span>{
+  <span class="Statement">return</span> <span class="Identifier">$ENV{</span><span class="Constant">'</span><span class="Constant">USER</span><span class="Constant">'</span><span class="Identifier">}</span>;
+}
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

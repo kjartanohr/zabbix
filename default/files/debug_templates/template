@@ -1,0 +1,53 @@
+name                = Template debug    # The name for this debug
+description         = This will debug ClusterXL and is very heavy. Only run this if you know what you are doing and you have checked the CPU usage of this device
+
+file_debug          = template.log      # Full path: /tmp/zabbix/run_debug/template.debug
+file_debug_max_size = 10                # MB. Max debug file size in MB. Will delete debug file if it's bigger than N MB.
+file_debug_disable  = 0                 # It's possible to disable debug logging
+file_debug_compress = 0                 # Will compress the data going to the file to save disk space
+file_debug_delete   = 0                 # Will delete the debug file after the script is done running
+
+file_log            = template.log      # Full path: /tmp/zabbix/run_debug/template.log
+file_log_max_size   = 1024              # MB. Max debug file size in MB. Will delete debug file if it's bigger than N MB.
+file_log_disable    = 0                 # It's possible to disable debug logging
+file_log_compress   = 1                 # Will compress the data going to the file to save disk space
+file_log_delete     = 0                 # Will delete the file after the script is done running
+
+CODE START
+
+ask(
+  "This will start ClusterXL debug\n",
+  answer      => "Y",
+  answer_msg  => "Y",
+  clear       => 1,
+);
+
+run(
+  "cphaprob state",
+  pause         => 1, 
+  clear         => 1,
+  #stop_if_found => "HA module not started",
+  stop_msg      => "No ClusterXL found on this installation",
+);
+
+run(
+  "fw ctl pstat", 
+  pause => 1, 
+  clear => 1
+);
+
+run(
+  "cpstat fw -f sync", 
+  pause => 1, 
+  clear => 1
+);
+
+run(
+  "fw ctl debug 0", 
+  pause => 1, 
+  clear => 1,
+  ask => "This will disable all debug"
+);
+
+
+CODE END

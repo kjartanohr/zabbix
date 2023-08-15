@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "SSH FS - KFO LAB CP GW 10.0.6.1",
+			"uri": "ssh://cp_gw/home/admin/vs_code/gw-cp-kfo"
+		}
+	],
+	"settings": {}
+}

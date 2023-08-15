@@ -1,0 +1,116 @@
+Legge til
+
+Slett eldre enn 30 dager
+/var/log/opt/CPsuite-R80.30/fw1/log/upgrade_log*.elg
+/opt/CPuepm-R80.30/logs/
+
+/tmp
+  *.elg     #tarBkp.elg
+  *.txt1    #temp_tar_include_10094.txt1
+  *.txt    
+
+Hvis lite diskplass ledig
+  slett log fra $FWIDR/log/
+
+/var/CPsnapshot/log/snapshots
+  *.log     #snap_log_backup_050522040238.snapshot.log
+
+
+/var/log/opt/CPshrd-R81/cpview_services
+  CPViewDB_\d{1,}.dat
+
+total 4.3G
+-rw-r----- 1 admin root 4.2M Jun 18  2021 CPViewDB_1624030326.dat
+-rw-r----- 1 admin root 127M Jun 21  2021 CPViewDB_1625077213.dat
+-rw-r----- 1 admin root 1.4G Sep 29  2021 CPViewDB_1632938739.dat
+-rw-r----- 1 admin root 1.4G Feb 26 14:40 CPViewDB_1645883790.dat
+-rw-r----- 1 admin root 1.5G May  5 07:31 cpview_services.dat
+[Expert@gw-cp-kfo:0]#
+
+
+/var/log/CPView_history
+  Slett filer eldre enn 90 dager
+
+Files in directory: /var/log/CPView_history
+-rw-r--r--  1 538M 2021-08-05 00:41:13.000000000 +0200 "CPViewDB.dat"
+-rw-r--r--  1 502M 2018-12-13 16:14:36.000000000 +0100 "CPViewDB_1544714398.dat"
+-rw-rw----  1 428M 2018-06-05 08:17:38.000000000 +0200 "exported_db_05_06_2018_0817"
+[Expert@tv2-cp-fw3-1:0]#
+
+
+
+/mnt/backup/
+  Slett mappe etter 7 dager
+
+/opt/CPInstLog
+  Upgrade logger som ikke forsvinner av seg selv
+  Slett *.log, *.elg eldre enn 30 dager
+    *.log
+    *.elg
+    *.xml
+    *.txt
+    *.tgz
+
+[Expert@tv2-cp-fw1-2:0]# ls -lh /opt/CPInstLog | tail -n 10
+-rw-rw---- 1 admin root    27K Apr 11 14:11 sigTermLog_2022-04-11_14:11:08.log
+-rw-rw---- 1 admin root   1.1K Mar 26  2021 sourceDbEnv.conf
+drwxr-xr-x 5 admin root   4.0K Mar 26  2021 svn
+-rw-rw---- 1 admin root    61K Mar 20 21:54 tp_conf_autoupdate.elg
+-rw-r--r-- 1 admin root    320 May  5 04:03 ui_messages_ver2
+-rw-rw-r-- 1 admin root   2.1K Mar 26  2021 uninstall_SecurePlatform_R80_10_JUMBO_HF
+-rw-rw---- 1 admin root   2.6K Jan 28 00:37 uninstall_SecurePlatform_R80_40_JUMBO_HF_MAIN
+-rw-rw---- 1 admin root   1.2K Mar 26  2021 update_inspect_files_R80.10.log
+-rw-rw-r-- 1 admin root    704 Mar 26  2021 update_inspect_files_R80_10_JUMBO_HF.log
+-rw-rw---- 1 admin root    376 Jan 28 00:33 update_inspect_files_R80_40_JUMBO_HF.log
+[Expert@tv2-cp-fw1-2:0]#
+
+  
+
+
+[Expert@tv2-cp-fw1-2:0]# ./disk_usage.pl
+
+Directory size
+
+size: '3 GB'     Path: '/var/log/CPda/repository/CheckPoint#Major#All#6.0#5#1#R80.40_T294'
+size: '2 GB'     Path: '/tmp'
+size: '2 GB'     Path: '/var/CPsnapshot/log/snapshots'
+size: '1 GB'     Path: '/var/log/opt/CPsuite-R80.40/fw1/CTX/CTX00006'
+size: '1 GB'     Path: '/var/log/opt/CPsuite-R80.40/fw1/CTX/CTX00008'
+size: '1 GB'     Path: '/opt/CPsuite-R80.40/fw1/lib'
+size: '1 GB'     Path: '/var/log/opt/CPsuite-R80.40/fw1/CTX/CTX00003'
+size: '1 GB'     Path: '/var/log/CPda/repository/CheckPoint#CPUpdates#All#6.0#5#1#BUNDLE_R80_40_JUMBO_HF_MAIN#139'
+
+
+Press CTRL+D to continue
+
+
+
+Files in directory: /var/log/CPda/repository/CheckPoint#Major#All#6.0#5#1#R80.40_T294
+-rw-rw-r-- 1 3.7G 2021-12-10 01:07:19.000000000 +0100 "Check_Point_R80.40_T294_Fresh_Install_and_Upgrade.tgz"
+-rw-rw-r-- 1  504 2021-12-10 01:07:46.000000000 +0100 "description"
+
+
+Files in directory: /tmp
+-rw-r--r--  1  75M 2022-05-05 03:03:04.000000000 +0200 "tarBkp.elg"
+-rw-rw-r--  1  54M 2022-05-05 09:16:21.000000000 +0200 "zabbix_agentd.log"
+-rw-r--r--  1  38M 2022-04-12 03:01:41.000000000 +0200 "temp_tar_include_10094.txt1"
+-rw-r--r--  1  38M 2022-04-11 03:01:41.000000000 +0200 "temp_tar_include_28942.txt1"
+-rw-r--r--  1  38M 2022-04-13 03:01:41.000000000 +0200 "temp_tar_include_41119.txt1"
+-rw-r--r--  1  38M 2022-04-14 03:01:40.000000000 +0200 "temp_tar_include_18877.txt1"
+-rw-r--r--  1  38M 2022-04-15 03:01:41.000000000 +0200 "temp_tar_include_20931.txt1"
+-rw-r--r--  1  38M 2022-04-17 03:01:41.000000000 +0200 "temp_tar_include_40155.txt1"
+-rw-r--r--  1  38M 2022-04-18 03:01:41.000000000 +0200 "temp_tar_include_16937.txt1"
+
+
+Files in directory: /var/CPsnapshot/log/snapshots
+-rw-r--r-- 1  35M 2022-05-05 04:03:15.000000000 +0200 "snap_log_backup_050522040238.snapshot.log"
+-rw-r--r-- 1  35M 2022-05-04 02:03:06.000000000 +0200 "snap_log_backup_040522020230.snapshot.log"
+-rw-r--r-- 1  35M 2022-05-03 03:03:03.000000000 +0200 "snap_log_backup_030522030227.snapshot.log"
+-rw-r--r-- 1  35M 2022-05-02 02:03:12.000000000 +0200 "snap_log_backup_020522020236.snapshot.log"
+-rw-r--r-- 1  35M 2022-05-01 04:03:13.000000000 +0200 "snap_log_backup_010522040236.snapshot.log"
+-rw-r--r-- 1  35M 2022-04-30 02:03:03.000000000 +0200 "snap_log_backup_300422020227.snapshot.log"
+-rw-r--r-- 1  35M 2022-04-29 03:03:08.000000000 +0200 "snap_log_backup_290422030232.snapshot.log"
+-rw-r--r-- 1  35M 2022-04-28 02:03:10.000000000 +0200 "snap_log_backup_280422020234.snapshot.log"
+-rw-r--r-- 1  35M 2022-04-27 02:03:07.000000000 +0200 "snap_log_backup_270422020229.snapshot.log"
+-rw-r--r-- 1  35M 2022-04-26 03:03:07.000000000 +0200 "snap_log_backup_260422030231.snapshot.log"
+

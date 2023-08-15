@@ -1,0 +1,6 @@
+#All scripts in this folder will be downloaded to local computer in /usr/share/zabbix/repo/$ver/scripts/auto/
+#The script will be started with /usr/share/zabbix/repo/$ver/scripts/auto/SCRIPT --zabbix-test-run
+#The test will success if the data returned is "ZABBIX TEST OK"
+#Alert if this string is not found in the output of the script
+
+echo ZABBIX TEST OK

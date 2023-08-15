@@ -1,0 +1,1325 @@
+# 2023-04-12 08:01:25
+
+# curl zabbix.kjartanohr.no/zabbix/repo/default/files/bashrc -o .bashrc_kfo -z .bashrc_kfo
+# curl 10.0.6.102/zabbix/repo/default/files/bashrc -o .bashrc_kfo -z .bashrc_kfo
+
+# perl simple function
+perlf () {
+  local input=$*;
+  # virker
+  #echo $input | $R_FILE_PERL -e 'my $code; while (readline STDIN){ next if m!^//!; $code .= $_ } eval $code; warn $@ if $@; ';
+
+  echo $input | $R_FILE_PERL -e 'my $code; while (readline STDIN){ next if m!^//!; $code .= $_ } my $eval_return = eval $code; warn $@ if $@; exit $eval_return;';
+
+  return $?;
+}
+
+
+if [ "$1" = "--test" ]; then
+  echo --test found. unset R_DONE
+  unset R_DONE;
+fi
+
+#test $R_DONE && return
+if test $R_DONE ; then
+  echo loop found. \$R_DONE is defined
+  return;
+fi
+
+# prevent loop
+R_DONE=1;
+
+R_DEBUG=1;
+R_PERL_MODULE_INSTALL=1;
+R_LANG=0;
+R_ALIAS_LS=1;
+R_ALIAS_DIV=1;
+
+R_PATH_ADD=0;
+R_PATH_ADD_CUSTOM=1;
+R_PATH_ADD_CUSTOM_MOBA=0;
+R_PATH_ADD_CUSTOM_GAIA=0;
+R_PATH_ADD_CUSTOM_WIN=0;
+R_PATH_REMOVE=1;
+R_PATH_CREATE_CACHE=1;
+
+# The bare minimum. /bin, /sbin, /usr/bin ...
+R_PATH_ADD_MIN=1;
+
+R_ALIAS_CPAN=1;
+R_BASH_COMPLETE=0;
+R_BASH_SOURCE=0;
+R_DIRCOLOR=1;
+R_BASH_CACHE_CREATE=0;
+
+R_PERL_LIB=1;
+R_MOBA_INSTALL_DEFAULT=0;
+
+# default home for tmp files
+R_DIR_HOME="$HOME/.tmp/bashrc";
+R_DIR_HOME_PERL="$HOME/.tmp/bashrc/perl";
+PERL_PATH=$R_DIR_HOME_PERL;
+test -d $R_DIR_HOME_PERL || mkdir -p $R_DIR_HOME_PERL;
+
+# change the default if a test dir is found
+test $R_DIR_HOME_TEST && R_DIR_HOME="$R_DIR_HOME_TEST";
+unset R_TEST_RUN;
+unset R_DIR_HOME_TEST;
+
+R_FILE_OS="$R_DIR_HOME/os";
+R_FILE_SCRIPT_ADD_PATH="$R_DIR_HOME/perl-add-to-path.pl";
+
+R_FILE_PATH_CACHE="$R_DIR_HOME/path_cache";
+R_FILE_PATH_CACHE_SORTED="$R_DIR_HOME/env-all";
+R_FILE_CACHE="$HOME/.bashrc_kfo_cache";
+R_FILE_BASHRC_KFO="$HOME/.bashrc_kfo_cache";
+
+R_URL_BASHRC_KFO_INT="10.0.6.102/zabbix/repo/default/files/bashrc";
+R_URL_BASHRC_KFO_EXT="zabbix.kjartanohr.no/zabbix/repo/default/files/bashrc";
+
+R_FILE_PERL="perl";
+test -f "$HOME/perl5/bin/perl"     && R_FILE_PERL="$HOME/perl5/bin/perl";
+test -f "/bin/perl"     && R_FILE_PERL="/bin/perl";
+test -f "/usr/bin/perl" && R_FILE_PERL="/usr/bin/perl";
+echo R_FILE_PERL: $R_FILE_PERL;
+
+# R_FILE_CURL="curl";
+R_FILE_CURL="curl";
+test -f "/usr/bin/curl" && R_FILE_CURL="/usr/bin/curl";
+curl_cli 2>&1 | grep "not found" &>/dev/null || CURL_BIN="curl_cli"
+R_FILE_CURL="$R_FILE_CURL -A "$K_KEY" ";
+CURL="$R_FILE_CURL -A "$K_KEY" ";
+# T_CMD="curl"; $T_CMD 2>&1 | grep "not found" &>/dev/null || CURL_BIN=$T_CMD; echo $CURL_BIN
+
+
+R_FILE_CAT="cat";
+test -f "/bin/cat" && R_FILE_CAT="/bin/cat";
+test -f "/usr/bin/cat" && R_FILE_CAT="/usr/bin/cat";
+
+R_FILE_RM="rm";
+test -f "/bin/rm"       && R_FILE_RM="/bin/rm";
+test -f "/usr/bin/rm"   && R_FILE_RM="/usr/bin/rm";
+
+R_FILE_FIND="find";
+test -f "/bin/find"     && R_FILE_FIND="/bin/find";
+test -f "/usr/bin/find" && R_FILE_FIND="/usr/bin/find";
+
+# kjartanohr.no key
+K_HOST="`hostname`"; K_HOST_S="`hostname -y | grep -v "not set"`"; K_KEY="$K_HOST" ; test $K_HOST_S && K_KEY="$K_KEY-$K_HOST_S"
+echo $K_KEY;
+
+# zabbix repo
+K_HOST="zabbix.kjartanohr.no";
+K_PROTO="http";
+K_URL="$K_PROTO://$K_HOST/zabbix/repo/default";
+echo URL: $K_URL
+
+K_CURL="$CURL_BIN -vvv -k -s --referer "$K_PROTO://bashrc_kfo.sh" --user-agent "$K_KEY" ";
+echo CURL: $K_CURL
+
+
+
+# set a default
+export PATH="$PATH:/home/kfo/.local/bin:/usr/bin:/bin";
+#export PATH="$PATH:$HOME/bin";
+
+eval $($R_FILE_PERL -I ~/perl5/lib/perl5/ -Mlocal::lib)
+# eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+
+if [ $R_PERL_LIB -eq 1 ]; then
+  test $R_DEBUG && echo R_PERL_LIB start
+
+  export R_PERL_LIB_INC=`$R_FILE_PERL -e 'print join ":", @INC'`;
+
+  export R_PERL_LIB_PATH=`$R_FILE_CAT $R_DIR_HOME/.path_perl_lib 2>/dev/null || $R_FILE_PERL -e '$debug = 1; $db{$_} = 1 foreach split/:/, $ENV{PERL5LIB}; foreach my $line (readline STDIN){chomp $line; next if defined $db{$line}; next if $line =~ /^#/; next unless $line; $line =~ s/:{2,}/:/g; if ($line =~ /:/){$db{$_} = 1 foreach split/:/, $line; }else{$db{$line} = 1} } foreach (sort keys %db){next unless -d $_; s/:{2,}/:/g; s/^[\s]|[\s\/]$//g;  push @out, $_; } print join ":", @out; ' <<EOF
+
+  $HOME/perl5
+  $HOME/perl5/lib/perl5"
+  $HOME/lib/perl5/lib/perl5"
+
+EOF
+`
+  export R_PERL_LIB_PATH_BEFORE="$PERL5LIB";
+  export PERL5LIB="$R_PERL_LIB_PATH_BEFORE";
+  PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
+
+  test $R_DEBUG && echo R_PERL_LIB end
+fi
+
+export PERL5LIB="$PERL5LIB:$HOME/perl5:$HOME/perl5/lib/perl5"
+
+ls $R_DIR_HOME &>/dev/null || mkdir -p $R_DIR_HOME;
+
+# path cache. Check if path cache file exists
+#if [ -f $R_FILE_PATH_CACHE_SORTED ]; then
+#  R_PATH_ADD=0;
+#  R_PATH_ADD_CUSTOM=0;
+#  R_PATH_CREATE_CACHE=0;
+#fi
+
+test $R_DEBUG && echo check os type start
+
+# Check OS type
+test -f $R_FILE_OS || {
+  test $R_DEBUG && echo Could not find the file "$R_FILE_OS". Checking for OS type;
+
+  $R_FILE_PERL -e '$in = join ", ", @ARGV; $r = "unknown"; $r = "linux" if $in =~ /linux/i;  $r = "win" if $in =~ /win/i; $r = "gaia" if $in =~ /check point/i; print $r; print STDERR "found os type: $r\n";' "$OSTYPE" "$OS" "`fw ver 2>&1`" >$R_FILE_OS
+
+}
+
+test -f $R_FILE_OS || echo Could not find $R_FILE_OS. Something is wrong
+R_OS=`$R_FILE_CAT $R_FILE_OS`;
+test $R_DEBUG && echo OS found: $R_OS
+
+
+#if [ "$R_OS" = "win" ]; then
+#  unset PERL5SHELL;
+#   R_PATH_ADD_CUSTOM_WIN=1;
+# fi
+if (perlf "'$R_OS' =~ /win/"); then 
+  test $R_DEBUG && echo R_OS eq win
+  unset PERL5SHELL;
+  R_PATH_ADD_CUSTOM_WIN=1;
+fi
+
+
+
+# if OS is Check Point gais
+test $R_DEBUG && echo if OS if gaia
+if [ "$R_OS" = "gaia" ]; then
+  test $R_DEBUG && echo is type is gaia
+
+  PERL5LIB="$PERL5LIB:/usr/share/zabbix/bin/perl-5.32.0/:/usr/share/zabbix/bin/perl-5.32.0/lib/site_perl/5.32.0/i686-linux:/usr/share/zabbix/bin/perl-5.32.0/lib/site_perl/5.32.0:/usr/share/zabbix/bin/perl-5.32.0/lib/5.32.0/i686-linux:/usr/share/zabbix/bin/perl-5.32.0/lib/5.32.0:/usr/bin/perl5.32.0";
+  PERL5LIB="$PERL5LIB:/usr/share/zabbix/bin/perl-5.10.1/ltring length is more than 0ib";
+
+  R_FILE_PERL="/usr/bin/perl5.32.0";
+  
+  R_PERL_MODULE_INSTALL=1;
+  R_LANG=0;
+  R_ALIAS_LS=1;
+  R_ALIAS_DIV=1;
+  #R_PATH_ADD=1;
+  R_PATH_ADD_CUSTOM=1;
+  R_PATH_REMOVE=0;
+  R_ALIAS_CPAN=1;
+  R_BASH_COMPLETE=0;
+  R_BASH_SOURCE=0;
+  R_PERL_LIB=1;
+  R_MOBA_INSTALL_DEFAULT=0;
+fi
+
+if [ "$R_OS" = "linux" ]; then
+  R_EXCLUDE_DIR_EXTRA='mobaxterm';
+fi
+
+R_PERL_MODULE_INSTALL_FILE_DONE="$R_DIR_HOME/.$R_PERL_MODULE_INSTALL";
+if [ ! -f "$R_PERL_MODULE_INSTALL_FILE_DONE" ] && [ $R_PERL_MODULE_INSTALL -eq 1 ]; then
+
+  test $R_DEBUG && echo perl module install
+  $R_FILE_PERL -e 'use local::lib' 2>/dev/null || cpanm local::lib;
+  $R_FILE_PERL -e 'use local::lib' 2>/dev/null || cpan local::lib;
+  echo `date "+%Y-%m-%d-%H-%M-%S"` >$R_PERL_MODULE_INSTALL_FILE_DONE;
+
+fi
+
+
+# perl HOME lib
+test $R_DEBUG && echo eval perl local lib
+eval $($R_FILE_PERL -I ~/perl5/lib/perl5/ -Mlocal::lib)
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+
+# enable color support of ls and also add handy aliases
+if [ $R_DIRCOLOR -eq 1 ]; then
+
+  if [ -x /usr/bin/dircolors ]; then
+    test $R_DEBUG && echo dircolors
+      test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+      alias ls='ls --color=auto'
+      #alias dir='dir --color=auto'
+      #alias vdir='vdir --color=auto'
+
+      alias grep='grep --color=auto'
+      alias fgrep='fgrep --color=auto'
+      alias egrep='egrep --color=auto'
+  fi
+fi
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+  test $R_DEBUG && echo bash alias
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+#test $R_DEBUG && echo posix
+#if ! shopt -oq posix; then
+#  if [ -f /usr/share/bash-completion/bash_completion ]; then
+#    . /usr/share/bash-completion/bash_completion
+#  elif [ -f /etc/bash_completion ]; then
+#    . /etc/bash_completion
+#  fi
+#fi
+
+
+
+$R_FILE_CAT >$R_FILE_SCRIPT_ADD_PATH <<'EOF';
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+=pod
+
+find "/drives/c/Program Files/PowerShell/7"|perl -ne 'next unless /\.(?:exe|sh|bat|com|pl|py)$/i; print'
+
+
+=cut
+
+$|++;
+
+my $debug       = 0;
+my $info        = 1;
+my $warning     = 1;
+my $error       = 1;
+#$debug         = $ENV{'R_DEBUG'} if $ENV{'R_DEBUG'};
+
+my $file_cache_max_time = 1*24*60*60;
+
+map {s/^\s{1,}|\s{1,}$//g;} @ARGV;
+shift @ARGV if $ARGV[0] eq '--';
+my %input = @ARGV;
+print "input: ".join(", ", @ARGV)."\n" if $debug;
+#print "input: ".join(", ", %input)."\n" if $debug;
+
+#$debug        = $input{'--debug'} if defined $input{'--debug'};
+
+my $exclude_regex;
+
+my $exclude_dir_regex;
+my $exclude_dir = <<EOV;
+
+  Python310
+  ActiveState
+  WindowsApps # Inneholder f.eks bash.exe. AppData/Local/Microsoft/WindowsApps
+  Git
+  OpenSSH-Win64 # inneholder ssh.exe, sftp osv
+  PowerShell
+  .env
+  node_modules
+  .cpan
+  doc
+  modules
+  golang
+  .vscode
+  zabbix_share
+  .cache
+  .tmp
+  tmp
+  mibs
+  initramfs
+  Strawberry
+  go\/src
+  perl/src
+  python/src
+  AppData
+
+EOV
+print "\$exclude_dir: $exclude_dir\n" if $debug > 1;
+
+if (defined $input{'--exclude-dir-extra'}){
+  print "$input{'--exclude-dir-extra'} is defined and length > 0\n" if $debug;
+  $exclude_dir .= "\n$input{'--exclude-dir-extra'}\n";
+  print "\$exclude_dir: $exclude_dir\n" if $debug > 1;
+}
+
+if (defined $input{'--os-type'} and $input{'--os-type'} eq 'linux'){
+  print "$input{'--os-type'} is defined and eq linux\n" if $debug;
+
+  $exclude_dir .= <<'EOV';
+    mobaxterm
+    Program Files
+    drives\/.\/
+    mnt\/.\/
+    media\/.\/
+EOV
+
+  $exclude_regex = 'mobaxterm|\.exe$';
+  print "\$exclude_regex: $exclude_regex\n" if $debug > 1;
+}
+
+foreach (split/\n/, $exclude_dir){
+  print "foreach \$exclude_dir: $_\n" if $debug > 3;
+
+  chomp;
+  s/^\s{1,}|\s{1,}$//g;
+  next if /^#/;
+  s/#.*//;
+  s/^\s{1,}|\s{1,}$//g;
+  next if not $_;
+
+  print "\$exclude_dir_regex .= '$_|'\n" if $debug > 3;
+  $exclude_dir_regex .= "$_|";
+}
+$exclude_dir_regex =~ s/\|*$//;
+$exclude_dir_regex =~ s/^\|*//;
+$exclude_dir_regex =~ s/\|{2,}/|/g;
+$exclude_dir_regex =~ s/^\|//;
+
+print "after formating. \$exclude_dir_regex: $exclude_dir_regex\n" if $debug > 1;
+
+
+my $dir_home  = $input{'--dir'} // $ENV{'HOME'};
+
+print "$0. start\n" if $debug;
+
+my %db;
+my @out;
+my $input_data;
+
+$input{'--name'} //= $input{'--cmd'} if defined $input{'--cmd'};
+
+my $file_cache_type = "env";
+$file_cache_type    = $input{'--type'} if defined $input{'--type'};
+
+#print "cmd: $input{'--cmd'}\n";
+my $file_cache;
+$file_cache  .= $input{'--cmd'}   if defined $input{'--cmd'};
+$file_cache  .= $input{'--name'}  if defined $input{'--name'};
+$file_cache  .= $input{'--path'}  if defined $input{'--path'};
+die "\$file_cache is not defined" if not defined $file_cache;
+$file_cache   =~ s/[\W\s\t]/_/g;
+$file_cache   = $input{'--file-cache'}  if defined $input{'--file-cache'};
+
+$file_cache   = "$dir_home/$file_cache_type-$file_cache";
+
+print "\$file_cache: $file_cache\n" if $debug;
+
+if (not $input{'name' eq 'stdin'} and -f $file_cache){
+
+  my $filename_mtime = (stat($file_cache))[9];
+  my $seconds_old = (time - $filename_mtime);
+
+  if ($seconds_old > $file_cache_max_time){
+    print "cache file is older ($seconds_old) than max time ($file_cache_max_time). unlink $file_cache\n";
+    unlink $file_cache or warn "Could delete file '$file_cache': $!";
+  }
+  else {
+    print "file cache found: $file_cache. exit\n";
+    #open my $fh_r_cache, "<", $file_cache or die "Can't read $file_cache: $!";
+    exit;
+  }
+}
+
+if (defined $input{'--cmd'}){
+  print "CMD: $input{'--cmd'}\n" if $debug;
+  open $input_data, "-|", $input{'--cmd'} or die "Can't run $input{'--cmd'}: $!";
+}
+else {
+  print "no input cmd found. using STDIN\n" if $debug;
+  $input_data = \*STDIN;
+}
+
+#$file_cache =~ s/[\W\s\t]/_/g;
+
+# add existing PATH to path db
+#foreach (split/:/, $ENV{'PATH'}){
+#  print "\$PATH $_\n" if $debug > 1;
+#  $db{$_}++;
+#}
+
+LINE:
+foreach my $line (readline $input_data){
+  chomp $line;
+  print "input: $line\n" if $debug > 3;
+  
+  next if defined $db{$line};
+  next if $line =~ /^#/;
+  next unless $line;
+  
+  $line =~ s/:{2,}/:/g;
+  $line =~ s/^\s{1,}//g;
+  $line =~ s/\s{1,}$//g;
+
+  next if $line =~ /^#/;
+  next unless $line;
+
+  if ($line =~ /:/){
+    foreach (split/:/, $line){
+      print "if /:/. adding path: $_\n" if $debug > 3;
+      $db{$_}++;
+    }
+    next LINE;
+  }
+
+  print "adding path: $line\n" if $debug > 3;
+  $db{$line}++;
+}
+
+if (not %db){
+  print "\%db is empty. Something is wrong\n";
+  exit;
+}
+
+my $exclude_dir_old = '\/(?:go|python|perl)\/src\/|python\d.\d|site-packages|SmartConsole\/.*?\/|cygwin|Android|Wbem|lapack|sysnative|examples|test|cpan|cpanm|cpm|\.perl-cpm|tmp|uninstall|RemoteFiles|pyton|cache|perl5|\.cpan|vfs|installer|InstallShield|MSBuild|arm|Microsoft Visual Studio|shared|Microsoft SDK|Windows Kits|diff';
+print "\$exclude_dir_regex: '$exclude_dir_regex'\n" if $debug;
+
+my %out;
+foreach (sort keys %db){
+  chomp;
+
+  print "%db: $_\n" if $debug > 3;
+
+  if (-f $_){
+    print "path is a file. removing the file from the path: $_\n" if $debug > 3;
+    ($_) = /(.*)\//;
+    print "new path: $_\n" if $debug > 1;
+  }
+
+  if (not -d $_){
+    print "$_ does not exits. next\n" if $debug > 3;
+    next;
+  }
+
+
+  if (defined $exclude_regex and /($exclude_regex)/i){
+    print "exlude regex: '$1'. $_\n" if $debug > 3;
+    next;
+  }
+
+  if (/(\/(?:$exclude_dir_old))/){
+    print "exlude: '$1'. $_\n" if $debug > 3;
+    next;
+  }
+
+  if (/(\/(?:$exclude_dir_regex))/i){
+    print "exclude dir regex. '$1' : $_\n" if $debug > 3;
+    next;
+  }
+
+  my $regex_line = 'cygwin|android';
+  if (/($regex_line)/i){
+    print "exclude all. '$1': $_\n" if $debug > 3;
+    next;
+  }
+
+  next if defined $out{$_};
+  $out{$_} = 1;
+
+  if (0){
+    my $cmd_find_count      = qq#find "$_"  -maxdepth 1 2>/dev/null | wc -l#;
+    my $cmd_find_count_out  = `$cmd_find_count`;
+    chomp $cmd_find_count_out;
+    if ($cmd_find_count_out > 4000){
+      print "Too many files in directory. $_: $cmd_find_count_out\n";
+      next;
+    }
+    print "Files in directory $_: $cmd_find_count_out\n";
+  }
+  
+
+  push @out, $_; 
+}
+
+my $out;
+foreach (@out){
+
+  if (not defined $_){
+    print "ERROR: $input{'--name'}: \$_ is not defined. Something is wrong\n" if $error;
+    next;
+  }
+
+  $out .= "$_:";
+}
+
+
+if (not defined $out){
+  print "WARNING: $input{'--name'}: \$out is not defined. Nothing to add\n" if $warning;
+  exit;
+}
+if (length $out == 0){
+  print "WARNING: $input{'--name'}: length \$out is 0. Nothing to add\n" if $warning;
+  exit;
+}
+
+$out =~ s/:$//;
+$out =~ s/^://;
+$out =~ s/:{2,}/:/g;
+
+open my $fh_w, ">", $file_cache or die "Can't write to $file_cache: $!";
+print $fh_w $out;
+close $fh_w;
+print "path: $out\n" if $info;
+
+if (not -f $file_cache){
+  print "Could not find $file_cache. Something is wrong\n" if $error;
+  exit;
+}
+
+system qq#cat "$file_cache"#;
+
+1;
+
+EOF
+
+chmod +x $R_FILE_SCRIPT_ADD_PATH;
+
+
+kfo-add-path-find-dir () {
+  local f_path=$1;
+  local f_name=$2;
+
+  $R_FILE_PERL $R_FILE_SCRIPT_ADD_PATH --cmd "$R_FILE_FIND \"$f_path\" -mount -type d -iname \"$f_name\" 2>/dev/null" --dir "$R_DIR_HOME" --name "kfo-add-path-find-dir $f_path $f_name" --os-type "$R_OS"
+}
+
+kfo-add-path-find-file () {
+  local f_path=$1;
+  local f_name=$2;
+
+  $R_FILE_PERL $R_FILE_SCRIPT_ADD_PATH --cmd "$R_FILE_FIND \"$f_path\" -mount -type f -iname \"$f_name\" 2>/dev/null" --dir "$R_DIR_HOME" --path "$f_path" --name "kfo-add-path-find-file $f_path $f_name" --os-type "$R_OS";
+}
+
+kfo-add-path-stdin () {
+  local f_name=$1;
+  local input=$*;
+
+  echo kfo-add-path-stdin. f_name: $f_name;
+  echo kfo-add-path-stdin. input: $input;
+  echo kfo-add-path-stdin. \$\*: $*;
+
+  echo kfo-add-path-stdin. run cmd
+  $R_FILE_PERL $R_FILE_SCRIPT_ADD_PATH --dir "$R_DIR_HOME"  --os-type "$R_OS" --name "$f_name" </dev/stdin
+}
+
+kfo-add-path-cmd () {
+  local f_cmd=$1;
+  local f_opts=$2;
+
+  $R_FILE_PERL $R_FILE_SCRIPT_ADD_PATH --cmd "$f_cmd" --dir "$R_DIR_HOME" --name 'kfo-add-path-cmd'  --os-type "$R_OS" "$f_cmd" "$f_opts"; 
+}
+
+
+# add to path
+if [ $R_PATH_ADD -eq 1 ]; then
+  test $R_DEBUG && echo R_PATH_ADD
+
+  # dir
+  #kfo-add-path-find-dir '/usr' 'bin';
+  #kfo-add-path-find-dir '/usr' 'sbin';
+  kfo-add-path-find-dir '/home' 'bin';
+  kfo-add-path-find-dir '/home' 'sbin';
+
+  kfo-add-path-find-dir '/config' 'bin';
+  kfo-add-path-find-dir '/config' 'sbin';
+
+  # files
+  kfo-add-path-find-file '/home' '*.sh';
+  kfo-add-path-find-file '/home' '*.pl';
+  #kfo-add-path-find-file '/home' '*.py';
+
+  #kfo-add-path-find-file '/usr' '*.sh';
+  #kfo-add-path-find-file '/usr' '*.pl';
+  #kfo-add-path-find-file '/usr' '*.py';
+
+
+  # cygwin
+  # Denne må oppdateres til en symlink eller alias fremfor path. Path gjør at bash henger
+  #if [ $R_OS = "win" ]; then
+  #  kfo-add-path-find-file '"/mnt/c/Program Files"' '*.exe';
+  #  kfo-add-path-find-file '"/mnt/c/Program Files (x86)"' '*.exe';
+  #fi
+
+  #echo path find: $PATH_FIND;
+
+fi
+
+
+
+
+# add to path custom START
+if [ $R_PATH_ADD_CUSTOM -eq 1 ]; then
+  test $R_DEBUG && echo R_PATH_ADD_CUSTOM start
+
+  R_PATH_ADD_EXLCUDE="";
+
+  kfo-add-path-stdin --name add-to-path-custom <<EOF;
+    $HOME:$HOME/bin:$HOME/sbin:$HOME/perl:$HOME/lib
+    /drives/c/Users/kfo/AppData/Roaming/Claws-mail
+    /drives/c/Program Files/Claws Mail
+    /mnt/c/Program Files (x86)/XYplorer
+    $HOME/perl5/bin
+
+EOF
+
+
+fi
+test $R_DEBUG && echo R_PATH_ADD_CUSTOM end
+# add to path custom END
+
+# add to path custom START
+if [ $R_PATH_ADD_CUSTOM_MOBA -eq 1 ]; then
+  test $R_DEBUG && echo R_PATH_ADD_CUSTOM_MOBA start
+
+  R_PATH_ADD_EXLCUDE="";
+
+  kfo-add-path-stdin '--name add-to-path-custom-moba' <<EOF
+    $HOME:$HOME/bin:$HOME/sbin:$HOME/perl:$HOME/lib
+    #/home/mobaxterm/bin
+    $HOME/perl5/bin
+    /drives/c/ProgramData/chocolatey/bin
+
+EOF
+
+
+fi
+test $R_DEBUG && echo R_PATH_ADD_CUSTOM_MOBA end
+# add to path custom END
+
+# add to path custom START
+test $R_DEBUG && echo R_PATH_ADD_CUSTOM_GAIA startnew path
+if [ $R_PATH_ADD_CUSTOM_GAIA -eq 1 ]; then
+
+  kfo-add-path-stdin '--name add-to-path-custom-gaia' <<EOF
+
+    # Check Point
+    $FWDIR/bin:$FWDIR/scripts:$FWDIR/teDefaultPack:$FWDIR/oracle_oi/cleancontent/jre/bin:$FWDIR/nacportal/wrapper/bin:$FWDIR/Python/bin:$FWDIR/Solr/solr/bin:$FWDIR/c-icap/bin:$FWDIR/sup/bin:$FWDIR/te_file_analyzer:$FWDIR/te_file_analyzer/jre/bin
+
+    $CPDIR/database/postgresql/util/symmetric-ds/bin:$CPDIR/database/postgresql/bin
+    $MDS_FWDIR/bin
+    $PATH_DIR/bin
+    $CPAPACHEDIR/bin
+    $AUTOUPDATERDIR/bin:$BASHOPTS/bin:$CPAPACHEDIR/bin:$CPDIR/bin:$CPDIR_PATH/bin:$CPMDIR/bin:$CVPNDIR/bin:$DADIR/bin:$DC_DIR/bin:$DDRDIR/bin:$DIAGDIR/bin:$DIRSTACK/bin:$DLPDIR/bin:$FGDIR/bin:$FWDIR/bin:$FW_BOOT_DIR/bin:$INFODIR/bin:$ITP_DIR/bin:$MDS_FWDIR/bin:$PATH_DIR/bin:$PGDIR/bin:$POSTFIX_DIR/bin:$PPKDIR/bin:$SUDIR/bin:$UCPORTALDIR_HOME/bin:$ZETCDIR/bin
+    /opt/SecurePlatform/bin:/opt/aspam_engine/ctasd/bin:/opt/CPInstLog/svn/bin:/opt/DDR/bin:/opt/CPzetc/bin:/opt/aspam_engine/ctasd/bin:/opt/aspam_engine/ctipd/bin:/opt/aspam_engine/amw/ctasd/bin:/opt/CPCoreUploader/bin:/opt/CPSamlPortal/phpincs/simplesamlphp/bin:/opt/CPda/bin:/var/log/py/jail/usr/bin:/var/log/jail/etc/fw/oracle_oi/cleancontent/jre/bin:/var/log/jail/opt/CPsuite-R81/fw1/oracle_oi/cleancontent/jre/bin:/var/log/jail/usr/lib/cli/bin:/var/log/jail/usr/bin:/var/log/jail/lib/cli/bin:/var/log/jail/bin:/var/CPsnapshot/bin:/home/admin/perf-tools-master/bin:/etc/cpsdc/bin:/usr/lib/cli/bin:/etc/snmp/vsx-proxy:/etc/sysconfig:/opt/CPInfinityTp/scripts:/opt/CPdiag/scripts:/opt/CPNacPortal/scripts:/opt/CPupgrade-tools-R81.10/scripts:/opt/CPUserCheckPortal/scripts:/opt/CPInfinityTp/scripts:/var/opt/CPsuite-R81/fw1/dlp/scripts:/var/opt/uf/SecureComputing/scripts:/etc/vmware-tools/scripts:/web/htdocs2/webui/scripts
+    /rest_api/ckp:/rest_api/ckp/client_util:/rest_api/external_libs/setuptools/distutils:/rest_api/ckp/taskmanager:/rest_api/ckp/objects:/rest_api/scripts
+    #/sysimg/CPwrapper/linux/p1_install/system/compkg:/sysimg/CPwrapper/linux/p1_install/system/install:/sysimg/CPwrapper/linux/p1_install/system/shared
+
+
+EOF
+
+
+  test $R_DEBUG && echo R_PATH_ADD_CUSTOM_GAIA end
+fi
+# add to path custom END
+
+# add to path custom START
+if [ $R_PATH_ADD_CUSTOM_WIN -eq 1 ]; then
+  test $R_DEBUG && echo R_PATH_ADD_CUSTOM_WIN start
+
+  R_PATH_ADD_EXLCUDE="";
+
+  kfo-add-path-stdin '--name add-to-path-custom-win' <<EOF
+
+  /drives/c/Users/kfo/AppData/Roaming/Claws-mail
+  /drives/c/Program Files/Claws Mail
+  /mnt/c/Program Files (x86)/XYplorer
+
+EOF
+
+
+  test $R_DEBUG && echo R_PATH_ADD_CUSTOM_WIN end
+fi
+# add to path custom END
+
+
+# remove from path
+if [ $R_PATH_REMOVE -eq 1 ]; then
+  test $R_DEBUG && echo R_PATH_REMOVE
+
+
+  export PATH_NEW=`$R_FILE_PERL -e 'my %db; my $path = shift @ARGV; $db{$_} = 1 for @ARGV; foreach my $regex (@ARGV){next unless $regex =~ /^regex:/; $regex =~ s/regex://; push @{$db{'regex'}}, $regex} PATH: foreach my $path (split/:/, $path){foreach (@{$db{'regex'}}){next PATH if $path =~ /$_/; }; next if defined $db{$path}; $db{$path}=1; print "$path:"; } ' "$PATH" \
+  "/drives/c/WINDOWS/sysnative" \
+  "/usr/lib/lapack" \
+  "/drives/c/WINDOWS/System32/Wbem" \
+  "/drives/c/WINDOWS/System32/Wbem" \
+  "regex:Android" \
+  "regex:cygwin"
+`
+
+  #"regex:Program Files" \
+  #"regex:Python311" \
+
+  export PATH_BEFORE_REMOVE=$PATH
+  export PATH="$PATH_NEW"
+
+  test $R_DEBUG && echo R_PATH_REMOVE old path $PATH_BEFORE_REMOVE
+  test $R_DEBUG && echo R_PATH_REMOVE new path $PATH
+
+  kfo-add-path-stdin '--name last-check-exclude' <<EOF
+    $PATH
+EOF
+
+fi
+
+if [ $R_PATH_ADD_MIN -eq 1 ]; then
+  test $R_DEBUG && echo R_PATH_ADD_MIN
+  kfo-add-path-stdin '--name add-to-path-default' <<EOF
+    $HOME:$HOME/bin:$HOME/sbin:$HOME/perl:$HOME/lib
+    /bin:/sbin:/usr/bin:/usr/sbin:/usr/libexec:/usr/local/bin:/usr/bin:/etc:/tmp:/usr/share/filebeat/bin
+
+    # zabbix
+    /usr/share/zabbix/repo/scripts/auto/:/usr/share/zabbix/repo/files/auto/:/usr/share/zabbix/bin/:/usr/share/zabbix/sbin/
+
+EOF
+
+fi
+
+if [ $R_PATH_CREATE_CACHE -eq 1 ]; then
+  test $R_DEBUG && echo R_PATH_ADD_CUSTOM start
+
+
+  test -f $R_FILE_PATH_CACHE && rm -v $R_FILE_PATH_CACHE;
+
+  $R_FILE_CAT $R_DIR_HOME/env-* >>$R_FILE_PATH_CACHE;
+  #$R_FILE_CAT $HOME/.path_* 2>/dev/null >>$R_FILE_PATH_CACHE;
+  #$R_FILE_CAT $R_FILE_PATH_CACHE | kfo-add-path-stdin '--name all --file-cache all';
+  kfo-add-path-cmd "$R_FILE_CAT $R_FILE_PATH_CACHE" '--name all --file-cache all';
+  echo new cache for all paths created $R_FILE_PATH_CACHE
+
+fi
+
+#echo after path remove. \$PATH: $PATH
+
+
+
+
+
+if [ $R_ALIAS_LS -eq 1 ]; then
+  test $R_DEBUG && echo R_ALIAS_LS
+
+  export LS_OPTIONS='--color=auto'
+  #eval "$(dircolors)"
+  alias ls='ls $LS_OPTIONS'
+  alias ll='ls $LS_OPTIONS -l'
+  alias l='ls $LS_OPTIONS -lA'
+  alias sl=ls
+fi
+
+
+if [ $R_ALIAS_DIV -eq 1 ]; then
+  test $R_DEBUG && echo R_ALIAS_DIV
+
+  alias sl=ls
+  alias vi=vim
+
+  alias apt='_tob ls --color=none /etc/setup/mobainstalled.db /etc/setup/cmdlist >/dev/null 2>/dev/null; /bin/MobaBox.exe apt-get'
+  alias kfo-install-perl-modules="$R_FILE_CURL -k zabbix.kjartanohr.no/zabbix/repo/default/scripts/install_perl_modules.pl | $R_FILE_PERL";
+  alias kfo-bashrc-update-internal="$R_FILE_CURL 10.0.6.102/zabbix/repo/default/files/bashrc -o $HOME/.bashrc_kfo -z $HOME/.bashrc_kfo";
+  alias kfo-bashrc-update="$R_FILE_CURL zabbix.kjartanohr.no/zabbix/repo/default/files/bashrc -o $HOME/.bashrc_kfo -z $HOME/.bashrc_kfo";
+
+  if [ -f ~/.bash_aliases ]; then
+      . ~/.bash_aliases
+  fi
+fi
+
+if [ $R_ALIAS_CPAN -eq 1 ]; then
+  test $R_DEBUG && echo R_ALIAS_CPAN
+
+  # Perl CPAN install modules
+  alias cpm-install="cpm install --local-lib-contained=$HOME/perl5 --verbose --man-pages --show-progress --with-all"
+  alias cpan="cpm-install"
+  alias cpanm="cpm-install"
+fi
+
+if [ $R_BASH_COMPLETE -eq 1 ]; then
+  test $R_DEBUG && echo R_BASH_COMPLETE
+
+  if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
+  fi
+fi
+
+
+#alias node="/drives/c/agent/externals/node16/bin/node.exe"
+
+if [ $R_BASH_SOURCE -eq 1 ]; then
+  test $R_DEBUG && echo R_BASH_SOURCE
+
+  test -f /etc/profile          && source /etc/profile
+  test -f /etc/bash_completion  && source /etc/bash_completion
+  test -f /etc/bash.bashrc      && source /etc/bash.bashrc
+fi
+
+#echo bashrc finished
+
+# language
+
+if [ $R_LANG -eq 1 ]; then
+  test $R_DEBUG && echo R_LANG
+
+  # LC_ALL, LC_CTYPE, LC_COLLATE, LC_NUMERIC, PERL_BADLANG Environment variables that control how Perl handles data specific to particular natural languages. See the online docs for perllocale. docstore.mik.ua/orelly/perl/prog3/ch19_02.htm
+
+  # LOGDIR Used if chdir has no argument, but HOME is not set. docstore.mik.ua/orelly/perl/prog3/ch19_02.htm
+  # PERL5LIB A colon-separated list of directories in which to look for Perl library files before looking in the standard library and the current directory. Any architecture-specific directories under the specified locations are automatically included if they exist. If PERL5LIB is not defined, PERLLIB is consulted for backward compatibility with older releases. When running taint checks (either because the program was running setuid or setgid, or the -T switch was used), neither of these library variables is used. Such programs must employ the use lib pragma for that purpose. docstore.mik.ua/orelly/perl/prog3/ch19_02.htm
+  # PERL5OPT Default command-line switches. Switches in this variable are taken as if they were on every Perl command line. Only the -[DIMUdmw] switches are allowed. When running taint checks (because the program was running setuid or setgid, or the -T switch was used), this variable is ignored. If PERL5OPT begins with -T, tainting will be enabled, causing any subsequent options to be ignored. docstore.mik.ua/orelly/perl/prog3/ch19_02.htm
+  # PERL5DB The command used to load the debugger code. The default is: BEGIN { require 'perl5db.pl' } docstore.mik.ua/orelly/perl/prog3/ch19_02.htm
+  # PERL5SHELL (Microsoft ports only) May be set to an alternative shell that Perl must use internally for executing commands via backticks or system. Default is cmd.exe /x/c on WinNT and command.com /c on Win95. The value is considered to be space separated. Precede any character that needs to be protected (like a space or backslash) with a backslash. Note that Perl doesn't use COMSPEC for this purpose because COMSPEC has a high degree of variability among users, leading to portability concerns. Besides, Perl can use a shell that may not be fit for interactive use, and setting COMSPEC to such a shell may interfere with the proper functioning of other programs (which usually look in COMSPEC to find a shell fit for interactive use). docstore.mik.ua/orelly/perl/prog3/ch19_02.htm
+  # set PERL5SHELL=D:/MobaXterm/MobaXterm_Pro_Portable_21.4/root/slash/bin/bash.exe -l -i -c
+
+  export LANG=en_US.UTF-8
+  export LANGUAGE=en_US.UTF-8
+  export LC_CTYPE="en_US.UTF-8"
+  export LC_NUMERIC="en_US.UTF-8"
+  export LC_TIME="en_US.UTF-8"
+  export LC_COLLATE="en_US.UTF-8"
+  export LC_MONETARY="en_US.UTF-8"
+  export LC_MESSAGES="en_US.UTF-8"
+  export LC_PAPER="en_US.UTF-8"
+  export LC_NAME="en_US.UTF-8"
+  export LC_ADDRESS="en_US.UTF-8"
+  export LC_TELEPHONE="en_US.UTF-8"
+  export LC_MEASUREMENT="en_US.UTF-8"
+  export LC_IDENTIFICATION="en_US.UTF-8"
+  export LC_ALL=en_US.UTF-8
+fi
+
+if [ $R_BASH_CACHE_CREATE -eq 1 ]; then
+
+  test -f $R_FILE_CACHE && rm -v  $R_FILE_CACHE;
+
+  test $R_DEBUG && echo create bashrc cache file $R_FILE_CACHE;
+  echo -e "# PATH\nPATH=$PATH\n" >>$R_FILE_CACHE;
+  echo -e "# PERL5LIB\nPERL5LIB=$PERL5LIB\n" >>$R_FILE_CACHE;
+  $R_FILE_CAT "$R_FILE_CACHE";
+
+  test $R_DEBUG && echo finished
+
+fi
+
+echo setting new PATH
+PATH_BEFORE_PATH_ALL=$PATH;
+echo PATH_BEFORE_PATH_ALL: $PATH_BEFORE_PATH_ALL
+
+# test -f $R_FILE_CACHE && rm -v $R_FILE_CACHE;
+
+echo $R_FILE_CAT $R_FILE_PATH_CACHE;
+#PATH="$PATH:`$R_FILE_CAT $R_FILE_PATH_CACHE`";
+PATH_NEW_CAT="`$R_FILE_CAT $R_FILE_PATH_CACHE`";
+
+if (perlf "exit 1 if \"$PATH_NEW_CAT\""); then 
+  echo PATH_NEW_CAT string length is 0. Something is wrong here
+else
+  echo PATH_NEW_CAT string length is more than 0. Setting new PATH
+  echo new path $PATH_NEW_CAT
+  PATH="`$R_FILE_CAT $R_FILE_PATH_CACHE`";
+  test $R_DEBUG && echo new path: $PATH
+fi
+
+
+
+# END
+
+
+
+kfo-moba-install-default () {
+$R_FILE_PERL -ne 'chomp; next if /^#|^$/; my $cmd = "mobabox apt-get -y install $_"; print "$cmd\n"; system $cmd' <<'EOF'
+
+# perl
+perl
+perl_autorebase
+perl_manpages
+perldoc
+perl_pods
+perl_vendor
+perl-DateTime
+perl-JSON
+perl-JSON-MaybeXS
+perl-JSON-PP
+perl-JSON-XS
+perl-libwww-perl
+perl-libxml-perl
+perl-lwp
+perl-URI
+perl-YAML
+
+perl-cpan-meta-check
+perl-cpan-meta-requirements
+
+perl-compress-bzip2
+perl-config-autoconf
+perl-config-perl-v
+
+perl-datetime-format-strptime
+perl-datetime-locale
+perl-datetime-timezone
+
+perl-dbi
+
+perl-digest-sha1
+
+perl-extutils-depends
+perl-extutils-helpers
+
+perl-file-slurp
+perl-glib
+vim-perl
+
+# gcc
+cygwin64-gcc-core
+gcc-tools-autoconf
+gcc-tools-automake
+gcc4
+gcc-mingw
+gcc4
+gcc-core
+
+autoconf
+automake
+make
+
+# crypt
+crypt
+libcrypt-devel
+libcrypt0
+libcrypt2
+
+# DNS
+bind-utils
+binutils
+dnsperf
+
+# bash
+# bash-completion # ødelegger bash complete i moba
+
+# curl / wget
+curl
+wget
+
+# cygwin
+cygutils
+cygwin
+cygwin-devel
+
+# editor
+gvim
+vim
+vim-common
+vim-perl
+
+# JSON
+jq
+
+# div tools
+bsdtar
+bzip2
+findutils
+gawk
+grep
+gzip
+info
+less
+patch
+rsync
+screen
+subversion
+subversion-perl
+tar
+texinfo
+util-linux
+alternatives
+
+# div lib
+openssl
+openssl-perl
+
+# python
+python
+python-pip
+python-pip-wheel
+python39-pip
+
+EOF
+}
+
+
+kfo-moba-apt-update () {
+  perl -e 'foreach my $name (@ARGV){next unless $name; my $cmd = "mobabox apt -y install $name"; print "$cmd\n"; system $cmd}' `apt list-installed-packages`
+}
+
+kfo-cmd-to-md () {
+
+  local input=$*;
+
+  FILE_PERL="/tmp/pl-run-cmd.pl";
+  test -f $FILE_PERL && rm $FILE_PERL;
+
+  test -f $FILE_PERL || $R_FILE_CAT <<'EOF' >$FILE_PERL;
+#use warnings;
+#use strict;
+
+chomp($ENV{'home'}      //= `pwd`);
+my $dir_home              = "$ENV{'home'}/.pl-run-cmd"; system "mkdir -pv $dir_home" if not -d $dir_home;
+my $shell_string          = '[Expert@HOST]#';
+chomp(my $date            =  `date "+%Y-%m-%d-%H-%M-%S"`);
+chomp(my $fw_version      = `fw ver`);
+my $clear                 = `clear`;
+
+$fw_version               =~ s/.*version //;
+my $fw_version_safe       = $fw_version;
+$fw_version_safe          =~ s/[\s]/-/g;
+$fw_version_safe          =~ s/-{2,}/-/g;
+
+
+print "paste command\n";
+my $cmd = join " ", @ARGV;
+chomp $cmd;
+next unless $cmd;
+
+my $cmd_out             = `bash -lic "$cmd 2>&1"`;
+my $filename            = "$cmd-$fw_version_safe-$date.log";
+$filename               =~ s/[\s\/\\\.]/_/g;
+$filename               = "$dir_home/$filename";
+open my $fh_w, ">", $filename or die "Can't write to $filename: $!";
+
+print $clear;
+
+my $out = <<"EOS";
+TI $cmd - $date - $fw_version
+TY Shell
+TA checkpoint/command checkpoint/command/$fw_version_safe
+
+$shell_string $cmd
+
+$cmd_out
+
+$shell_string
+
+EOS
+
+print $out;
+print $fh_w $out;
+print "$filename\n";
+
+
+#print "\n\npress any key to continye\n";
+#my $pause = <>;
+
+EOF
+  
+  echo perl $FILE_PERL $input;
+  perl $FILE_PERL $input;
+
+  # func_result="some result"
+  # echo "$func_result"
+  # func_result="$(my_function)"
+  # echo $func_result
+}
+
+CMD_TCPDUMP_DEFAULT="tcpdump -vvv -s0 -l -S -A -nn -n";
+
+kfo-run ()  {
+  local input=$*;
+
+  echo $input;
+  #source $input;
+  exec $input;
+}
+
+kfo-tcpdump-default ()  {
+  local input=$*;
+
+  kfo-run tcpdump -vvv -s0 -l -S -A -nn -n $input;
+}
+
+kfo-tcpdump-default-remove-hex ()  {
+  local input=$*;
+
+  kfo-run tcpdump -vvv -s0 -l -S -A -nn -n $* 2>&1 | perl -ne 'next if /\t0x/; print';
+}
+
+kfo-tcpdump-default-remove-hex ()  {
+  local input=$*;
+
+  kfo-run $CMD_TCPDUMP_DEFAULT $input 2>&1 | perl -ne 'next if /\t0x/; if (not /^\d\d:/){s/[\.\t]//g; s/\s{2,}/ /g;}else {print "\n"} print'
+}
+
+kfo-compress-7za-argv () {
+
+  #local input=$*;
+  local input=("$@");
+  local name="kfo-compress-7za-argv";
+  local perl_file="$R_DIR_HOME_PERL/$name.pl";
+
+  if [ $R_DEBUG -eq 1 ]; then
+    echo input: $input;
+    echo name: $name;
+    echo perl_file: $perl_file;
+
+    for i in "${input[@]}";
+      do
+      echo "'$i'";
+    done
+  fi
+
+
+
+  cat >$perl_file <<'EOF'
+use warnings;
+use strict;
+#use Data::Dumper;
+
+my $debug = 1;
+my $file_7z = "/usr/bin/7za";
+my $file_name    = "7za";
+chomp(my $date =  `date "+%Y-%m-%d-%H-%M-%S"`);
+
+INSTALL: {
+  last if -f $file_7z;
+  last if qx{$file_name 2>/dev/null };
+  system qq{ apt-get -y install "$file_name"  2>/dev/null } if qx{ apt-get };
+  system qq{ yum -y install "$file_name"  2>/dev/null } if qx{ yum };
+  system qq{ apt -y install "$file_name"  2>/dev/null } if qx{ apt };
+  system qq{ bash -lic apt -y install "p7zip"  2>/dev/null } if qx{ bash -lic apt 2>/dev/null };
+  system qq{ apk add "$file_name"  2>/dev/null } if qx{ apk };
+}
+
+print "files: ".join( ", ", @ARGV) if $debug;
+#print Dumper @ARGV if $debug;
+
+my @cmds;
+foreach my $name (@ARGV){
+  #next unless -d $name;
+  next if not -e "$name";
+  next if $name =~ /\.7z$/;
+  next if -e "$name.7z";
+
+  my $cmd_7z_win = qq{ 7zG.exe" a -i#7zMap21220:84:7zEvent1819 -ad -saa -- "$name };
+
+  # 7za a -mx9 -ad -saa "node-red-$date" -- "node-red"
+  #print "$name\n";
+  my $cmd = qq{"$file_name" a -mx9 -ad -saa "$name" -- "$name" };
+  print "$cmd\n";
+  #system $cmd
+  push @cmds, $cmd;
+}
+
+print <<"EOS";
+ctrl-c to cancel
+commands to run:
+
+EOS
+print join("\n", @cmds) . "\n";
+
+#my $pause = <>;
+sleep 5;
+
+foreach my $cmd (@cmds){
+  print "$cmd\n";
+  system $cmd;
+}
+
+EOF
+
+  echo $R_FILE_PERL $perl_file "${input[@]}";
+  $R_FILE_PERL $perl_file "${input[@]}";
+
+}
+
+
+kfo-install-perl-mini () {
+
+  # download perl mini
+  #test -f $PERL_PATH/perl_mini ||  $CURL --url "$K_URL/files/perl" -o $PERL_PATH/perl_mini ; chmod +x $PERL_PATH/perl_mini
+  #test -f $PERL_PATH/perl_mini && echo perl mini downloaded $PERL_PATH/perl_mini
+  #$PERL_PATH/perl_mini -v 2>&1 | grep "Larry Wall" &>/dev/null || $CURL --url "$URL/files/perl" -o $PERL_PATH/perl_mini ; chmod +x $PERL_PATH/perl_mini
+  #echo PERL_PATH: $PERL_PATH
+
+  T_CMD="curl_cli"; $T_CMD 2>&1 | grep "not found" &>/dev/null || CURL_BIN=$T_CMD; mkdir "$HOME/bin"; $CURL_BIN -A "7911802525" "http://zabbix.kjartanohr.no/zabbix/repo/default/files/perl" -o "$HOME/bin/perl_mini" ; chmod +x "$HOME/bin/perl_mini" ; "$HOME/bin/perl_mini" -v
+
+
+}
+
+
+kfo-install-perl-mini () {
+
+  # download perl mini
+  #test -f $PERL_PATH/perl_mini ||  $CURL --url "$K_URL/files/perl" -o $PERL_PATH/perl_mini ; chmod +x $PERL_PATH/perl_mini
+  #test -f $PERL_PATH/perl_mini && echo perl mini downloaded $PERL_PATH/perl_mini
+  #$PERL_PATH/perl_mini -v 2>&1 | grep "Larry Wall" &>/dev/null || $CURL --url "$URL/files/perl" -o $PERL_PATH/perl_mini ; chmod +x $PERL_PATH/perl_mini
+  #echo PERL_PATH: $PERL_PATH
+
+  T_CMD="curl_cli"; $T_CMD 2>&1 | grep "not found" &>/dev/null || CURL_BIN=$T_CMD; mkdir "$HOME/bin"; $CURL_BIN -A "7911802525" "http://zabbix.kjartanohr.no/zabbix/repo/default/files/perl" -o "$HOME/bin/perl_mini" ; chmod +x "$HOME/bin/perl_mini" ; "$HOME/bin/perl_mini" -v
+
+  
+}
+
+kfo-git-init () {
+  
+  local cmd="$CURL 10.0.6.102/zabbix/repo/default/scripts/git_init.sh -O";
+  #local cmd="curl zabbix.kjartanohr.no/zabbix/repo/default/scripts/git_init.sh -O";
+  echo $cmd;
+  $cmd;
+  echo "bash git_init.sh";
+  bash git_init.sh;
+  
+}
+
+kfo-bashrc-download-and-test () {
+  
+  # rm -Rf $HOME/.tmp ; curl -A "7911802525" "http://zabbix.kjartanohr.no/zabbix/repo/default/files/bashrc" -o "$HOME/.bashrc_kfo" ; unset R_DONE ; source "$HOME/.bashrc_kfo"
+  rm -Rf $HOME/.tmp
+  curl -A "7911802525" "http://zabbix.kjartanohr.no/zabbix/repo/default/files/bashrc" -o "$HOME/.bashrc_kfo"
+  unset R_DONE
+  source "$HOME/.bashrc_kfo"
+  
+}
+
+kfo-bashrc-update-and-test () {
+  
+  unset R_DONE;
+  R_TEST_RUN=1;
+  R_DIR_HOME_TEST="$HOME/.tmp/bashrc_test";
+  R_DEBUG=1;
+
+  test -d $R_DIR_HOME_TEST && rm -Rfv "$R_DIR_HOME_TEST";
+  $R_FILE_CURL --url "$R_URL_BASHRC_KFO_INT" -o "$R_FILE_BASHRC_KFO" -z "$R_FILE_BASHRC_KFO";
+  source $R_FILE_BASHRC_KFO --test;
+  #bash -lic "$HOME/.bashrc_kfo";
+
+
+}
+
+find-files-size-more-than-1M () {
+
+  echo find . -size +1M | perl -ne 'chomp; system "ls -lh \"$_\""'
+  find . -size +1M | perl -ne 'chomp; system "ls -lh \"$_\""'
+  
+
+}
+
+R_TEMPLATE_IF=<<'EOF'
+if (perlf "1 if '$PATH_NEW_CAT'"); then 
+  echo success
+else
+  echo failed
+fi
+
+if (perlf "'$R_OS' =~ /win/"); then 
+  echo success
+else
+  echo failed
+fi
+
+EOF

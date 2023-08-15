@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+#bin
+
+export PYTHONHTTPSVERIFY=0
+python /usr/share/zabbix/repo/files/auto/speedtest-cli

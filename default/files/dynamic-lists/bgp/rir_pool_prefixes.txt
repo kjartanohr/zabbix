@@ -1,0 +1,37 @@
+# rir_pool_prefixes.txt
+#Generated at 06-05-2018 08:01:19
+# Per prefix breakdown of the RIR pool (number of prefixes of each size)
+# Column 1 - prefix size
+# Column 2 - Total number of prefixes of this size in the RIR Pool
+# Column 3 - Number of Prefixes of this size held by APNIC
+# Column 4 - Number of Prefixes of this size held by ARIN
+# Column 5 - Number of Prefixes of this size held by RIPENCC
+# Column 6 - Number of Prefixes of this size held by LACNIC
+# Column 6 - Number of Prefixes of this size held by AFRINIC
+# Column 7 - Number of Prefixes of this size held by IANA
+#
+8 28 2 23 3 0 0 0
+9 16 1 13 1 0 1 0
+10 56 22 24 10 0 0 0
+11 150 50 57 28 4 11 0
+12 344 120 122 61 15 26 0
+13 600 228 189 129 21 33 0
+14 1352 446 387 276 195 48 0
+15 1934 618 562 511 196 47 0
+16 11959 1774 6315 3100 546 224 0
+17 3525 756 1069 1305 308 87 0
+18 5634 1005 1991 2045 421 172 0
+19 12083 1843 3870 5227 801 342 0
+20 15673 2062 5652 5431 2191 337 0
+21 16066 1911 4254 8204 1356 341 0
+22 54121 16740 7384 22103 7014 880 0
+23 17136 3683 5218 7643 411 181 0
+24 53772 9303 25601 16413 1435 1018 2
+25 103 0 0 103 0 0 0
+26 59 0 0 59 0 0 0
+27 51 0 0 51 0 0 0
+28 13 0 0 13 0 0 0
+29 18 0 0 18 0 0 0
+30 0 0 0 0 0 0 0
+31 0 0 0 0 0 0 0
+32 0 0 0 0 0 0 0

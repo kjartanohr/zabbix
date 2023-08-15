@@ -1,0 +1,1 @@
+../dns_objects_c_ptr.sh

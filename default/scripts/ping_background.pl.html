@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>/usr/share/zabbix/repo/default/scripts/ping_background.pl.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="perl">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,prevent_copy=">
+<meta name="colorscheme" content="none">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #ffffff; background-color: #000000; }
+body { font-family: monospace; color: #ffffff; background-color: #000000; }
+* { font-size: 1em; }
+.Comment { color: #00ffff; font-weight: bold; }
+.Constant { color: #ff40ff; font-weight: bold; }
+.Special { color: #ff6060; font-weight: bold; }
+.Identifier { color: #00ffff; font-weight: bold; }
+.Statement { color: #ffff00; font-weight: bold; }
+.PreProc { color: #8080ff; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="PreProc">#!/bin/perl</span>
+
+<span class="PreProc">BEGIN</span>{<span class="Statement">push</span> <span class="Identifier">@INC</span>,<span class="Constant">&quot;</span><span class="Constant">/usr/share/zabbix/bin/perl-5.10.1/lib</span><span class="Constant">&quot;</span>}
+
+<span class="Comment">#use warnings;</span>
+<span class="Statement">use </span>Time::Piece;
+<span class="Statement">use </span>Fcntl <span class="Constant">qw(</span><span class="Constant">:flock SEEK_END</span><span class="Constant">)</span>;
+
+<span class="Identifier">$debug</span>             = <span class="Constant">0</span>;
+<span class="Identifier">$|</span>++;
+
+<span class="Comment">#Zabbix test that will have to print out zabbix test ok. If not, the script will not download</span>
+<span class="Statement">if</span> (<span class="Identifier">$ARGV[</span><span class="Constant">0</span><span class="Identifier">]</span> <span class="Statement">eq</span> <span class="Constant">&quot;</span><span class="Constant">--zabbix-test-run</span><span class="Constant">&quot;</span>){
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">ZABBIX TEST OK</span><span class="Constant">&quot;</span>;
+  <span class="Statement">exit</span>;
+}
+
+debug(<span class="Constant">&quot;</span><span class="Identifier">$0</span><span class="Constant"> Input data </span><span class="Constant">&quot;</span>.<span class="Statement">join</span> <span class="Constant">&quot;</span><span class="Constant"> </span><span class="Constant">&quot;</span>,<span class="Identifier">@ARGV</span>);
+
+<span class="Identifier">$vsid</span>              = <span class="Statement">shift</span> <span class="Identifier">@ARGV</span> || <span class="Constant">0</span>;                                     <span class="Comment">#VSID </span>
+<span class="Identifier">$read_log</span>          = <span class="Statement">shift</span> <span class="Identifier">@ARGV</span> || <span class="Constant">0</span>;                                     <span class="Comment">#If this is defined, it will print the last log and exit</span>
+<span class="Identifier">$log_file</span>          = <span class="Statement">shift</span> <span class="Identifier">@ARGV</span> || <span class="Constant">&quot;</span><span class="Constant">/tmp/zabbix/ping/ping_vs</span><span class="Identifier">$vsid</span><span class="Constant">&quot;</span>;       <span class="Comment">#What log file to use</span>
+(<span class="Identifier">$log_dir</span>)         = <span class="Identifier">$log_file</span> =~ <span class="Statement">/</span><span class="Special">(.*)</span><span class="Special">\/</span><span class="Statement">/</span>;                                <span class="Comment">#Extract directory from log file path</span>
+<span class="Identifier">@ip_destination</span>    = <span class="Constant">qw(</span><span class="Constant">8.8.8.8 8.8.4.4 vg.no bt.no</span><span class="Constant">)</span>;                      <span class="Comment">#ping -w1 -c1 all the addresses in the array</span>
+<span class="Identifier">$0</span>                 = <span class="Constant">&quot;</span><span class="Constant">Internet check ICMP/PING VSID </span><span class="Identifier">$vsid</span><span class="Constant">&quot;</span>;
+
+<span class="Comment">#Create zabbix tmp directory</span>
+<span class="Statement">system</span> <span class="Constant">&quot;</span><span class="Constant">mkdir -p </span><span class="Identifier">$log_dir</span><span class="Constant">&quot;</span> <span class="Statement">unless</span> <span class="Statement">-d</span> <span class="Identifier">$log_dir</span>;
+
+<span class="Comment">#If there a log file, print it</span>
+<span class="Statement">if</span> (<span class="Statement">-f</span> <span class="Identifier">$log_file</span>) {
+  debug(<span class="Constant">&quot;</span><span class="Constant">Log file found. Will read and output data</span><span class="Constant">&quot;</span>);
+  <span class="Statement">foreach</span> (<span class="Statement">`</span><span class="Constant">cat </span><span class="Identifier">$log_file</span><span class="Statement">`</span>){
+    <span class="Statement">print</span>;
+  }
+  <span class="Comment">#Trunk the log file</span>
+  <span class="Statement">system</span> <span class="Constant">&quot;</span><span class="Constant">echo -n &gt;</span><span class="Identifier">$log_file</span><span class="Constant">&quot;</span>;
+
+}
+
+<span class="Comment">#Exit the script if this is running for the old log output only</span>
+<span class="Statement">if</span> (<span class="Identifier">$read_log</span>){
+  debug(<span class="Constant">&quot;</span><span class="Constant">The script is started in read log file only mode. Exit</span><span class="Constant">&quot;</span>);
+  <span class="Statement">exit</span>;
+}
+
+<span class="Comment">#fork a child and exit the parent</span>
+<span class="Comment">#Don't fork if debug is running. </span>
+<span class="Statement">unless</span> (<span class="Identifier">$debug</span>){
+  <span class="Statement">fork</span> &amp;&amp; <span class="Statement">exit</span>;
+}
+
+<span class="Comment">#Eveything after here is the child</span>
+
+<span class="Comment">#Closing so the parent can exit and the child can live on</span>
+<span class="Comment">#The parent will live and wait for the child if there is no close </span>
+<span class="Comment">#Don't close if debug is running. </span>
+<span class="Statement">unless</span> (<span class="Identifier">$debug</span>) {
+  <span class="Statement">close</span> <span class="Identifier">STDOUT</span>;
+  <span class="Statement">close</span> <span class="Identifier">STDIN</span>;
+  <span class="Statement">close</span> <span class="Identifier">STDERR</span>;
+}
+
+<span class="Comment">#Open log file</span>
+<span class="Statement">open</span> <span class="Identifier">$fh_w</span>,<span class="Constant">&quot;</span><span class="Constant">&gt;&gt;</span><span class="Constant">&quot;</span>, <span class="Identifier">$log_file</span> <span class="Statement">or</span> <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Can't write to </span><span class="Identifier">$log_file</span><span class="Constant">: </span><span class="Identifier">$!</span><span class="Constant">&quot;</span>;
+
+<span class="Comment">#Exit if it takes more than 1 sec to lock the log file.</span>
+<span class="Comment">#Don't start the script if it's already running</span>
+<span class="Statement">local</span> <span class="Identifier">$SIG</span><span class="Identifier">{</span><span class="Constant">ALRM</span><span class="Identifier">}</span> = <span class="Statement">sub </span>{ <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Special">\n</span><span class="Constant">&quot;</span> };
+<span class="Statement">alarm</span> <span class="Constant">1</span>;
+
+<span class="Comment">#Lock the log file</span>
+<span class="Statement">flock</span>(<span class="Identifier">$fh_w</span>, LOCK_EX) || <span class="Statement">die</span> <span class="Constant">&quot;</span><span class="Constant">Cannot lock </span><span class="Identifier">$file_log</span><span class="Constant"> </span><span class="Identifier">$!</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+
+<span class="Statement">alarm</span> <span class="Constant">0</span>;
+
+
+<span class="Comment">#Listing all the local kernel tables</span>
+<span class="Statement">MAIN:</span> <span class="Statement">while</span> (<span class="Constant">1</span>) {
+  <span class="Statement">foreach</span> <span class="Identifier">$ip</span> (<span class="Identifier">@ip_destination</span>){
+    <span class="Identifier">$out</span> = <span class="Statement">`</span><span class="Constant">ping -w1 -c1 </span><span class="Identifier">$ip</span><span class="Constant"> 2&gt;&amp;1</span><span class="Statement">`</span>;
+    debug(<span class="Identifier">$out</span>);
+
+    <span class="Comment">#Skip if 0% loss</span>
+    <span class="Statement">if</span> (<span class="Identifier">$out</span> =~ <span class="Statement">m#</span><span class="Constant">, 0% packet loss,</span><span class="Statement">#</span>){
+      debug(<span class="Constant">&quot;</span><span class="Constant">0% loss, next</span><span class="Constant">&quot;</span>);
+      <span class="Statement">last</span>;
+    }
+
+    <span class="Identifier">$date</span> = <span class="Statement">localtime</span>(<span class="Statement">time</span>)-&gt;strftime(<span class="Constant">'</span><span class="Constant">%F %T</span><span class="Constant">'</span>);
+
+    <span class="Comment">#Print the name and percentage to the log file</span>
+    <span class="Statement">print</span> <span class="Identifier">$fh_w</span> <span class="Constant">&quot;</span><span class="Identifier">$date</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    <span class="Statement">print</span>  <span class="Constant">&quot;</span><span class="Identifier">$date</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+    debug(<span class="Constant">&quot;</span><span class="Identifier">$date</span><span class="Special">\n</span><span class="Constant">&quot;</span>);
+  }
+  <span class="Statement">sleep</span> <span class="Constant">1</span>;
+}
+
+<span class="Statement">sub </span><span class="Identifier">debug </span>{
+  <span class="Statement">print</span> <span class="Constant">&quot;</span><span class="Constant">DEBUG: </span><span class="Identifier">$_[</span><span class="Constant">0</span><span class="Identifier">]</span><span class="Special">\n</span><span class="Constant">&quot;</span> <span class="Statement">if</span> <span class="Identifier">$debug</span>;
+}
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

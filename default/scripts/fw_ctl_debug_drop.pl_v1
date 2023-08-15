@@ -1,0 +1,350 @@
+#!/bin/perl
+#bin
+
+#Set the path for modules
+BEGIN{push @INC,"/usr/share/zabbix/bin/perl-5.10.1/lib"}
+
+#use warnings;
+use Fcntl qw(:flock SEEK_END); #Module for file lock 
+
+#Print the data immediately. Don't wait for full buffer
+$|++;
+
+#Zabbix test that will have to print out zabbix test ok. If not, the script will not download
+if ($ARGV[0] eq "--zabbix-test-run"){
+  print "ZABBIX TEST OK";
+  exit;
+}
+
+#Print the input the script is started with
+debug("$0 Input data ".join " ",@ARGV);
+
+$debug             = 0;                                                            #Set to 1 if you want debug data and no fork
+$version           = 102;                                                          #Version of the script. If the version runnin is older than this, kill the old script
+$run_time          = shift @ARGV || 10;                                            #Run the fw debug for NN minutes
+$log_file          = shift @ARGV || "/tmp/zabbix/fw_ctl_debug_drop/drop.log";      #What log file to use
+$lock_file         = shift @ARGV || "/tmp/zabbix/fw_ctl_debug_drop/drop.lock";     #What lock file to use
+$time_file         = shift @ARGV || "/tmp/zabbix/fw_ctl_debug_drop/dbg_time.log";  #debug drop timestamp file
+$stop_file         = shift @ARGV || "/tmp/zabbix/fw_ctl_debug_drop/stop";                            #STOP file
+($log_dir)         = $log_file =~ /(.*)\//;                                        #Extract directory from log file path
+$0                 = "fw ctl debug drop VER $version";                             #Set the process name
+$cmd_fw            = "fw ctl zdebug -m fw + drop";                                 #fw ctl debug command
+$kill_time         = 4;                                                            #Kill the fw ctl debug if it's older than N hours
+$cpu_count_minimum = 4; 
+%db                = ();                                                           #Set an empty hash
+
+#Exit if stop file found
+exit if -f $stop_file;
+
+#Exit if this is not a gw
+exit unless is_gw();
+
+#Exit the script if there is less than 4 CPU cores
+exit if cpu_count() < $cpu_count_minimum;
+
+#Check if debug fw drop is enabled. Create a file. If the file is older than $kill_time the command fw ctl debug 0 will run
+check_debug_drop();
+
+#Kill old running fw ctl debug if more than 4 hours old
+kill_old_fw_ctl_debug("fw ctl zdebug");
+
+#Check if the running process is older than this version
+#If older version found, kill it
+is_old_version_running();
+
+#Create zabbix tmp directory
+system "mkdir -p $log_dir" unless -d $log_dir;
+
+#fork a child and exit the parent
+#Don't fork if $debug is true
+unless ($debug){
+  fork && exit;
+}
+
+#Eveything after here is the child
+
+#Closing so the parent can exit and the child can live on
+#The parent will live and wait for the child if there is no close 
+#Don't close if $debug is true
+unless ($debug) {
+  close STDOUT;
+  close STDIN;
+  close STDERR;
+}
+
+#Build the hash from old log file
+foreach (`cat $log_file 2>/dev/null`){
+  debug("Reading from old log file $_");
+  chomp; 
+
+  #Split the data in to variables
+  ($vsid,$err,$count) = split/,,,/;
+
+  #There is no need to log a rulebase drop
+  next if $err =~ /Rulebase/;
+  next if $err =~ /matched drop template/;
+  $err =~ s/Instance \d{1,} /Instance /;
+
+  $vsid = "vs_0" if $vsid =~ /cpu/;
+  $vsid = "vs_0" if $vsid eq "kern";
+
+  #Sanity check the input. Skip the line if something is wrong with it
+  next unless $vsid && $err && $count;
+
+  #Remove old drop logs with hit count under 100
+  next if $count < 10;
+
+  #Add the data to %db hash
+  $db{"$vsid,,,$err"} = $count;
+}
+
+#copy the old log file to tmp
+$cmd_cp = "cp -f $log_file $log_file.tmp 2>/dev/null";
+debug("copy old log file: $cmd_cp");
+system $cmd_cp;
+
+#Open lock file
+debug("Open lock file $lock_file");
+open $fh_lock_w,">", $lock_file or die "Can't write to $lock_file: $!";
+
+#Exit if it takes more than 1 sec to lock the lock file.
+#Don't start the script if it's already running
+local $SIG{ALRM} = sub { die "\n" };
+alarm 1;
+
+#Lock the log file
+debug("Lock the lock file");
+flock($fh_lock_w, LOCK_EX) or die "Cannot lock $file_lock $!\n";
+
+#Reset the alarm
+alarm 0;
+
+#Run the command
+debug("Running the command: $cmd_fw");
+open $fw_r,"-|", $cmd_fw or die "Can't run $cmd_fw: $!";
+
+#Get the current time. The command will run for $run_time
+$time_startup = time;
+
+#Get the current time for the write time
+$time_write = time;
+
+#Loop the command output
+MAIN: while ($_ = <$fw_r>) {
+
+  #Exit if the run time is up
+  if ((time - $time_startup) > ($run_time*60)){
+    debug("The command has been running for more than $run_time minutes. Will exit");
+    write_log();
+    kill_process("fw ctl zdebug");
+    exit;
+  }
+
+  #Write to log file every minute
+  if ((time - $time_write) > (1*60)){
+    debug("The command has been running for more than 1 minute. Will write to log file");
+    $time_write = time; #Reset the timeer
+    write_log();
+  }
+
+  #Remove new line in the end of line
+  chomp;
+
+  #Get the reason for the drop log
+  ($reason) = /Reason: (.*)/;
+
+  #Add a garbage collector her. Send all unknown data to a separate log file. Pr session
+  #Add a counter where $reason is empty 
+  
+  #Skip the line is there is no reason
+  next unless $reason; 
+
+  $reason =~ s/Instance \d{1,} /Instance /;
+
+  #Remove ; from $reason
+  $reason =~ s/;//;
+
+  #Remove space from end of line in $reason
+  $reason =~ s/\s{1,}$//;
+
+  #Change ,,, to ,, The log file uses ,,, as row seperator
+  $reason =~ s/,,,/,,/g;
+
+  #Get the VSID
+  ($vsid) = /^;\[(.*?)\];/;
+
+  $vsid = "vs_0" if $vsid =~ /cpu/;
+  $vsid = "vs_0" if $vsid eq "kern";
+  $vsid = "vs_0" unless $vsid;
+
+  #Drop counter
+  $db{"$vsid,,,Total drop"} += 1;
+
+  #There is no need to log a rulebase drop
+  next if $reason =~ /Rulebase/;
+  next if $reason =~ /matched drop template/;
+
+  #+1 the reason counter in the hash
+  $db{"$vsid,,,$reason"} += 1;
+
+  debug("Output from command: $_");
+
+}
+
+sub write_log {
+
+  #Open the $log_file for writing
+  open $fh_w_log, ">", $log_file or die "Can't write to $log_file: $!";
+
+  #for each the hash and print the values to the $log_file
+  foreach (sort %db){
+
+    #Sanity check the data. Skip if empty 
+    next unless $db{$_};
+
+    #Print the value to $log_file
+    print $fh_w_log "$_,,,$db{$_}\n";
+  }
+
+  #Close the $log_file
+  close $fh_w_log;
+}
+
+sub debug {
+  print "DEBUG: $_[0]\n" if $debug;
+}
+
+sub is_old_version_running {
+  $name = $0;
+  $name =~ s/ VER.*//;
+
+  $cmd = qq#ps xa|grep "$name"#;
+  debug($cmd);
+
+  foreach (`$cmd`){
+    s/^\s{1,}//;
+
+    #PID TTY      STAT   TIME COMMAND
+    ($pid,$tty,$stat,$time,$command) = split /\s{1,}/;
+
+    next if $$ == $pid;
+    next if /grep /;
+
+    ($ver) = /VER (\d{1,})/;
+
+    unless ($ver) {
+      debug("Found an old version of the script without version. Will kill it: $pid");
+      system "kill $pid";
+    }
+
+    if ($ver && $ver < $version){
+      debug("Found an old version of the script Will kill it: $pid");
+      system "kill $pid";
+    }
+  }
+  debug("No old process found");
+
+}
+
+sub kill_process {
+  my $name = shift or die "Need a process name to kill";
+  debug("Kill process subrutine with input: $name");
+
+  foreach (`ps xa`){
+    next unless /$name/;
+    debug("ps xa: found $name: $_");
+    s/^\s{1,}//;
+
+    #PID TTY      STAT   TIME COMMAND
+    ($pid,$tty,$stat,$time,$command) = split /\s{1,}/;
+    
+    debug("kill $pid");
+    system "kill $pid";
+    sleep 1;
+    system "kill -9 $pid";
+    system "fw ctl debug 0 &>/dev/null";
+  } 
+}
+
+sub kill_old_fw_ctl_debug {
+  my $name  = shift or die "Need a process name to kill";
+  my $hours = shift || 4;
+  debug("Kill process subrutine with input: $name");
+
+  foreach (`ps xau`){
+    next unless /$name/;
+    debug("ps xa: found $name: $_");
+    s/^\s{1,}//;
+
+    #USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+    my ($user,$pid,$cpu,$mem,$vsz,$rss,$tty,$stat,$start,$time,$command) = split /\s{1,}/;
+
+    #Convert start time to unix time
+    my $start_unix = `date -d "$start" +"%s"`;
+    chomp $start_unix;
+    debug("Found start time of process $start. Converted to unix time $start_unix");
+
+    #Kill running fw ctl if start time is more than 4 hours
+    if ( (time - $start_unix) > (4*60*60) ){
+      debug("Found that process is older than 4 hours. Will kill it");
+      debug("kill $pid");
+      system "kill $pid &>/dev/null";
+      sleep 1;
+      system "kill -9 $pid &>/dev/null";
+      system "fw ctl debug 0 &>/dev/null";
+    }
+  } 
+}
+
+sub check_debug_drop {
+  debug("Starting subrutine check_debug_drop");
+
+  #Looking for fw drop
+  if (`fw ctl debug` =~ /Module: fw.*drop.*Common/s){
+    debug("fw drop debug enabled");
+
+    my $time = time;
+
+    debug("Looking for $time_file");
+    if (-f $time_file) {
+      debug("$time_file found. Will check the mtime");
+
+      my $ctime = (stat($time_file))[9];
+      
+      if ( (time - $ctime) > ($kill_time*60*60) ) {
+        debug("$time_file is older than $kill_time. Will run fw ctl debug 0");
+        unlink $time_file;
+        system "fw ctl debug 0 &>/dev/null";
+        
+      }
+      else {
+        debug("File is not older than $kill_time hours. Will print 9999 and exit");
+        print 9999;
+        exit;
+      }
+    }
+    else {
+      debug("Creating timestamp file");
+
+      system "echo $time >$time_file 2>/dev/null";
+      print 9999;
+    }
+  }
+
+}
+
+sub cpu_count {
+  my $cpu_count;
+
+  foreach (`cat /proc/cpuinfo`){
+    next unless /^$/;
+    $cpu_count++;
+  } 
+  return $cpu_count;
+}
+
+sub is_gw {
+  $out = `fw stat`;
+
+  return 1 if $out =~ /POLICY/;
+}

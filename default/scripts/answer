@@ -1,0 +1,113 @@
+$VAR1 = bless( {
+                 'real_size' => 49,
+                 'events' => {
+                               'read' => [
+                                           sub { "DUMMY" }
+                                         ]
+                             },
+                 'read' => $VAR1->{'events'}{'read'}[0],
+                 'auto_upgrade' => 1,
+                 'state' => 'finished',
+                 'body' => 2,
+                 'raw_size' => 855,
+                 'auto_decompress' => 1,
+                 'buffer' => '',
+                 'pre_buffer' => '',
+                 'asset' => bless( {
+                                     'max_memory_size' => 262144,
+                                     'auto_upgrade' => 1,
+                                     'content' => 'Bad payload received by generic incoming webhook.'
+                                   }, 'Mojo::Asset::Memory' ),
+                 'header_size' => 806,
+                 'size' => 49,
+                 'auto_relax' => 1,
+                 'headers' => bless( {
+                                       'cache' => [],
+                                       'headers' => {
+                                                      'date' => [
+                                                                  'Thu, 22 Apr 2021 17:01:17 GMT'
+                                                                ],
+                                                      'x-proxy-backendserverstatus' => [
+                                                                                         '400'
+                                                                                       ],
+                                                      'pragma' => [
+                                                                    'no-cache'
+                                                                  ],
+                                                      'x-rum-validated' => [
+                                                                             '1'
+                                                                           ],
+                                                      'x-feserver' => [
+                                                                        'PR3P191CA0022',
+                                                                        'HE1PR09CA0073'
+                                                                      ],
+                                                      'cache-control' => [
+                                                                           'no-cache'
+                                                                         ],
+                                                      'request-id' => [
+                                                                        '669d1168-8fcf-47a5-80ed-e9aa99decf41'
+                                                                      ],
+                                                      'x-aspnet-version' => [
+                                                                              '4.0.30319'
+                                                                            ],
+                                                      'content-type' => [
+                                                                          'text/plain; charset=utf-8'
+                                                                        ],
+                                                      'x-beserver' => [
+                                                                        'PR3PR03MB6553'
+                                                                      ],
+                                                      'x-powered-by' => [
+                                                                          'ASP.NET'
+                                                                        ],
+                                                      'x-feproxyinfo' => [
+                                                                           'PR3P191CA0022.EURP191.PROD.OUTLOOK.COM'
+                                                                         ],
+                                                      'x-calculatedfetarget' => [
+                                                                                  'PR3P191CU001.internal.outlook.com'
+                                                                                ],
+                                                      'expires' => [
+                                                                     '-1'
+                                                                   ],
+                                                      'content-length' => [
+                                                                            '49'
+                                                                          ],
+                                                      'x-calculatedbetarget' => [
+                                                                                  'PR3PR03MB6553.EURPRD03.PROD.OUTLOOK.COM'
+                                                                                ],
+                                                      'x-backendhttpstatus' => [
+                                                                                 '400',
+                                                                                 '400'
+                                                                               ],
+                                                      'server' => [
+                                                                    'Microsoft-IIS/10.0'
+                                                                  ],
+                                                      'x-cafeserver' => [
+                                                                          'PR3P191CA0022.EURP191.PROD.OUTLOOK.COM'
+                                                                        ],
+                                                      'strict-transport-security' => [
+                                                                                       'max-age=31536000; includeSubDomains; preload'
+                                                                                     ],
+                                                      'x-proxy-routingcorrectness' => [
+                                                                                        '1'
+                                                                                      ]
+                                                    },
+                                       'state' => 'finished',
+                                       'names' => {
+                                                    'request-id' => 'request-id',
+                                                    'x-aspnet-version' => 'X-AspNet-Version',
+                                                    'x-calculatedbetarget' => 'X-CalculatedBETarget',
+                                                    'x-backendhttpstatus' => 'X-BackEndHttpStatus',
+                                                    'x-proxy-routingcorrectness' => 'X-Proxy-RoutingCorrectness',
+                                                    'x-cafeserver' => 'X-CafeServer',
+                                                    'x-powered-by' => 'X-Powered-By',
+                                                    'x-proxy-backendserverstatus' => 'X-Proxy-BackendServerStatus',
+                                                    'pragma' => 'Pragma',
+                                                    'x-beserver' => 'X-BEServer',
+                                                    'x-rum-validated' => 'X-RUM-Validated',
+                                                    'x-calculatedfetarget' => 'X-CalculatedFETarget',
+                                                    'x-feproxyinfo' => 'X-FEProxyInfo',
+                                                    'x-feserver' => 'X-FEServer'
+                                                  },
+                                       'max_lines' => 100,
+                                       'max_line_size' => 8192
+                                     }, 'Mojo::Headers' )
+               }, 'Mojo::Content::Single' );

@@ -1,0 +1,1 @@
+../show_configuration_sha1sum.pl
